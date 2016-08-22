@@ -1,0 +1,85 @@
+﻿<local:MFundiPage
+    x:Name="PageRoot"
+    x:Class="QuicKE.Client.UI.ProfilePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QuicKE.Client.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <local:MFundiPage.BottomAppBar >
+        <CommandBar Background="{StaticResource MyBlue}">
+            <AppBarButton Icon="Home"/>
+            <AppBarButton Icon="Copy"/>
+            <AppBarButton Icon="Contact"/>
+            <AppBarButton Icon="Globe"/>
+            <AppBarButton Icon="Setting"/>
+        </CommandBar>
+    </local:MFundiPage.BottomAppBar>
+    <Grid Background="white">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Background="{StaticResource MyBlue}" Orientation="Horizontal" >
+                <AppBarButton Icon="Back" Command="{Binding NavigationHelper.GoBackCommand,ElementName=PageRoot}" 
+                              Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter},
+                          RelativeSource={RelativeSource Mode=Self}}"
+                              AutomationProperties.Name="Back"
+                          AutomationProperties.AutomationId="BackButton"
+                          AutomationProperties.ItemType="Navigation Button"/>
+                <TextBlock Text="My Profile" Style="{StaticResource SubheaderTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="60,0,0,0"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Background="{StaticResource MyOrange}">
+                <AppBarButton Icon="Contact" HorizontalAlignment="Center"  Foreground="{StaticResource MyBlue}" />
+                <TextBlock Text="{Binding Name}" TextAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" 
+                           Width="Auto"
+                           VerticalAlignment="Stretch"
+                           HorizontalAlignment="Stretch"
+                           Foreground="{StaticResource MyBlue}"/>
+                <TextBlock Text="{Binding Phone}" TextAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" Foreground="{StaticResource MyBlue}"/>
+                <TextBlock Text="{Binding Email}" TextAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" Foreground="{StaticResource MyBlue}" Margin="0,0,0,15"/>
+            </StackPanel>
+        </Grid>
+        <Border Grid.Row="1" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,2,0">
+        <Button HorizontalAlignment="Stretch"  Width="Auto" Background="White" VerticalAlignment="Stretch" >
+            <StackPanel>
+                <AppBarButton Icon="People" HorizontalAlignment="Center" Foreground="{StaticResource MyBlue}" />
+                <TextBlock Text="Favourites" TextAlignment="Center" Foreground="{StaticResource MyOrange}"/>
+            </StackPanel>
+        </Button>
+        </Border>
+        <Button HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="1" Width="Auto" Background="White" VerticalAlignment="Stretch"
+                Command="{Binding ViewTicketCommand}">
+            <StackPanel>
+                <AppBarButton Icon="LikeDislike" HorizontalAlignment="Center" Foreground="{StaticResource MyBlue}"/>
+                <TextBlock Text="Give us Feedback" TextAlignment="Center" Foreground="{StaticResource MyOrange}"/>
+            </StackPanel>
+        </Button>
+        <Border Grid.Row="2" Grid.ColumnSpan="2" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,1">
+            <Button HorizontalAlignment="Stretch" Width="Auto" Background="White" VerticalAlignment="Top" >
+                <StackPanel Orientation="Horizontal" Margin="0">
+                    <Image Source="Assets/img_history.png"/>
+                    <TextBlock Text="View History" TextAlignment="Center" VerticalAlignment="Center" 
+                           Foreground="{StaticResource MyOrange}"/>
+
+                </StackPanel>
+            </Button>
+        </Border>     
+ 
+
+    </Grid>
+</local:MFundiPage>

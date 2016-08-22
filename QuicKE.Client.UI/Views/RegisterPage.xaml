@@ -1,0 +1,115 @@
+﻿<local:MFundiPage
+    x:Name="pageRoot"
+    x:Class="QuicKE.Client.UI.RegisterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QuicKE.Client.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:OppositeBoolConverter x:Key="OppositeBoolConverter"/>
+    </Page.Resources>
+    <Grid x:Name="LayoutRoot" Background="White">
+
+       <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="Black"/>             
+            </Style>
+            <Style TargetType="HyperlinkButton">
+                <Setter Property="Foreground" Value="{StaticResource MyBlue}"/>                
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel x:Name="TitlePanel" VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" >
+            <ProgressBar VerticalAlignment="Top" IsIndeterminate="true"
+                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <TextBlock x:Name="PageTitle"                        
+                       Text="Sign Up/Sign in to M-Fundi" 
+                       Style="{StaticResource TitleTextBlockStyle}" 
+                       VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+         
+		</StackPanel>
+        <StackPanel Grid.Row="1" Margin="15,0">
+		<Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,5,0,0">
+                    <Image Height="75"
+                          Source="ms-appx:///Assets/Microsoft.png" HorizontalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                               Text="Sign in via Windows Live Account" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="#FF0E0E0E" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,5,0,0">
+                    <Image Height="75" Source="ms-appx:///Assets/facebook.png" HorizontalAlignment="Center" />
+                    <TextBlock 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Text="Connect Via Facebook" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" />
+                </StackPanel>
+
+            </Grid>
+            
+            <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}"
+                Background="{StaticResource MyBlue}"    
+                Foreground="{StaticResource MyBlue}"                      
+                Content="Already have an account?" 
+                      Margin="15,0,0,0" FontSize="14" FontFamily="Segoe WP Semibold" FontWeight="Bold"/>
+          
+            <Button Background="{StaticResource MyBlue}"
+                    Content="Sign In"
+                    Foreground="white"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding SignInCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
+                    Margin="0" 
+                    BorderBrush="{StaticResource MyBlue}"/>
+            <TextBlock Text="Sign Up"
+                       Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"
+                       HorizontalAlignment="Center" FontSize="18" FontFamily="Segoe WP Semibold" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox  HorizontalAlignment="Stretch" 
+                      Text="{Binding FullName, Mode=TwoWay}"
+                      PlaceholderText="Full Name" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
+                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
+            </TextBox>
+            <TextBox  HorizontalAlignment="Stretch" 
+                      Text="{Binding Email, Mode=TwoWay}"
+                      PlaceholderText="Email Address" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" >
+            </TextBox>
+            <PasswordBox Password="{Binding Password, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" PlaceholderText="Password" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1" >
+            </PasswordBox>
+            <PasswordBox Password="{Binding Confirm, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" PlaceholderText="Confirm Password" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" RenderTransformOrigin="0.489,0.609"
+                          Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
+            </PasswordBox>
+            <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}" Grid.Column ="1"
+                    PlaceholderText="Tel" BorderBrush="{StaticResource MyBlue}" VerticalAlignment="Center" BorderThickness="1,0,1,1" 
+                     Grid.ColumnSpan="2" Margin="0,0,15,0"
+                     Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
+                             
+
+            <HyperlinkButton HorizontalAlignment="Center"
+                Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,0,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0">Forgot Password?</HyperlinkButton>
+        </StackPanel>
+        <Button  Grid.Row="2"  
+                 Command="{Binding SignUpCommand}"
+                 HorizontalAlignment="Stretch" 
+                 VerticalAlignment="Stretch" 
+                 Content="Sign Up"
+                 Background="{StaticResource MyOrange}"
+                 BorderBrush="{StaticResource MyOrange}" Margin="0,9.5,0,-10"
+                 Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"
+                 IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"/>
+    </Grid>
+</local:MFundiPage>

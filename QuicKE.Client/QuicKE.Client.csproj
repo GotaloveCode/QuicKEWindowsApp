@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A92DDFC6-E094-4EC8-B335-AEB02ED90AF4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MFundi.Client</RootNamespace>
+    <AssemblyName>MFundi.Client</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_PHONE_APP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Entities\ExpertItem.cs" />
+    <Compile Include="Entities\MapObject.cs" />
+    <Compile Include="Entities\ModelItem.cs" />
+    <Compile Include="Entities\ProfileItem.cs" />
+    <Compile Include="Entities\ServiceItem.cs" />
+    <Compile Include="Entities\SettingItem.cs" />
+    <Compile Include="Entities\SummaryItem.cs" />
+    <Compile Include="Entities\TicketItem.cs" />
+    <Compile Include="Entities\UserItem.cs" />
+    <Compile Include="Entities\WrappingModelItem.cs" />
+    <Compile Include="Location\AdHocMappablePoint.cs" />
+    <Compile Include="Location\IMappablePoint.cs" />
+    <Compile Include="Location\LocationResultCode.cs" />
+    <Compile Include="Location\LocationHelper.cs" />
+    <Compile Include="Location\LocationResult.cs" />
+    <Compile Include="Model\Base\CommandExecutionContext.cs" />
+    <Compile Include="Model\Base\DelegateCommand.cs" />
+    <Compile Include="Model\Base\IViewModel.cs" />
+    <Compile Include="Model\Base\IViewModelHost.cs" />
+    <Compile Include="Model\Base\NavigateCommand.cs" />
+    <Compile Include="Model\Instances\Interfaces\ILocationPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\IPaymentPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\QuikClean\ISummaryPageViewModel.cs" />
+    <Compile Include="Model\Instances\LocationPageViewModel.cs" />
+    <Compile Include="Model\Instances\QuikClean\PaymentPageViewModel.cs" />
+    <Compile Include="Model\Instances\QuikClean\SummaryPageViewModel.cs" />
+    <Compile Include="Model\Instances\QuikClean\SelectExpertPageViewModel.cs" />
+    <Compile Include="Model\Instances\HomePageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\IHomePageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\QuikClean\ILocateUserPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\QuikClean\ISelectExpertPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\ISignInPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\QuikClean\IServicesPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\QuikClean\ITicketPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\QuikClean\IProfilePageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\IRegisterPageViewModel.cs" />
+    <Compile Include="Model\Instances\QuikClean\LocateUserPageViewModel.cs" />
+    <Compile Include="Model\Instances\ProfilePageViewModel.cs" />
+    <Compile Include="Model\Instances\RegisterPageViewModel.cs" />
+    <Compile Include="Model\Instances\ServicesPageViewModel.cs" />
+    <Compile Include="Model\Instances\SignInPageViewModel.cs" />
+    <Compile Include="Model\Instances\QuikClean\TicketPageViewModel.cs" />
+    <Compile Include="Notifications\BadgeGlyph.cs" />
+    <Compile Include="Notifications\BadgeNotificationBuilder.cs" />
+    <Compile Include="Notifications\NotificationBuilder.cs" />
+    <Compile Include="Notifications\NotificationWithTextBuilder.cs" />
+    <Compile Include="Notifications\ToastNotificationBuilder.cs" />
+    <Compile Include="Objects\ErrorBucket.cs" />
+    <Compile Include="Objects\JsonExtensions.cs" />
+    <Compile Include="Objects\JsonObjectExtender.cs" />
+    <Compile Include="Objects\MFundiRuntime.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\Base\ViewModel.cs" />
+    <Compile Include="Services\CreateTicketServiceProxy.cs" />
+    <Compile Include="Services\errorhandlers\ErrorPOCO.cs" />
+    <Compile Include="Services\GetExpertsServiceProxy.cs" />
+    <Compile Include="Services\GetMyProfileServiceProxy.cs" />
+    <Compile Include="Services\GetTicketServiceProxy.cs" />
+    <Compile Include="Services\ICreateTicketServiceProxy.cs" />
+    <Compile Include="Services\IGetTicketServiceProxy.cs" />
+    <Compile Include="Services\ILogOutServiceProxy.cs" />
+    <Compile Include="Services\LogOutServiceProxy.cs" />
+    <Compile Include="Services\ServiceResults\GetExpertsResult.cs" />
+    <Compile Include="Services\ServiceResults\GetProfileResult.cs" />
+    <Compile Include="Services\ServiceResults\GetServicesResult.cs" />
+    <Compile Include="Services\GetServicesServiceProxy.cs" />
+    <Compile Include="Services\ServiceResults\GetUserResult.cs" />
+    <Compile Include="Services\IGetExpertsServiceProxy.cs" />
+    <Compile Include="Services\IGetMyProfileServiceProxy.cs" />
+    <Compile Include="Services\IGetServicesServiceProxy.cs" />
+    <Compile Include="Services\ISignInServiceProxy.cs" />
+    <Compile Include="Services\IRegisterServiceProxy.cs" />
+    <Compile Include="Services\IServiceProxy.cs" />
+    <Compile Include="Services\ServiceResults\SignInResult.cs" />
+    <Compile Include="Services\ServiceResults\RegisterResult.cs" />
+    <Compile Include="Services\RegisterServiceProxy.cs" />
+    <Compile Include="Services\ServiceResults\ServiceExecuteResult.cs" />
+    <Compile Include="Services\ServiceProxy.cs" />
+    <Compile Include="Services\ServiceResults\CreateTicketResult.cs" />
+    <Compile Include="Services\ServiceResults\SignOutResult.cs" />
+    <Compile Include="Services\SignInServiceProxy.cs" />
+    <Compile Include="Services\ServiceResults\GetTicketsResult.cs" />
+    <Compile Include="SQLite.cs" />
+    <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="TinyIoC.cs" />
+    <Compile Include="TypeExtender.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, version=12.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.WP81, Version=3.13.0">
+      <Name>SQLite for Windows Phone 8.1</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\MFundi.Client.UI\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
+    <VisualStudioVersion>12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetPlatformIdentifier)' == '' ">
+    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -49,14 +49,6 @@ namespace QuicKE.Client.UI
             // start...
             MFundiRuntime.Start("Client");
 
-            // create a temporary view model...
-            //var logonViewModel = TinyIoCContainer.Current.Resolve<IRegisterPageViewModel>();
-           // logonViewModel.Initialize(new NullViewModelHost());
-
-            // what next?
-            //var targetPage = typeof(LogonPage);
-            //if (await logonViewModel.RestorePersistentLogonAsync())
-            //    targetPage = typeof(ReportsPage);
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -73,10 +65,7 @@ namespace QuicKE.Client.UI
                 rootFrame.CacheSize = 1;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // TODO: Load state from previously suspended application
                     await Common.SuspensionManager.RestoreAsync();
-                }
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
@@ -84,32 +73,20 @@ namespace QuicKE.Client.UI
 
             if (rootFrame.Content == null)
             {
-                // When the navigation stack isn't restored navigate to the first page,
+                // When the navigation stack isn't restored navigate to the home page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (ApplicationData.Current.LocalSettings.Values["LoggedIn"] != null)
+                if (ApplicationData.Current.LocalSettings.Values["LoggedIn"] != null &&
+                    ApplicationData.Current.LocalSettings.Values["LoggedIn"].ToString() == "True")
                 {
-                    if (ApplicationData.Current.LocalSettings.Values["LoggedIn"].ToString() == "True")
-                    {
                         if (!rootFrame.Navigate(typeof(HomePage), e.Arguments))
-                        {
                             throw new Exception("Failed to create initial page");
-                        }
-                    }
-                    else
-                    {
-                        if (!rootFrame.Navigate(typeof(RegisterPage), e.Arguments))
-                        {
-                            throw new Exception("Failed to create initial page");
-                        }
-                    }
+
                 }
                 else
                 {
-                    if (!rootFrame.Navigate(typeof(RegisterPage), e.Arguments))
-                    {
-                        throw new Exception("Failed to create initial page");
-                    }
+                    if (!rootFrame.Navigate(typeof(MaidsPage), e.Arguments))
+                      throw new Exception("Failed to create initial page");
                 }
                
             }

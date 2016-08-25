@@ -30,14 +30,13 @@
         <StackPanel x:Name="TitlePanel" VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" >
             <ProgressBar VerticalAlignment="Top" IsIndeterminate="true"
                      Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <TextBlock x:Name="PageTitle"                        
-                       Text="Sign Up/Sign in to M-Fundi" 
-                       Style="{StaticResource TitleTextBlockStyle}" 
-                       VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-         
-		</StackPanel>
-        <StackPanel Grid.Row="1" Margin="15,0">
-		<Grid>
+            <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
+
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="0">
+           
+            
+		<!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -57,14 +56,44 @@
                         Text="Connect Via Facebook" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" />
                 </StackPanel>
 
-            </Grid>
+            </Grid>-->
             
-            <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}"
+           
+            <TextBlock Text="Sign Up"
+                       Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"
+                       HorizontalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" FontFamily="Segoe WP Semibold" FontWeight="Bold" Margin="0,10,0,5"/>
+            <StackPanel Margin="15,0">
+                <TextBox  HorizontalAlignment="Stretch" 
+                      Text="{Binding FullName, Mode=TwoWay}"
+                      PlaceholderText="Full Name" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
+                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
+
+                <TextBox  HorizontalAlignment="Stretch" 
+                      Text="{Binding Email, Mode=TwoWay}"
+                      PlaceholderText="Email Address" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" />
+
+                <PasswordBox Password="{Binding Password, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" PlaceholderText="Password" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1" >
+                </PasswordBox>
+                <PasswordBox Password="{Binding Confirm, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" PlaceholderText="Confirm Password" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" RenderTransformOrigin="0.489,0.609"
+                          Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
+                </PasswordBox>
+                <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}" Grid.Column ="1"
+                    PlaceholderText="Tel" BorderBrush="{StaticResource MyBlue}" VerticalAlignment="Center" BorderThickness="1,0,1,1" 
+                     Margin="0"
+                     Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
+                <ComboBox VerticalAlignment="Center" Width="Auto" Margin="0"
+                      ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Background="{StaticResource MyBlue}"
+                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" PlaceholderText="Choose your Location"/>
+                <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}"
                 Background="{StaticResource MyBlue}"    
                 Foreground="{StaticResource MyBlue}"                      
                 Content="Already have an account?" 
-                      Margin="15,0,0,0" FontSize="14" FontFamily="Segoe WP Semibold" FontWeight="Bold"/>
-          
+                      Margin="0" FontSize="14" FontFamily="Segoe WP Semibold" FontWeight="Bold"/>
+
+                
+            </StackPanel>
             <Button Background="{StaticResource MyBlue}"
                     Content="Sign In"
                     Foreground="white"
@@ -72,37 +101,12 @@
                     HorizontalAlignment="Stretch"
                     Command="{Binding SignInCommand}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
-                    Margin="0" 
+                    Margin="0,15,0,0" 
                     BorderBrush="{StaticResource MyBlue}"/>
-            <TextBlock Text="Sign Up"
-                       Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"
-                       HorizontalAlignment="Center" FontSize="18" FontFamily="Segoe WP Semibold" FontWeight="Bold" Margin="0,0,0,5"/>
-            <TextBox  HorizontalAlignment="Stretch" 
-                      Text="{Binding FullName, Mode=TwoWay}"
-                      PlaceholderText="Full Name" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
-                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
-            </TextBox>
-            <TextBox  HorizontalAlignment="Stretch" 
-                      Text="{Binding Email, Mode=TwoWay}"
-                      PlaceholderText="Email Address" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" >
-            </TextBox>
-            <PasswordBox Password="{Binding Password, Mode=TwoWay}" 
-                HorizontalAlignment="Stretch" PlaceholderText="Password" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1" >
-            </PasswordBox>
-            <PasswordBox Password="{Binding Confirm, Mode=TwoWay}" 
-                HorizontalAlignment="Stretch" PlaceholderText="Confirm Password" Margin="0,0,15,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" RenderTransformOrigin="0.489,0.609"
-                          Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
-            </PasswordBox>
-            <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}" Grid.Column ="1"
-                    PlaceholderText="Tel" BorderBrush="{StaticResource MyBlue}" VerticalAlignment="Center" BorderThickness="1,0,1,1" 
-                     Grid.ColumnSpan="2" Margin="0,0,15,0"
-                     Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
-                             
-
             <HyperlinkButton HorizontalAlignment="Center"
-                Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,0,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0">Forgot Password?</HyperlinkButton>
+                Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,15,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0">Forgot Password?</HyperlinkButton>
         </StackPanel>
-        <Button  Grid.Row="2"  
+        <Button Grid.Row="2"  
                  Command="{Binding SignUpCommand}"
                  HorizontalAlignment="Stretch" 
                  VerticalAlignment="Stretch" 

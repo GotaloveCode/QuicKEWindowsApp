@@ -91,6 +91,9 @@
     <Compile Include="Common\CostConverter.cs" />
     <Compile Include="Common\IMappablePointConverter.cs" />
     <Compile Include="Common\OppositeBoolConverter.cs" />
+    <Compile Include="MaidsPage.xaml.cs">
+      <DependentUpon>MaidsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Objects\MapView.cs" />
     <Compile Include="Views\LocationPage.xaml.cs">
       <DependentUpon>LocationPage.xaml</DependentUpon>
@@ -132,9 +135,6 @@
     </Compile>
     <Compile Include="Views\QuikClean\SelectExpertPage.xaml.cs">
       <DependentUpon>SelectExpertPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\QuikClean\SignInPage.xaml.cs">
-      <DependentUpon>SignInPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\QuikClean\SummaryPage.xaml.cs">
       <DependentUpon>SummaryPage.xaml</DependentUpon>
@@ -196,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MaidsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LocationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,10 +238,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\QuikClean\SelectExpertPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\QuikClean\SignInPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

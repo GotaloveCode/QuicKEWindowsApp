@@ -9,8 +9,8 @@
     <ProjectGuid>{A92DDFC6-E094-4EC8-B335-AEB02ED90AF4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MFundi.Client</RootNamespace>
-    <AssemblyName>MFundi.Client</AssemblyName>
+    <RootNamespace>QuicKE.Client</RootNamespace>
+    <AssemblyName>QuicKE.Client</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
@@ -80,6 +80,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Entities\ExpertItem.cs" />
+    <Compile Include="Entities\LocationItem.cs" />
+    <Compile Include="Entities\MaidItem.cs" />
     <Compile Include="Entities\MapObject.cs" />
     <Compile Include="Entities\ModelItem.cs" />
     <Compile Include="Entities\ProfileItem.cs" />
@@ -89,6 +91,9 @@
     <Compile Include="Entities\TicketItem.cs" />
     <Compile Include="Entities\UserItem.cs" />
     <Compile Include="Entities\WrappingModelItem.cs" />
+    <Compile Include="Ioc\IocBase.cs" />
+    <Compile Include="Ioc\ServiceProxyFactory.cs" />
+    <Compile Include="Ioc\ViewModelFactory.cs" />
     <Compile Include="Location\AdHocMappablePoint.cs" />
     <Compile Include="Location\IMappablePoint.cs" />
     <Compile Include="Location\LocationResultCode.cs" />
@@ -100,9 +105,11 @@
     <Compile Include="Model\Base\IViewModelHost.cs" />
     <Compile Include="Model\Base\NavigateCommand.cs" />
     <Compile Include="Model\Instances\Interfaces\ILocationPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\IMaidsPageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\IPaymentPageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\QuikClean\ISummaryPageViewModel.cs" />
     <Compile Include="Model\Instances\LocationPageViewModel.cs" />
+    <Compile Include="Model\Instances\MaidsPageViewModel.cs" />
     <Compile Include="Model\Instances\QuikClean\PaymentPageViewModel.cs" />
     <Compile Include="Model\Instances\QuikClean\SummaryPageViewModel.cs" />
     <Compile Include="Model\Instances\QuikClean\SelectExpertPageViewModel.cs" />
@@ -135,23 +142,27 @@
     <Compile Include="Services\CreateTicketServiceProxy.cs" />
     <Compile Include="Services\errorhandlers\ErrorPOCO.cs" />
     <Compile Include="Services\GetExpertsServiceProxy.cs" />
+    <Compile Include="Services\GetLocationsServiceProxy.cs" />
     <Compile Include="Services\GetMyProfileServiceProxy.cs" />
     <Compile Include="Services\GetTicketServiceProxy.cs" />
-    <Compile Include="Services\ICreateTicketServiceProxy.cs" />
-    <Compile Include="Services\IGetTicketServiceProxy.cs" />
-    <Compile Include="Services\ILogOutServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\ICreateTicketServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IGetLocationsServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IGetMaidsServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IGetTicketServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\ILogOutServiceProxy.cs" />
     <Compile Include="Services\LogOutServiceProxy.cs" />
     <Compile Include="Services\ServiceResults\GetExpertsResult.cs" />
+    <Compile Include="Services\ServiceResults\GetLocationsResult.cs" />
     <Compile Include="Services\ServiceResults\GetProfileResult.cs" />
     <Compile Include="Services\ServiceResults\GetServicesResult.cs" />
     <Compile Include="Services\GetServicesServiceProxy.cs" />
     <Compile Include="Services\ServiceResults\GetUserResult.cs" />
-    <Compile Include="Services\IGetExpertsServiceProxy.cs" />
-    <Compile Include="Services\IGetMyProfileServiceProxy.cs" />
-    <Compile Include="Services\IGetServicesServiceProxy.cs" />
-    <Compile Include="Services\ISignInServiceProxy.cs" />
-    <Compile Include="Services\IRegisterServiceProxy.cs" />
-    <Compile Include="Services\IServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IGetExpertsServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IGetMyProfileServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IGetServicesServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\ISignInServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IRegisterServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IServiceProxy.cs" />
     <Compile Include="Services\ServiceResults\SignInResult.cs" />
     <Compile Include="Services\ServiceResults\RegisterResult.cs" />
     <Compile Include="Services\RegisterServiceProxy.cs" />
@@ -163,6 +174,7 @@
     <Compile Include="Services\ServiceResults\GetTicketsResult.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="Services\TestClasses\FakeRegisterServiceProxy.cs" />
     <Compile Include="TinyIoC.cs" />
     <Compile Include="TypeExtender.cs" />
   </ItemGroup>

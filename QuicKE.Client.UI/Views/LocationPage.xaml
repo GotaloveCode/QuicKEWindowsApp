@@ -27,7 +27,7 @@
         <StackPanel Background="White" Grid.Row="1">
             <TextBlock Text="Choose a location" Margin="0,20,0,10" HorizontalAlignment="Center"/>
             <ComboBox VerticalAlignment="Center" Width="Auto" Margin="15,0"
-                      ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}"/>
+                      ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Background="{StaticResource MyBlue}"/>
 
         </StackPanel>
         <StackPanel Grid.Row="2" Background="{StaticResource MyOrange}">

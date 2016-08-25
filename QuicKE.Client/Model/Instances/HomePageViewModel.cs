@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
@@ -17,7 +15,7 @@ namespace QuicKE.Client
         public ICommand ViewPikiCommand { get; private set; }
         public ICommand LogoutCommand { get; private set; }
         public ICommand ViewHouseKeepingCommand { get; private set; }
-        public ICommand ShowLocationCommand { get { return this.GetValue<ICommand>(); } private set { this.SetValue(value); } }
+        public ICommand ShowLocationCommand { get { return GetValue<ICommand>(); } private set { SetValue(value); } }
         
 
         public const string MyLocationPropertyName = "MyLocation";
@@ -40,7 +38,7 @@ namespace QuicKE.Client
 
 
                 _myLocation = value;
-                this.SetValue(value);
+                SetValue(value);
             }
         }
         //internal static string locationtext = "-1.2883400,36.8063400";
@@ -57,14 +55,14 @@ namespace QuicKE.Client
         {
             base.Initialize(host);
            // var localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-            this.ProfileCommand = new NavigateCommand<IProfilePageViewModel>(host);
-            this.ViewPikiCommand = new DelegateCommand((e) =>
+            ProfileCommand = new NavigateCommand<IProfilePageViewModel>(host);
+            ViewPikiCommand = new DelegateCommand((e) =>
             {
                 //set servicetypeid
                 //localSettings.Values["ServiceId"] = 2;
                 MFundiRuntime.ServiceTypeID = 2;
                 MFundiRuntime.Title = "Delivery";
-                this.Host.ShowView(typeof(IHomePageViewModel));
+                Host.ShowView(typeof(IHomePageViewModel));
             }); 
             this.ViewHouseKeepingCommand = new DelegateCommand((e) =>
             {
@@ -72,16 +70,16 @@ namespace QuicKE.Client
                // localSettings.Values["ServiceId"] = 1;
                 MFundiRuntime.Title = "House Keeping";
                 MFundiRuntime.ServiceTypeID = 1;
-                this.Host.ShowView(typeof(IServicesPageViewModel));
+                Host.ShowView(typeof(IServicesPageViewModel));
             }); 
-            this.LogoutCommand = new DelegateCommand(async (e) =>
+            LogoutCommand = new DelegateCommand(async (e) =>
             { // get the location...
-                await this.LogOut();
+                await LogOut();
             });
 
             this.ShowLocationCommand = new DelegateCommand(async (e) =>
             { // get the location...
-                await this.GetMyLocation();
+                await GetMyLocation();
             });
         }
 
@@ -167,7 +165,7 @@ namespace QuicKE.Client
                 toast.Update();
                 await GetMyLocation();
             }
-                
+
         }
     }
 }

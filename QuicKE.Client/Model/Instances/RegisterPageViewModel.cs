@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TinyIoC;
 using Windows.Storage;
@@ -11,6 +13,9 @@ namespace QuicKE.Client
 
         public ICommand SignUpCommand { get { return this.GetValue<ICommand>(); } private set { this.SetValue(value); } }
         public ICommand SignInCommand { get { return this.GetValue<ICommand>(); } private set { this.SetValue(value); } }
+        public List<string> Locations { get; set; }
+        public string SelectedLocation { get; set; }
+        ErrorBucket errors = new ErrorBucket();
 
         internal const string LastPhonenumberKey = "LastPhoneNumber";
         internal const string LastEmailKey = "LastEmail";
@@ -26,16 +31,16 @@ namespace QuicKE.Client
 
         public RegisterPageViewModel()
         {
-
         }
+
         public override void Initialize(IViewModelHost host)
         {
             base.Initialize(host);
-            this.SignUpCommand = new DelegateCommand((args) => DoRegister(args as CommandExecutionContext));
-            this.SignInCommand = new DelegateCommand((args) => DoLogin(args as CommandExecutionContext));
-            this.IsSelected = true;
-           
 
+            Locations = new List<string>();
+            SignUpCommand = new DelegateCommand((args) => DoRegister(args as CommandExecutionContext));
+            SignInCommand = new DelegateCommand((args) => DoLogin(args as CommandExecutionContext));
+            IsSelected = true;         
         }
 
 
@@ -57,7 +62,7 @@ namespace QuicKE.Client
                 // call...
                 using (this.EnterBusy())
                 {
-                    var result = await proxy.SignInAsync(this.Email, this.Password);
+                    var result = await proxy.SignInAsync(Email, Password);
                     if (!(result.HasErrors))
                     {
                         ApplicationData.Current.LocalSettings.Values["LoggedIn"] = "True";
@@ -112,7 +117,7 @@ namespace QuicKE.Client
                 context = new CommandExecutionContext();
 
             // validate...
-            ErrorBucket errors = new ErrorBucket();
+
             ValidateSignUp(errors);
 
             // ok?
@@ -123,14 +128,14 @@ namespace QuicKE.Client
 
                 using (this.EnterBusy())
                 {
-                    var result = await proxy.RegisterAsync(this.FullName, this.PhoneNumber, this.Email, this.Password);
+                    var result = await proxy.RegisterAsync(FullName, PhoneNumber, Email, Password);
 
                     // ok?
                     if (!(result.HasErrors))
                     {
                         // show a message to say that a user has been created... (this isn't a helpful message, 
 
-                        await this.Host.ShowAlertAsync(string.Format("User {0} has been registered successfuly.", this.FullName));
+                        await this.Host.ShowAlertAsync(string.Format("User {0} has been registered successfuly.", FullName));
                         if (result.status == "success")
                         {
                             // save the username as the last used...
@@ -180,7 +185,7 @@ namespace QuicKE.Client
             if (string.IsNullOrEmpty(PhoneNumber))
                 errors.AddError("PhoneNumber is required.");
             // check the passwords...
-            if (!(string.IsNullOrEmpty(Password)) && this.Password != this.Confirm)
+            if (!(string.IsNullOrEmpty(Password)) && Password != Confirm)
                 errors.AddError("The passwords do not match.");
             if (Password.Length < 6)
                 errors.AddError("The passwords must be at least 6 characters.");
@@ -192,17 +197,53 @@ namespace QuicKE.Client
         {
             base.Activated(args);
             string LogonToken = null;
-            using (this.EnterBusy())
+            using (EnterBusy())
             {
+                LoadLocations();
                 LogonToken = await SettingItem.GetValueAsync("LogonToken");
             }
             if (!(string.IsNullOrEmpty(LogonToken)))
             {
                 // show the home page as already logged in...
-                this.Host.ShowView(typeof(IHomePageViewModel));
+                Host.ShowView(typeof(IHomePageViewModel));
             }
             
 
         }
+        async void LoadLocations()
+        {
+            var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
+            // call...
+            //using (EnterBusy())
+            //{
+            //    var result = await proxy.GetLocationsAsync();
+            //    if (!(result.HasErrors))
+            //    {
+            //        foreach (var item in result.Locations);
+            //            Locations.Add(item);
+            //    }
+            //    else
+            //        errors.CopyFrom(result);
+            //}
+
+
+            // errors?
+            if (errors.HasErrors)
+                await Host.ShowAlertAsync(errors);
+            List<LocationItem> locs = new List<LocationItem>()
+            {
+                new LocationItem {id = 1,name = "Kilimani" },
+                new LocationItem {id = 2,name = "Milimani" },
+                new LocationItem {id = 3,name = "Yaya" },
+                new LocationItem {id = 4,name = "Riverside" },
+                new LocationItem {id = 5,name = "Westlands" },
+                new LocationItem {id = 6,name = "Community" },
+            };
+
+            foreach (var item in locs)
+                Locations.Add(item.name);
+        }
+
+
     }
 }

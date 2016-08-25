@@ -7,14 +7,8 @@ namespace QuicKE.Client
 {
     public interface ILocationPageViewModel : IViewModel
     {
-        ICommand SubmitCommand
-        {
-            get;
-        }
-        ObservableCollection<string> Locations
-        {
-            get;
-        }
+        ICommand SubmitCommand{ get;}
+        ObservableCollection<string> Locations{ get;}
         string SelectedLocation { get;}
     }
 }

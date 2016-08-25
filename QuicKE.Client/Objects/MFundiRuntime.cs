@@ -28,7 +28,11 @@ namespace QuicKE.Client
 
 
         // starts the application/sets up state...
-        public static async void Start(string module)
+        public static async 
+
+        // starts the application/sets up state...
+        Task
+Start(string module)
         {
             Module = module;
 

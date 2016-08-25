@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace QuicKE.Client
@@ -20,10 +16,14 @@ namespace QuicKE.Client
         string PhoneNumber { get; set; }
 
         ICommand SignUpCommand{get;}
+
         ICommand SignInCommand { get; }
 
-        //ICommand Verify { get; }
+        List<string> Locations { get; set; }
 
-        
+        string SelectedLocation { get; set; }
+
+
+
     }
 }

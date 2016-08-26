@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+
 
 namespace QuicKE.Client
 {
@@ -11,6 +9,8 @@ namespace QuicKE.Client
     {
         Task ShowAlertAsync(ErrorBucket errors);
         Task ShowAlertAsync(string message);
+
+       
         // shows a view from a given view-model...
         void ShowView(Type viewModelInterfaceType, object parameter = null);
     }

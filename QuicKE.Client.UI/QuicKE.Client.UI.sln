@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuicKE.Client.UI", "QuicKE.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuicKE.Client", "..\QuicKE.Client\QuicKE.Client.csproj", "{A92DDFC6-E094-4EC8-B335-AEB02ED90AF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuicKE.UnitTest", "..\QuicKE.UnitTest\QuicKE.UnitTest.csproj", "{CA566A9E-5BCA-414A-BC8D-0BA02AAB811E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuicKE.Client.Tests", "..\QuicKE.Client.Tests\QuicKE.Client.Tests.csproj", "{CA566A9E-5BCA-414A-BC8D-0BA02AAB811E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

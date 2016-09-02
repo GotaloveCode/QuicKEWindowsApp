@@ -13,8 +13,8 @@ namespace QuicKE.Client
         // defines the username settings key...
         
         public ICommand SubmitCommand { get; private set; }
-        public ObservableCollection<string> Locations { get; set; }
-        public string SelectedLocation { get; set; }
+        public ObservableCollection<string> Locations { get { return GetValue<ObservableCollection<string>>(); } set { SetValue(value); } }
+        public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
         ErrorBucket errors = new ErrorBucket();
 
         public LocationPageViewModel()
@@ -65,49 +65,49 @@ namespace QuicKE.Client
 
        
 
-        public override void Activated(object args)
+        public async override void Activated(object args)
         {
             base.Activated(args);
 
-            LoadLocations();
+            //LoadLocations();
 
-            //// get a handler...
-            //var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
-            //// call...
-            //using (EnterBusy())
-            //{
-            //    var result = await proxy.GetLocationsAsync();
-            //    if (!(result.HasErrors))
-            //    {
-            //        foreach (var item in result.Locations)
-            //            Locations.Add(item);                    
-            //    }
-            //    else
-            //    {
-            //        errors.CopyFrom(result);
-            //        await Host.ShowAlertAsync(errors);
-            //    }
-
-            //}
-
-
-        }
-
-          void LoadLocations()
-        {
-            List<LocationItem> locs = new List<LocationItem>()
+            // get a handler...
+            var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
+            // call...
+            using (EnterBusy())
             {
-                new LocationItem {id = 1,name = "Kilimani" },
-                new LocationItem {id = 2,name = "Milimani" },
-                new LocationItem {id = 3,name = "Yaya" },
-                new LocationItem {id = 4,name = "Riverside" },
-                new LocationItem {id = 5,name = "Westlands" },
-                new LocationItem {id = 6,name = "Community" },
-            };
+                var result = await proxy.GetLocationsAsync();
+                if (!(result.HasErrors))
+                {
+                    foreach (var item in result.Locations)
+                        Locations.Add(item.name);
+                }
+                else
+                {
+                    errors.CopyFrom(result);
+                    await Host.ShowAlertAsync(errors);
+                }
 
-            foreach (var item in locs)
-                Locations.Add(item.name);
+            }
+
+
         }
+
+        //  void LoadLocations()
+        //{
+        //    List<LocationItem> locs = new List<LocationItem>()
+        //    {
+        //        new LocationItem {id = 1,name = "Kilimani" },
+        //        new LocationItem {id = 2,name = "Milimani" },
+        //        new LocationItem {id = 3,name = "Yaya" },
+        //        new LocationItem {id = 4,name = "Riverside" },
+        //        new LocationItem {id = 5,name = "Westlands" },
+        //        new LocationItem {id = 6,name = "Community" },
+        //    };
+
+        //    foreach (var item in locs)
+        //        Locations.Add(item.name);
+        //}
 
     }
 }

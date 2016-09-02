@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
 using Windows.Storage;
@@ -11,23 +11,23 @@ namespace QuicKE.Client
     public class RegisterPageViewModel : ViewModel, IRegisterPageViewModel
     {
 
-        public ICommand SignUpCommand { get { return this.GetValue<ICommand>(); } private set { this.SetValue(value); } }
-        public ICommand SignInCommand { get { return this.GetValue<ICommand>(); } private set { this.SetValue(value); } }
-        public List<string> Locations { get; set; }
-        public string SelectedLocation { get; set; }
+        public ICommand SignUpCommand { get; private set; }
+        public ICommand SignInCommand { get; private set ; }
+        public ICommand VerifyCommand { get; private set; }
+        
+        public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
+        public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
         ErrorBucket errors = new ErrorBucket();
 
-        internal const string LastPhonenumberKey = "LastPhoneNumber";
-        internal const string LastEmailKey = "LastEmail";
-        internal const string LogonTokenKey = "LogonToken";
-        internal const string LastUserPhoneNumberKey = "LastUserPhoneNumber";
-
         public bool IsSelected { get { return GetValue<bool>(); } set { SetValue(value); } }
-        public string FullName { get { return GetValue<string>(); } set { SetValue(value); } }
-        public string Email { get { return GetValue<string>(); } set { SetValue(value); } }
+        public string FullName { get { return GetValue<string>(); } set { SetValue(value); } }        
         public string Password { get { return GetValue<string>(); } set { SetValue(value); } }
         public string Confirm { get { return GetValue<string>(); } set { SetValue(value); } }
-        public string PhoneNumber { get { return GetValue<string>(); } set { SetValue(value); } }
+        public string PhoneNumber { get { return phoneNumber; } set { phoneNumber = value; } }
+        private string phoneNumber = "254";
+        public string Code { get { return GetValue<string>(); } set { SetValue(value); } }
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        
 
         public RegisterPageViewModel()
         {
@@ -36,14 +36,46 @@ namespace QuicKE.Client
         public override void Initialize(IViewModelHost host)
         {
             base.Initialize(host);
-
+            
             Locations = new List<string>();
             SignUpCommand = new DelegateCommand((args) => DoRegister(args as CommandExecutionContext));
             SignInCommand = new DelegateCommand((args) => DoLogin(args as CommandExecutionContext));
+            VerifyCommand = new DelegateCommand((args) => Verify(args as CommandExecutionContext));
             IsSelected = true;         
         }
 
+        //verify number
+        private async void Verify(CommandExecutionContext context)
+        {
+            if (context == null)
+                context = new CommandExecutionContext();
 
+            if (string.IsNullOrEmpty(PhoneNumber) || PhoneNumber.Length < 12)
+                await Host.ShowAlertAsync("Enter valid phone number");
+            else
+            {
+                var proxy = TinyIoCContainer.Current.Resolve<IVerifyServiceProxy>();
+
+
+                using (EnterBusy())
+                {
+                    var result = await proxy.VerifyAsync(PhoneNumber);
+
+                    // ok?
+                    if (!(result.HasErrors))
+                    {
+                        if (result.Status != "success")
+                            errors.CopyFrom(result);
+                    }
+                    else
+                        errors.CopyFrom(result);
+
+                    if (errors.HasErrors)
+                        await Host.ShowAlertAsync(errors.GetErrorsAsString());
+                }
+            }
+            
+        }
 
         private async void DoLogin(CommandExecutionContext context)
         {
@@ -60,54 +92,37 @@ namespace QuicKE.Client
                 // get a handler...
                 var proxy = TinyIoCContainer.Current.Resolve<ISignInServiceProxy>();
                 // call...
-                using (this.EnterBusy())
+                using (EnterBusy())
                 {
-                    var result = await proxy.SignInAsync(Email, Password);
+                    await Host.ToggleProgressBar(true, "Signing In ...");
+                    var result = await proxy.SignInAsync(PhoneNumber, Password);
                     if (!(result.HasErrors))
                     {
-                        ApplicationData.Current.LocalSettings.Values["LoggedIn"] = "True";
-                        // check if user has database by checking if username matches LastUserPhoneNumber or LastEmail key in setting db
-                        string LastUserPhoneNumber = await SettingItem.GetValueAsync("LastUserPhoneNumber");
-                        string LastEmail = await SettingItem.GetValueAsync("LastEmail");
+                        localSettings.Values["LoggedIn"] = "True";
+                        var values = ApplicationData.Current.LocalSettings.Values;
+                        
+                       //assign new token to global class
                         MFundiRuntime.LogonToken = result.token;
+
                         // save the logontoken
-                        await SettingItem.SetValueAsync("LogonToken", result.token);
-                        //not last logged user
-                        if (!Email.Equals(LastUserPhoneNumber, StringComparison.OrdinalIgnoreCase) || !Email.Equals(LastEmail, StringComparison.OrdinalIgnoreCase))
+                        localSettings.Values["LogonToken"] = result.token;
+                        if (!values.ContainsKey("Location"))
                         {
-                            //call IGetMyProfileServiceProxy get userdetails  
-                            var proxy2 = TinyIoCContainer.Current.Resolve<IGetMyProfileServiceProxy>();
-                            var user = await proxy2.GetProfileAsync();
-                            if (!(user.HasErrors))
-                            {
-                                MFundiRuntime.UserDatabaseConnectionString = string.Format("MFundi-user-{0}.db", user.Profile.phone);
-                                var conn = MFundiRuntime.GetUserDatabase();
-                                await conn.CreateTableAsync<UserItem>();
-                                await conn.CreateTableAsync<ProfileItem>();
-                                await conn.CreateTableAsync<TicketItem>();
-                                await UserItem.SetValueAsync("token", result.token);
-                                await UserItem.SetValueAsync("phonenumber", user.Profile.phone);
-                                await UserItem.SetValueAsync("email", user.Profile.email);
-                                await UserItem.SetValueAsync("fullname", user.Profile.name);
-                                await UserItem.SetValueAsync("password", Password);
-                                var conn1 = MFundiRuntime.GetSystemDatabase();
-                                await SettingItem.SetValueAsync("LastUserPhoneNumber", user.Profile.phone);
-                                await SettingItem.SetValueAsync("LastEmail", user.Profile.email);
-                                
-
-                            }
+                            await Host.ShowAlertAsync("Please set your Location");
+                            Host.ShowView(typeof(IUpdateLocationPageViewModel));
                         }
-
+                        else
                         // show the home page...
-                        this.Host.ShowView(typeof(IHomePageViewModel));
+                        Host.ShowView(typeof(IHomePageViewModel));
                     }
                     else
                         errors.CopyFrom(result);
+                   await Host.ToggleProgressBar(false);
                 }
             }
             // errors?
             if (errors.HasErrors)
-                await this.Host.ShowAlertAsync(errors);
+                await Host.ShowAlertAsync(errors);
         }
 
         private async void DoRegister(CommandExecutionContext context)
@@ -126,28 +141,32 @@ namespace QuicKE.Client
                 // get a handler...
                 var proxy = TinyIoCContainer.Current.Resolve<IRegisterServiceProxy>();
 
-                using (this.EnterBusy())
+                using (EnterBusy())
                 {
-                    var result = await proxy.RegisterAsync(FullName, PhoneNumber, Email, Password);
+                    var result = await proxy.RegisterAsync(FullName, PhoneNumber, Password, SelectedLocation, Code);
 
                     // ok?
                     if (!(result.HasErrors))
-                    {
-                        // show a message to say that a user has been created... (this isn't a helpful message, 
-
-                        await this.Host.ShowAlertAsync(string.Format("User {0} has been registered successfuly.", FullName));
+                    {                                                
                         if (result.status == "success")
                         {
-                            // save the username as the last used...
-                            await SettingItem.SetValueAsync("LogonToken", result.token);
-                            // logon... pass through the username as each user gets their own database...
-                            await MFundiRuntime.SignUpAsync(FullName, PhoneNumber, Email, Password, result.token);
-                            this.Host.ShowView(typeof(IHomePageViewModel));
+                            //assign new token to global class
+                            MFundiRuntime.LogonToken = result.token;
+
+                            // save logontoken
+                            localSettings.Values["LogonToken"] = result.token;
+
+                            //save Location                        
+                            localSettings.Values["Location"] = SelectedLocation;
+
+                            await Host.ShowAlertAsync(string.Format("{0} your account has been registered successfuly.", FullName));
+                            
+                            Host.ShowView(typeof(IHomePageViewModel));
                         }
                         else
                         {
                             errors.AddError(result.status);
-                            await this.Host.ShowAlertAsync(errors);
+                            await Host.ShowAlertAsync(errors);
                         }
 
                     }
@@ -159,14 +178,15 @@ namespace QuicKE.Client
 
             // errors?
             if (errors.HasErrors)
-                await this.Host.ShowAlertAsync(errors);
+                await Host.ShowAlertAsync(errors);
         }
 
         private void Validate(ErrorBucket errors)
         {
             // do basic data presence validation...
-            if (string.IsNullOrEmpty(Email))
-                errors.AddError("Email is required.");
+            if (string.IsNullOrEmpty(PhoneNumber))
+                errors.AddError("PhoneNumber is required.");
+
             if (string.IsNullOrEmpty(Password) || Password.Length < 6)
                 errors.AddError("Password must be at least 6 characters.");
         }
@@ -176,72 +196,53 @@ namespace QuicKE.Client
             // do basic data presence validation...
             if (string.IsNullOrEmpty(FullName))
                 errors.AddError("FullName is required.");
-            if (string.IsNullOrEmpty(Email))
-                errors.AddError("Email required.");
             if (string.IsNullOrEmpty(Password))
                 errors.AddError("Password is required.");
             if (string.IsNullOrEmpty(Confirm))
-                errors.AddError("Confirm password is required.");
-            if (string.IsNullOrEmpty(PhoneNumber))
-                errors.AddError("PhoneNumber is required.");
+                errors.AddError("Confirm password is required.");            
             // check the passwords...
             if (!(string.IsNullOrEmpty(Password)) && Password != Confirm)
                 errors.AddError("The passwords do not match.");
-            if (Password.Length < 6)
+            if ( Password.Length < 6)
                 errors.AddError("The passwords must be at least 6 characters.");
+            if (string.IsNullOrEmpty(PhoneNumber))
+                errors.AddError("PhoneNumber is required.");
             if ((string.IsNullOrEmpty(PhoneNumber)) && PhoneNumber.Length < 12)
                 errors.AddError("Invalid phone number.");
+            if (string.IsNullOrEmpty(Code))
+                errors.AddError("Verification Code is required.");
         }
 
         public async override void Activated(object args)
         {
             base.Activated(args);
-            string LogonToken = null;
+
             using (EnterBusy())
             {
-                LoadLocations();
-                LogonToken = await SettingItem.GetValueAsync("LogonToken");
+               await LoadLocations();                
             }
-            if (!(string.IsNullOrEmpty(LogonToken)))
-            {
-                // show the home page as already logged in...
-                Host.ShowView(typeof(IHomePageViewModel));
-            }
-            
-
         }
-        async void LoadLocations()
+
+        async Task LoadLocations()
         {
             var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
             // call...
-            //using (EnterBusy())
-            //{
-            //    var result = await proxy.GetLocationsAsync();
-            //    if (!(result.HasErrors))
-            //    {
-            //        foreach (var item in result.Locations);
-            //            Locations.Add(item);
-            //    }
-            //    else
-            //        errors.CopyFrom(result);
-            //}
-
+            using (EnterBusy())
+            {
+                var result = await proxy.GetLocationsAsync();
+                if (!(result.HasErrors))
+                {
+                    foreach (var item in result.Locations) 
+                        Locations.Add(item.name);
+                }
+                else
+                    errors.CopyFrom(result);
+            }
 
             // errors?
             if (errors.HasErrors)
                 await Host.ShowAlertAsync(errors);
-            List<LocationItem> locs = new List<LocationItem>()
-            {
-                new LocationItem {id = 1,name = "Kilimani" },
-                new LocationItem {id = 2,name = "Milimani" },
-                new LocationItem {id = 3,name = "Yaya" },
-                new LocationItem {id = 4,name = "Riverside" },
-                new LocationItem {id = 5,name = "Westlands" },
-                new LocationItem {id = 6,name = "Community" },
-            };
-
-            foreach (var item in locs)
-                Locations.Add(item.name);
+           
         }
 
 

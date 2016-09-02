@@ -25,7 +25,22 @@ namespace QuicKE.Client.UI
             MessageDialog dialog = new MessageDialog(message != null ? message : string.Empty);
             return dialog.ShowAsync();
         }
-       
+
+        public static async Task ToggleProgressBar(bool toggle, string message = "")
+        {
+            var statusBar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+
+            if (toggle)
+            {
+                statusBar.ProgressIndicator.Text = message;
+                await statusBar.ProgressIndicator.ShowAsync();
+            }
+            else
+            {
+                await statusBar.ProgressIndicator.HideAsync();
+            }
+        }
+
 
         internal static void InitializeViewModel(this IViewModelHost host, IViewModel model = null)
         {

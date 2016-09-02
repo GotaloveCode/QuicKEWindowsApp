@@ -9,8 +9,8 @@ namespace QuicKE.Client
     {
         Task ShowAlertAsync(ErrorBucket errors);
         Task ShowAlertAsync(string message);
+        Task ToggleProgressBar(bool toggle, string message="");
 
-       
         // shows a view from a given view-model...
         void ShowView(Type viewModelInterfaceType, object parameter = null);
     }

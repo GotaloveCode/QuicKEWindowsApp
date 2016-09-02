@@ -6,6 +6,6 @@ namespace QuicKE.Client
 
     public interface IGetMaidsServiceProxy : IServiceProxy
     {
-        Task<GetProfileResult> GetProfileAsync();
+        Task<GetMaidResult> GetMaidAsync();
     }
 }

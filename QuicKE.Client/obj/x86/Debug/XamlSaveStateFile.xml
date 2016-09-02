@@ -1,6 +1,6 @@
 <XamlCompilerSaveState>
   <ReferenceAssemblyList>
     <ReferenceAssembly PathName="c:\program files (x86)\microsoft sdks\windowsphoneapp\v8.1\extensionsdks\microsoft.vclibs\12.0\references\commonconfiguration\neutral\platform.winmd" HashGuid="58b6b6d1-928e-9908-9804-eb460e5e101b" />
-    <ReferenceAssembly PathName="c:\users\marti\documents\visual studio 2013\projects\mfundi\mfundi.client.ui\packages\newtonsoft.json.8.0.3\lib\portable-net40+sl5+wp80+win8+wpa81\newtonsoft.json.dll" HashGuid="3aecfc80-bb25-aac6-14f1-4d0789a7f8fb" />
+    <ReferenceAssembly PathName="c:\users\marti\documents\visual studio 2015\projects\quicke\quicke.client\bin\x86\debug\newtonsoft.json.dll" HashGuid="424e6aa8-ba94-c678-e707-af9fe9838e1a" />
   </ReferenceAssemblyList>
 </XamlCompilerSaveState>

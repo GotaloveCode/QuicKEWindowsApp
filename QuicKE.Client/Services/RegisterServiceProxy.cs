@@ -1,8 +1,4 @@
-﻿using System;  
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.Data.Json;
 
 namespace QuicKE.Client
@@ -14,18 +10,19 @@ namespace QuicKE.Client
         {
         }
 
-        public async Task<RegisterResult> RegisterAsync(string fullname, string phone_number, string email, string password)
+        public async Task<RegisterResult> RegisterAsync(string fullname, string phone_number, string password, string location,string code)
         {
             // package up the request...
             JsonObject input = new JsonObject();
             input.Add("name", fullname);
-            input.Add("phone_number", phone_number);
-            input.Add("email", email);
+            input.Add("phone_number", phone_number);          
             input.Add("password", password);
+            input.Add("location", location);
+            input.Add("code", code);
 
 
             // call...
-            var executeResult = await this.PostAsync(input);
+            var executeResult = await PostAsync(input);
 
             // get the user ID from the server result...
             if (!(executeResult.HasErrors))

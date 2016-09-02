@@ -1,0 +1,126 @@
+﻿<local:QuicKEPage
+    x:Class="QuicKE.Client.UI.ViewMaidPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QuicKE.Client.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:OppositeBoolConverter x:Key="OppositeBoolConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ProgressBar VerticalAlignment="Top" IsIndeterminate="true" 
+			Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" >
+            <AppBarButton x:Name="backButton" Icon="Back" 
+				Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}" 
+				Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=Self}}"
+				AutomationProperties.Name="Back"
+				AutomationProperties.AutomationId="BackButton"
+				AutomationProperties.ItemType="Navigation Button"/>
+            <TextBlock Text="Back" Style="{StaticResource TitleTextBlockStyle}"  VerticalAlignment="Center" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Background="#F5F5F5">
+            <Image MaxHeight="100"
+				Stretch="Fill"
+				Source="ms-appx:///Assets/polygon-background.jpg" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+            <StackPanel Background="#FFE6E6E6">
+                <TextBlock Text="Call to speak with the expert" 
+					Style="{ThemeResource TitleTextBlockStyle}" 
+					Margin="15,5,0,5"                       
+					Foreground="{StaticResource MyBlue}"/>
+            </StackPanel>
+
+            <Grid Background="white" Margin="20,25,20,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{StaticResource MyBlue}"/>
+                        <Setter Property="FontSize" Value="{StaticResource TextStyleMediumFontSize}"/>
+                    </Style>
+                </Grid.Resources>
+                <Image Source="{Binding bitmap}" Width="150" Height="150" Margin="3,3,5,0" />
+                <StackPanel Grid.Column="1">
+                    <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
+                         <Run FontWeight="Bold">Name: </Run>
+                         <Run  Text="{Binding name}"/>
+                    </TextBlock>
+                    <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
+                         <Run FontWeight="Bold" Text="Age:"/>
+                         <Run  Text="{Binding age}"/>
+                    </TextBlock>
+                    <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
+                         <Run FontWeight="Bold" Text="ID No:"/>
+                         <Run  Text="{Binding id_number}"/>
+                    </TextBlock>
+                    <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
+                         <Run FontWeight="Bold" Text="Tag No:"/>
+                         <Run  Text="{Binding badge}"/>
+                    </TextBlock>
+                    
+                </StackPanel>
+                <Button Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource MyBlue}"
+                        Command="{Binding CallCommand}"
+                        Content="Call" HorizontalAlignment="Stretch" Margin="40,30" VerticalAlignment="Center"/>
+
+            </Grid>
+
+
+
+        </StackPanel>
+        <StackPanel Visibility="{Binding IsMonthly, Converter={StaticResource OppositeBoolConverter}}" Grid.Row="2" Background="{StaticResource MyOrange}">
+            <Button Background="{StaticResource MyOrange}" Content="Cancel"
+                    Command="{Binding CancelCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{StaticResource MyOrange}"/>
+
+        </StackPanel>
+        <Grid Visibility="{Binding IsMonthly, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="2" Background="#FFE6E6E6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Background="#FF72BB52" Margin="20,20,10,20">
+                <Button Command="{Binding HireCommand}"
+			Content="Hire this Expert"
+			IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
+			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" Margin="0" 
+                        Background="#FF72BB52" 
+                        BorderBrush="#FF72BB52" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Background="{StaticResource MyOrange}" Margin="10,20,20,20">
+                <Button                     
+			Command="{Binding RequestOtherCommand}"			
+			IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
+			Background="{StaticResource MyOrange}"
+			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" BorderBrush="{StaticResource MyOrange}" Margin="0">
+                    <StackPanel>
+                        <TextBlock Text="Request another"></TextBlock>
+                        <TextBlock>(
+                            <Run Text="{Binding Count}"></Run>
+                            left)
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+
+    </Grid>
+
+
+
+</local:QuicKEPage>

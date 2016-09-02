@@ -1,0 +1,54 @@
+﻿<local:QuicKEPage
+    x:Class="QuicKE.Client.UI.UpdateLocationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QuicKE.Client.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource MyBlue}"/>
+            <Setter Property="FontSize" Value="{StaticResource TextStyleLargeFontSize}"/>
+        </Style>
+        
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Background="{StaticResource MyBlue}"  >
+           
+            <ProgressBar VerticalAlignment="Top" IsIndeterminate="true" 
+                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.ColumnSpan="3"></ProgressBar>
+           
+            <Image Grid.Column="1" Source="ms-appx:///Assets/quicke - white flat.png" Height="80" Margin="0,10"/>
+           
+        </StackPanel>
+
+
+        <StackPanel Background="white" Grid.Row="1">
+            <StackPanel Background="#FFE6E6E6" Grid.Row="2">
+                <TextBlock Text="CHANGE ADDRESS" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10"/>               
+            </StackPanel>
+            <TextBlock Text="Select Location" Margin="20,20,0,0"/>
+            <ComboBox Margin="15,20,15,0" Background="{StaticResource MyBlue}"/>
+        </StackPanel>
+
+         <StackPanel Background="{StaticResource MyOrange}" Grid.Row="2" >
+            <Button Content="Submit" Command="{Binding SubmitCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{StaticResource MyOrange}" />
+
+        </StackPanel>
+            
+
+       
+
+
+
+    </Grid>
+
+
+</local:QuicKEPage>

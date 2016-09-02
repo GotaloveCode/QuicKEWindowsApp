@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.Data.Json;
 
-namespace QuicKE.Client.Services
+namespace QuicKE.Client
 {
     public class SignInServiceProxy : ServiceProxy, ISignInServiceProxy
     {

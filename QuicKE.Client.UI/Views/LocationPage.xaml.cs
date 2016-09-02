@@ -3,7 +3,7 @@
 namespace QuicKE.Client.UI
 {
     [ViewModel(typeof(ILocationPageViewModel))]
-    public sealed partial class LocationPage : MFundiPage
+    public sealed partial class LocationPage : QuicKEPage
     {
         public LocationPage()
         {

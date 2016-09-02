@@ -6,7 +6,6 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace QuicKE.Client.UI
 {
@@ -47,7 +46,7 @@ namespace QuicKE.Client.UI
             }
 #endif
             // start...
-            MFundiRuntime.Start("Client");
+             MFundiRuntime.Start("Client");
 
 
             Frame rootFrame = Window.Current.Content as Frame;
@@ -85,7 +84,7 @@ namespace QuicKE.Client.UI
                 }
                 else
                 {
-                    if (!rootFrame.Navigate(typeof(MaidsPage), e.Arguments))
+                    if (!rootFrame.Navigate(typeof(RegisterPage), e.Arguments))
                       throw new Exception("Failed to create initial page");
                 }
                

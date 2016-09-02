@@ -10,7 +10,7 @@ namespace QuicKE.Client
 {
     public abstract class NotificationWithTextBuilder<T> : NotificationBuilder<T>
     {
-        protected List<string> Texts { get; set; }
+        protected List<string> Texts { get;set; }
 
         protected NotificationWithTextBuilder(IEnumerable<string> texts)
         {

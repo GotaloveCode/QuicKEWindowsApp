@@ -6,22 +6,25 @@ namespace QuicKE.Client
     // exposes the map of public binding properties on RegisterPage's view-model...
     public interface IRegisterPageViewModel : IViewModel
     {
-        string FullName{get;set;}
+        string FullName { get; }
 
-        string Email{get;set;}
+        string Code { get; }
 
-        string Password { get; set; }
+        string Password { get; }
 
-        string Confirm {get;set;}
-        string PhoneNumber { get; set; }
+        string Confirm { get; }
 
-        ICommand SignUpCommand{get;}
+        string PhoneNumber { get; }
+
+        ICommand SignUpCommand { get; }
 
         ICommand SignInCommand { get; }
 
-        List<string> Locations { get; set; }
+        ICommand VerifyCommand { get; }        
 
-        string SelectedLocation { get; set; }
+        List<string> Locations { get; }
+
+        string SelectedLocation { get; }
 
 
 

@@ -9,7 +9,7 @@ namespace QuicKE.Client
 {
     public class DelegateCommand : ICommand
     {
-        private Action<object> Handler { get; set; }
+        private Action<object> Handler {get;set; }
 
         public event EventHandler CanExecuteChanged = null;
 

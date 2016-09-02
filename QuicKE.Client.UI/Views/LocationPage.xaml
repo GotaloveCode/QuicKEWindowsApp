@@ -1,4 +1,4 @@
-﻿<local:MFundiPage
+﻿<local:QuicKEPage
     x:Name="pageRoot"
     x:Class="QuicKE.Client.UI.LocationPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -34,4 +34,4 @@
             <Button Content="Submit" BorderBrush="{StaticResource MyOrange}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </StackPanel>
     </Grid>
-</local:MFundiPage>
+</local:QuicKEPage>

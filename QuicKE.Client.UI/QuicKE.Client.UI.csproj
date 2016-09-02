@@ -7,8 +7,8 @@
     <ProjectGuid>{B7E51A0D-A7FF-4704-B249-3694849B0A0E}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MFundi.Client.UI</RootNamespace>
-    <AssemblyName>MFundi.Client.UI</AssemblyName>
+    <RootNamespace>QuicKE.Client.UI</RootNamespace>
+    <AssemblyName>QuicKE.Client.UI</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
@@ -80,9 +80,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ApartmentPage.xaml.cs">
-      <DependentUpon>ApartmentPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -94,15 +91,17 @@
     <Compile Include="MaidsPage.xaml.cs">
       <DependentUpon>MaidsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Objects\MapView.cs" />
+    <Compile Include="Views\ChargePage.xaml.cs">
+      <DependentUpon>ChargePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EvaluationPage.xaml.cs">
+      <DependentUpon>EvaluationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LocationPage.xaml.cs">
       <DependentUpon>LocationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\QuikClean\ServicesPage.xaml.cs">
+    <Compile Include="Views\ServicesPage.xaml.cs">
       <DependentUpon>ServicesPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ExpertProfilePage.xaml.cs">
-      <DependentUpon>ExpertProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -111,21 +110,11 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="LocateUserPage.xaml.cs">
-      <DependentUpon>LocateUserPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Objects\FrameExtender.cs" />
     <Compile Include="Objects\FrameworkElementExtender.cs" />
-    <Compile Include="Objects\MapHelper.cs" />
-    <Compile Include="Objects\MvvmAwareControl.cs" />
-    <Compile Include="Objects\MyListView.cs" />
     <Compile Include="Objects\PageExtender.cs" />
-    <Compile Include="Objects\MFundiPage.cs" />
+    <Compile Include="Objects\QuicKEPage.cs" />
     <Compile Include="Objects\ViewModelAttribute.cs" />
-    <Compile Include="Objects\WebViewExtensions.cs" />
-    <Compile Include="Views\QuikClean\PaymentPage.xaml.cs">
-      <DependentUpon>PaymentPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -133,15 +122,14 @@
     <Compile Include="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\QuikClean\SelectExpertPage.xaml.cs">
-      <DependentUpon>SelectExpertPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\QuikClean\SummaryPage.xaml.cs">
+    <Compile Include="Views\SummaryPage.xaml.cs">
       <DependentUpon>SummaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TicketPage.xaml.cs">
-      <DependentUpon>TicketPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Views\UpdateLocationPage.xaml.cs">
+      <DependentUpon>UpdateLocationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMaidPage.xaml.cs">
+      <DependentUpon>ViewMaidPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -153,8 +141,8 @@
     <Content Include="Assets\bg.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\bulb.png" />
     <Content Include="Assets\day service.png" />
-    <Content Include="Assets\facebook.png" />
     <Content Include="Assets\homescreen.jpg" />
     <Content Include="Assets\img_history.png" />
     <Content Include="Assets\img_home_selected.png" />
@@ -165,9 +153,9 @@
     <Content Include="Assets\img_profile_selected.png" />
     <Content Include="Assets\img_ticket.png" />
     <Content Include="Assets\img_user_profile.png" />
-    <Content Include="Assets\Microsoft.png" />
     <Content Include="Assets\monthly service.png" />
     <Content Include="Assets\polygon-background.jpg" />
+    <Content Include="Assets\quicke - red flat.png" />
     <Content Include="Assets\quicke - white flat.png" />
     <Content Include="Assets\settings.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -188,10 +176,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ApartmentPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -200,27 +184,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ChargePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EvaluationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LocationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\QuikClean\ServicesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ExpertProfilePage.xaml">
+    <Page Include="Views\ServicesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="LocateUserPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\QuikClean\PaymentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -237,15 +217,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\QuikClean\SelectExpertPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\QuikClean\SummaryPage.xaml">
+    <Page Include="Views\SummaryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TicketPage.xaml">
+    <Page Include="Views\UpdateLocationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMaidPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -260,6 +240,15 @@
       <Project>{a92ddfc6-e094-4ec8-b335-aeb02ed90af4}</Project>
       <Name>QuicKE.Client</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Bratched.Tools.RatingControl_ua81, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\BratchedTools.RatingControl.1.0.0\lib\wpa81\Bratched.Tools.RatingControl_ua81.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

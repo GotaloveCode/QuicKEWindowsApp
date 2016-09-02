@@ -1,8 +1,8 @@
 ﻿
 namespace QuicKE.Client.UI
 {
-    [ViewModel(typeof(IMaidsPageViewModel))]
-    public sealed partial class MaidsPage : MFundiPage
+    
+    public sealed partial class MaidsPage : QuicKEPage
     {      
 
         public MaidsPage()

@@ -28,41 +28,5 @@ namespace QuicKE.Client.UI
             return null;
         }
 
-        internal static void OpenAppBarsOnPage(this FrameworkElement element, bool sticky)
-        {
-            // get...
-            var page = element.GetParentPage();
-            if (page == null)
-                return;
-
-            if (page.TopAppBar != null)
-            {
-                page.TopAppBar.IsSticky = sticky;
-                page.TopAppBar.IsOpen = true;
-            }
-            if (page.BottomAppBar != null)
-            {
-                page.BottomAppBar.IsSticky = sticky;
-                page.BottomAppBar.IsOpen = true;
-            }
-        }
-
-        internal static void HideAppBarsOnPage(this FrameworkElement element)
-        {
-            var page = element.GetParentPage();
-            if (page == null)
-                return;
-
-            if (page.TopAppBar != null)
-            {
-                page.TopAppBar.IsOpen = false;
-                page.TopAppBar.IsSticky = false;
-            }
-            if (page.BottomAppBar != null)
-            {
-                page.BottomAppBar.IsOpen = false;
-                page.BottomAppBar.IsSticky = false;
-            }
-        }
     }
 }

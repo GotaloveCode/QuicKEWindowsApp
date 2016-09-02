@@ -1,8 +1,8 @@
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\MFundi.Client.dll
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\MFundi.Client.pdb
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\MFundi.Client.pri
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\MFundi.Client.dll
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\MFundi.Client.pdb
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\QuicKE.Client.dll
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\QuicKE.Client.pdb
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\QuicKE.Client.pri
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\QuicKE.Client.dll
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\QuicKE.Client.pdb
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\priconfig.xml
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\priconfig.xml.intermediate
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\layout.resfiles
@@ -14,3 +14,4 @@ C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\AR
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\qualifiers.txt
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\qualifiers.txt.intermediate
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\MultipleQualifiersPerDimensionFound.txt
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\QuicKE.Client.csprojResolveAssemblyReference.cache

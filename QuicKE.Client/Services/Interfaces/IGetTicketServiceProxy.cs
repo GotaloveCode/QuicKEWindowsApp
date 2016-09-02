@@ -8,6 +8,6 @@ namespace QuicKE.Client
 {
     public interface IGetTicketServiceProxy : IServiceProxy
     {
-        Task<GetTicketsResult> GetTicketsAsync();
+        Task<RequestPaymentResult> GetTicketsAsync();
     }
 }

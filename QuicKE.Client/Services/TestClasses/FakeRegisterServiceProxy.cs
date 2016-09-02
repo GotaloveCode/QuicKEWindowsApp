@@ -4,7 +4,7 @@ namespace QuicKE.Client.Tests
 {
     public class FakeRegisterServiceProxy : IRegisterServiceProxy
     {
-        public Task<RegisterResult> RegisterAsync(string fullname, string phone_number, string email, string password)
+        public Task<RegisterResult> RegisterAsync(string fullname, string phone_number, string password,string location,string code)
         {
             if (phone_number == "254712704404")
                 return Task.FromResult<RegisterResult>(new RegisterResult("tokenrandom", "success"));

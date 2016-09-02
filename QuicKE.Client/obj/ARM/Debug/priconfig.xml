@@ -26,8 +26,8 @@
       <qualifier name="Theme" value="Dark" />
       <qualifier name="AlternateForm" value="" />
     </default>
-    <indexer-config type="RESW" convertDotsToSlashes="true" initialPath="MFundi.Client" />
-    <indexer-config type="RESJSON" initialPath="MFundi.Client" />
+    <indexer-config type="RESW" convertDotsToSlashes="true" initialPath="QuicKE.Client" />
+    <indexer-config type="RESJSON" initialPath="QuicKE.Client" />
     <indexer-config type="RESFILES" qualifierDelimiter="." />
   </index>
   <index root="\" startIndexAt="obj\ARM\Debug\pri.resfiles">

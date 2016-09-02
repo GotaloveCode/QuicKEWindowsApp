@@ -1,4 +1,4 @@
-﻿<local:MFundiPage
+﻿<local:QuicKEPage
     x:Name="pageRoot"
     x:Class="QuicKE.Client.UI.RegisterPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,7 +10,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <local:OppositeBoolConverter x:Key="OppositeBoolConverter"/>
+        
     </Page.Resources>
+    <ScrollViewer>
     <Grid x:Name="LayoutRoot" Background="White">
 
        <Grid.RowDefinitions>
@@ -30,13 +32,15 @@
         <StackPanel x:Name="TitlePanel" VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" >
             <ProgressBar VerticalAlignment="Top" IsIndeterminate="true"
                      Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
+            <TextBlock HorizontalAlignment="Center"
+                       Text="Sign Up to QuicKE" Style="{StaticResource TitleTextBlockStyle}" Margin="0,10"/>
 
         </StackPanel>
-        <StackPanel Grid.Row="1" Margin="0">
-           
-            
-		<!--<Grid>
+        
+            <StackPanel Grid.Row="1" Margin="0">
+
+
+                <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -57,55 +61,113 @@
                 </StackPanel>
 
             </Grid>-->
-            
-           
-            <TextBlock Text="Sign Up"
+                <Image Source="ms-appx:///Assets/quicke - red flat.png" Height="100" Margin="15,0"/>
+
+                <TextBlock Text="Sign Up"
                        Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"
                        HorizontalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" FontFamily="Segoe WP Semibold" FontWeight="Bold" Margin="0,10,0,5"/>
-            <StackPanel Margin="15,0">
-                <TextBox  HorizontalAlignment="Stretch" 
+                <StackPanel Margin="15,0">
+                    <TextBox  HorizontalAlignment="Stretch" 
                       Text="{Binding FullName, Mode=TwoWay}"
                       PlaceholderText="Full Name" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
                       Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
+                    <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}" 
+                        PlaceholderText="254" BorderBrush="{StaticResource MyBlue}" VerticalAlignment="Center" BorderThickness="1,0,1,1" 
+                          Margin="0"
+                      InputScope="TelephoneNumber"/>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBox  HorizontalAlignment="Stretch" 
+                      Text="{Binding Code, Mode=TwoWay}"
+                      PlaceholderText="Verification Code" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" VerticalAlignment="Bottom"/>
+                      
+                        <Button Grid.Column="1" Content="Verify" BorderThickness="0" HorizontalAlignment="Left" Foreground="{StaticResource MyBlue}"
+                             Command="{Binding VerifyCommand}" Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" VerticalAlignment="Center"/>
+                    </Grid>
 
-                <TextBox  HorizontalAlignment="Stretch" 
-                      Text="{Binding Email, Mode=TwoWay}"
-                      PlaceholderText="Email Address" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" />
 
-                <PasswordBox Password="{Binding Password, Mode=TwoWay}" 
-                HorizontalAlignment="Stretch" PlaceholderText="Password" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1" >
-                </PasswordBox>
-                <PasswordBox Password="{Binding Confirm, Mode=TwoWay}" 
+                    <PasswordBox Password="{Binding Password, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" PlaceholderText="Password" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" >
+                    </PasswordBox>
+                    <PasswordBox Password="{Binding Confirm, Mode=TwoWay}" 
                 HorizontalAlignment="Stretch" PlaceholderText="Confirm Password" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" RenderTransformOrigin="0.489,0.609"
                           Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
-                </PasswordBox>
-                <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}" Grid.Column ="1"
-                    PlaceholderText="Tel" BorderBrush="{StaticResource MyBlue}" VerticalAlignment="Center" BorderThickness="1,0,1,1" 
-                     Margin="0"
-                     Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
-                <ComboBox VerticalAlignment="Center" Width="Auto" Margin="0"
+                    </PasswordBox>
+                    
+                    <ComboBox MaxDropDownHeight="200"
+                    VerticalAlignment="Center" Width="Auto" Margin="0"
+                      ItemsSource="{Binding Locations}" Background="{StaticResource MyBlue}"
+                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" PlaceholderText="Choose your Location"
+                      SelectedItem="{Binding SelectedLocation,Mode=TwoWay}"  />
+
+                    <!--<Border BorderThickness="1,0,1,1" BorderBrush="{StaticResource MyBlue}">
+                    <AutoSuggestBox PlaceholderText="Enter your location" ItemsSource="{Binding Locations}" 
+                                    VerticalAlignment="Stretch"
+                                    SuggestionChosen=""
+                                     Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
+                    </Border>-->
+                    <!--<Button Content="Choose your Location" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource MyBlue}">
+                        <Button.Flyout>
+                            <Flyout>
+                                
+                                    <StackPanel HorizontalAlignment="Center" Margin="10" MaxHeight="400">
+                                        <ListBox VerticalAlignment="Center" Width="Auto" Margin="0"
                       ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Background="{StaticResource MyBlue}"
-                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" PlaceholderText="Choose your Location"/>
-                <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}"
+                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" AllowDrop="True" >
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate >
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding name }" TextWrapping="Wrap" />
+                                                        <TextBlock Text="{Binding id }" Visibility="Collapsed" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </StackPanel>
+                                
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>-->
+
+                    <!--<ListBox VerticalAlignment="Center" Width="Auto" Margin="0"
+                      ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Background="{StaticResource MyBlue}"
+                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" AllowDrop="True" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate >
+                            <StackPanel>
+                                <TextBlock Text="{Binding name }" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding id }" Visibility="Collapsed" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>-->
+                    <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}"
                 Background="{StaticResource MyBlue}"    
                 Foreground="{StaticResource MyBlue}"                      
                 Content="Already have an account?" 
                       Margin="0" FontSize="14" FontFamily="Segoe WP Semibold" FontWeight="Bold"/>
 
-                
-            </StackPanel>
-            <Button Background="{StaticResource MyBlue}"
+
+                </StackPanel>
+                <Button Background="{StaticResource MyBlue}"
                     Content="Sign In"
                     Foreground="white"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Stretch"
                     Command="{Binding SignInCommand}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
+                    Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Margin="0,15,0,0" 
                     BorderBrush="{StaticResource MyBlue}"/>
-            <HyperlinkButton HorizontalAlignment="Center"
-                Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,15,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0">Forgot Password?</HyperlinkButton>
-        </StackPanel>
+                <HyperlinkButton HorizontalAlignment="Center"
+                Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,15,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0"
+                                 Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">Forgot Password?</HyperlinkButton>
+            </StackPanel>
+        
         <Button Grid.Row="2"  
                  Command="{Binding SignUpCommand}"
                  HorizontalAlignment="Stretch" 
@@ -116,4 +178,5 @@
                  Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"
                  IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"/>
     </Grid>
-</local:MFundiPage>
+    </ScrollViewer>
+</local:QuicKEPage>

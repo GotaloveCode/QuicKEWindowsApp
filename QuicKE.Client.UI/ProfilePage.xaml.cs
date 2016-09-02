@@ -20,8 +20,8 @@ namespace QuicKE.Client.UI
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    [ViewModel(typeof(IProfilePageViewModel))]
-    public sealed partial class ProfilePage : MFundiPage
+   // [ViewModel(typeof(IProfilePageViewModel))]
+    public sealed partial class ProfilePage : QuicKEPage
     {
         public ProfilePage()
         {

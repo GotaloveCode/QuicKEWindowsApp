@@ -23,8 +23,7 @@ namespace QuicKE.Client
                 {
                     NativeId = (int)executeResult.Output["data"]["id"],
                     name = (string)executeResult.Output["data"]["name"],
-                    phone = (string)executeResult.Output["data"]["phone"],
-                    email = (string)executeResult.Output["data"]["email"],
+                    phone = (string)executeResult.Output["data"]["phone"],                    
                     user_type = (string)executeResult.Output["data"]["user_type"],
                     location = (string)executeResult.Output["data"]["location"],
                     photo = (string)executeResult.Output["data"]["photo"]

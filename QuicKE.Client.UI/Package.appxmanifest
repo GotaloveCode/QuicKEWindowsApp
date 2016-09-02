@@ -15,8 +15,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MFundi.Client.UI.App">
-      <m3:VisualElements DisplayName="QuicKE" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="MFundi.Client.UI" ForegroundText="light" BackgroundColor="transparent" ToastCapable="true">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="QuicKE .Client.UI.App">
+      <m3:VisualElements DisplayName="QuicKE" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="QuicKE Application allows users to find househelps at the convenience of their phones" ForegroundText="light" BackgroundColor="transparent" ToastCapable="true">
         <m3:DefaultTile Wide310x150Logo="Assets\WideLogo.png" Square71x71Logo="Assets\Square71x71Logo.png">
         </m3:DefaultTile>
         <m3:SplashScreen Image="Assets\SplashScreen.png" />
@@ -25,6 +25,5 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClientServer" />
-    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

@@ -10,7 +10,7 @@ namespace QuicKE.Client
     public class NavigateCommand<T> : ICommand
         where T : IViewModel
     {
-        private IViewModelHost Host { get; set; }
+        private IViewModelHost Host { get;set; }
 
         public event EventHandler CanExecuteChanged;
 

@@ -12,10 +12,10 @@ namespace QuicKE.Client
         // what we're trying to show...
         public int Number { get; private set; }
         public BadgeGlyph Glyph { get; private set; }
-        private bool HasGlyph { get; set; }
+        private bool HasGlyph { get;set; }
 
         // the engine used to update it...
-        private static BadgeUpdater Updater { get; set; }
+        private static BadgeUpdater Updater { get;set; }
 
         public BadgeNotificationBuilder(int number)
         {

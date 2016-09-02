@@ -12,13 +12,13 @@ namespace QuicKE.Client
     {
         // what we're trying to show...
         private ToastTemplateType _type;
-        private bool TypeSet { get; set; }
+        private bool TypeSet { get;set; }
 
         // the image to display...
-        public string ImageUri { get; set; }
+        public string ImageUri { get;set; }
 
         // the engine used to update it...
-        private static ToastNotifier Notifier { get; set; }
+        private static ToastNotifier Notifier { get;set; }
 
         public ToastNotificationBuilder(string text)
             : this(new string[] { text })

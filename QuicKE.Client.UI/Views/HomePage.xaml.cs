@@ -6,7 +6,7 @@ namespace QuicKE.Client.UI
 {
 
     [ViewModel(typeof(IHomePageViewModel))]
-    public sealed partial class HomePage : MFundiPage
+    public sealed partial class HomePage : QuicKEPage
     {
         public HomePage()
         {

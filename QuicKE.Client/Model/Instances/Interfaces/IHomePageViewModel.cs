@@ -2,19 +2,32 @@
 
 namespace QuicKE.Client
 {
-    public interface IHomePageViewModel:IViewModel
+    public interface IHomePageViewModel : IViewModel
     {
-         ICommand ProfileCommand
+        //ICommand ProfileCommand
+        //{
+        //    get;
+        //}
+
+        ICommand LogoutCommand { get; }
+
+        ICommand ViewDayServiceCommand
         {
             get;
         }
-
-         ICommand LogoutCommand { get; }
-         ICommand ViewHouseKeepingCommand
-         {
-             get;
-         }
-
-        ICommand ShowLocationCommand { get; }
+        ICommand ViewMonthlyServiceCommand
+        {
+            get;
+        }
+        ICommand ChangeLocationCommand { get; }
+        ICommand TaskDoneCommand
+        {
+            get;
+        }
+        int TicketId
+        {
+            get;
+        }
+        bool HasPendingTask { get; }
     }
 }

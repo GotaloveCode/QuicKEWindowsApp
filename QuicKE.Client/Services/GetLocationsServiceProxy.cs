@@ -8,22 +8,21 @@ namespace QuicKE.Client
     public class GetLocationsServiceProxy : ServiceProxy, IGetLocationsServiceProxy
     {
         public GetLocationsServiceProxy()
-            : base("estates?token=" + MFundiRuntime.LogonToken) //change this to an id with time
+            : base("estates") //change this to an id with time
         {
         }
         public async Task<GetLocationsResult> GetLocationsAsync()
-        {
-            ServiceProxy.Url = MFundiRuntime.ServiceUrlBase + "estates?token=" + MFundiRuntime.LogonToken;
+        {            
+            Url = MFundiRuntime.ServiceUrlBase + "estates";
             var executeResult = await this.GetAsync();
 
             // did it work?
             if (!(executeResult.HasErrors))
             {
 
-                List<LocationItem> locations = (List<LocationItem>)executeResult.Output["data"]
+                List<LocationItem> locations = executeResult.Output["data"]
                     .Select(x => new LocationItem
                     {
-                        id = (int)x["id"],
                         name = (string)x["name"]
                     }).ToList();
 

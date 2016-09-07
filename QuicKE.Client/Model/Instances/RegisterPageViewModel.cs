@@ -77,12 +77,13 @@ namespace QuicKE.Client
             
         }
 
+        //login
         private async void DoLogin(CommandExecutionContext context)
         {
-            // if we don't have a context, create one...
+
             if (context == null)
                 context = new CommandExecutionContext();
-            // validate...
+
             ErrorBucket errors = new ErrorBucket();
             Validate(errors);
 
@@ -95,10 +96,12 @@ namespace QuicKE.Client
                 using (EnterBusy())
                 {
                     await Host.ToggleProgressBar(true, "Signing In ...");
+
                     var result = await proxy.SignInAsync(PhoneNumber, Password);
+
                     if (!(result.HasErrors))
                     {
-                        localSettings.Values["LoggedIn"] = "True";
+                       
                         var values = ApplicationData.Current.LocalSettings.Values;
                         
                        //assign new token to global class
@@ -106,13 +109,8 @@ namespace QuicKE.Client
 
                         // save the logontoken
                         localSettings.Values["LogonToken"] = result.token;
-                        if (!values.ContainsKey("Location"))
-                        {
-                            await Host.ShowAlertAsync("Please set your Location");
-                            Host.ShowView(typeof(IUpdateLocationPageViewModel));
-                        }
-                        else
-                        // show the home page...
+
+                        // navigate to home page...
                         Host.ShowView(typeof(IHomePageViewModel));
                     }
                     else
@@ -141,8 +139,11 @@ namespace QuicKE.Client
                 // get a handler...
                 var proxy = TinyIoCContainer.Current.Resolve<IRegisterServiceProxy>();
 
+
                 using (EnterBusy())
                 {
+                    await Host.ToggleProgressBar(true, "Signing In...");
+
                     var result = await proxy.RegisterAsync(FullName, PhoneNumber, Password, SelectedLocation, Code);
 
                     // ok?
@@ -150,6 +151,8 @@ namespace QuicKE.Client
                     {                                                
                         if (result.status == "success")
                         {
+                            await Host.ToggleProgressBar(true, string.Format("{0} your account has been registered successfuly.", FullName));
+
                             //assign new token to global class
                             MFundiRuntime.LogonToken = result.token;
 
@@ -158,20 +161,29 @@ namespace QuicKE.Client
 
                             //save Location                        
                             localSettings.Values["Location"] = SelectedLocation;
+                            localSettings.Values["FullName"] = FullName;
+                            localSettings.Values["PhoneNumber"] = PhoneNumber;
 
-                            await Host.ShowAlertAsync(string.Format("{0} your account has been registered successfuly.", FullName));
-                            
+
+                            await Host.ToggleProgressBar(false);
+
                             Host.ShowView(typeof(IHomePageViewModel));
+
                         }
                         else
                         {
+                            await Host.ToggleProgressBar(false);
+
                             errors.AddError(result.status);
                             await Host.ShowAlertAsync(errors);
                         }
 
                     }
                     else
+                    {
                         errors.CopyFrom(result);
+                        await Host.ToggleProgressBar(false);
+                    }
                 }
 
             }
@@ -223,7 +235,7 @@ namespace QuicKE.Client
             }
         }
 
-        async Task LoadLocations()
+        private async Task LoadLocations()
         {
             var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
             // call...

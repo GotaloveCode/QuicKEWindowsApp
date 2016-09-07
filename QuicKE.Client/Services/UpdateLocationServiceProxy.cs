@@ -24,8 +24,9 @@ namespace QuicKE.Client
             if (!(executeResult.HasErrors))
             {
                 string status = (string)executeResult.Output["status"];
+                string message = (string)executeResult.Output["message"];
 
-                return new UpdateLocationResult(status);
+                return new UpdateLocationResult(status, message);
             }
             else
                 return new UpdateLocationResult(executeResult);

@@ -1,33 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Windows.Data.Json;
+using Windows.Storage;
 
 namespace QuicKE.Client.Services
 {
     public class TaskCompleteServiceProxy : ServiceProxy, ITaskCompleteServiceProxy
     {
         public TaskCompleteServiceProxy()
-            : base("")
+            : base(string.Format("expert/tickets/{0}/complete", ApplicationData.Current.LocalSettings.Values["TicketID"].ToString()))
         {
             
         }
 
-        public async Task<TaskCompleteResult> TaskCompleteAsync(int ticketid)
+        public async Task<TaskCompleteResult> TaskCompleteAsync()
         {
-            Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{id}/complete", ticketid);
-            
+            Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{0}/complete", ApplicationData.Current.LocalSettings.Values["TicketID"].ToString());
 
-            var executeResult = await GetAsync();
+            JsonObject input = new JsonObject();
+
+            var executeResult = await PostAsync(input);
 
 
             // get the user ID from the server result...
             if (!(executeResult.HasErrors))
             {
                 string status = (string)executeResult.Output["status"];
+                string message = (string)executeResult.Output["message"];
 
-                return new TaskCompleteResult(status);
+                return new TaskCompleteResult(status, message);
             }
             else
                 return new TaskCompleteResult(executeResult);

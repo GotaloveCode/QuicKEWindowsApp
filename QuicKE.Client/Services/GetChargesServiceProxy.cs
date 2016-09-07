@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Windows.Data.Json;
-using Newtonsoft.Json.Linq;
 
 namespace QuicKE.Client
 {
@@ -26,7 +21,7 @@ namespace QuicKE.Client
 
                 IEnumerable<ServiceItem> services = (List<ServiceItem>)executeResult.Output["data"]
                     .Select(x => new ServiceItem {
-                     NativeId = (int)x["id"],
+                     Id = (int)x["id"],
                      Name = (string)x["name"],
                      Cost = (string)x["cost"]
                     }).ToList(); 

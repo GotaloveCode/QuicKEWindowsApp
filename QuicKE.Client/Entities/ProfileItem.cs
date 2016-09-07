@@ -1,20 +1,10 @@
-﻿using Newtonsoft.Json;
-using SQLite;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using TinyIoC;
-
-namespace QuicKE.Client
+﻿namespace QuicKE.Client
 {
     public class ProfileItem
     {
-        [AutoIncrement(), PrimaryKey(),JsonIgnore]
-        public int id { get;set;}
-        [Unique, JsonProperty("id")]
-        public int NativeId { get;set;}
-        
+
+        public int id { get;set;}       
         public string name { get;set;}
-        [Unique]
         public string phone { get;set;}       
         public string user_type { get;set;}
         public string location { get;set;}

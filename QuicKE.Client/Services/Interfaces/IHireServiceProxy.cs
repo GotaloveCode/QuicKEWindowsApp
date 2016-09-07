@@ -5,6 +5,6 @@ namespace QuicKE.Client
 
     public interface IHireServiceProxy : IServiceProxy
     {
-        Task<HireResult> HireAsync(int ticketid);
+        Task<TaskCompleteResult> HireAsync(int ticketID);
     }
 }

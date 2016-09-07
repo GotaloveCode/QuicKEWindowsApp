@@ -9,11 +9,12 @@ namespace QuicKE.Client
         public ConfirmPaymentServiceProxy()
             : base("confirm-payment")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "confirm-payment";
         }
 
         public async Task<ConfirmPaymentResult> ConfirmPaymentAsync(string Code)
         {
+            Url = MFundiRuntime.ServiceUrlBase + "confirm-payment";
+
             JsonObject input = new JsonObject();
             input.Add("code", Code);
 

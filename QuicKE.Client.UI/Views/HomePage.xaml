@@ -25,9 +25,7 @@
             <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-            <ProgressBar VerticalAlignment="Top" IsIndeterminate="true" 
-                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.ColumnSpan="3"></ProgressBar>
-            <AppBarButton Icon="List"                           
+         <AppBarButton Icon="List"                           
                           Click="AppBarButton_Click">
                 <Button.Flyout>
                     <Flyout x:Name="MySettingsFlyOut" Placement="Left">
@@ -45,9 +43,9 @@
                             <StackPanel Grid.Row="1">
                                 <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                                     <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior EventName="PointerPressed">
-                                            <core:NavigateToPageAction TargetPage="MFundi.Client.UI.ProfilePage"/>
-                                        </core:EventTriggerBehavior>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.ProfilePage"/>
+                                        </core:EventTriggerBehavior>                                        
                                     </interactivity:Interaction.Behaviors>
                                     <Image Source="ms-appx:///Assets/img_profile_selected.png" Height="50" HorizontalAlignment="Left" Margin="15,0,30,0" />
                                     <TextBlock Text="Profile" 
@@ -58,10 +56,11 @@
                                 
                                 <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                                     <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior EventName="PointerPressed">
-                                            <core:InvokeCommandAction Command="{Binding ChangeLocationCommand}"/>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.UpdateLocationPage"/>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
+
                                     <Image Source="ms-appx:///Assets/img_location_pin.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
                                     <TextBlock Text="Change Location" 
                                                FontSize="{StaticResource TextStyleLargeFontSize}" 
@@ -70,7 +69,7 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,15">
                                     <interactivity:Interaction.Behaviors>
-                                        <core:EventTriggerBehavior EventName="PointerPressed">
+                                        <core:EventTriggerBehavior EventName="Tapped">
                                             <core:InvokeCommandAction Command="{Binding LogoutCommand}"/>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
@@ -88,12 +87,15 @@
                 </Button.Flyout>
             </AppBarButton>
             <Image Grid.Column="1" Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
-            <Image Grid.Column="2" Source="ms-appx:///Assets/bulb.png" Height="50" Margin="0,0,10,0">
+            <Image Grid.Column="2" 
+                   Visibility="{Binding HasPendingTask, Converter={StaticResource BooleanToVisibilityConverter}}"
+                   Source="ms-appx:///Assets/bulb.png" Height="50" Margin="0,0,10,0">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="PointerPressed">
-                        <core:InvokeCommandAction/>
+                        <core:InvokeCommandAction Command="{Binding TaskDoneCommand}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
+
 
             </Image>
         </Grid>

@@ -15,6 +15,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{76F1466A-8B6D-4E39-A767-685A06062A39};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ExpressionBlendVersion>12.0.60617.0</ExpressionBlendVersion>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -85,29 +87,17 @@
     </Compile>
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Common\CostConverter.cs" />
-    <Compile Include="Common\IMappablePointConverter.cs" />
     <Compile Include="Common\OppositeBoolConverter.cs" />
-    <Compile Include="MaidsPage.xaml.cs">
-      <DependentUpon>MaidsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ChargePage.xaml.cs">
       <DependentUpon>ChargePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EvaluationPage.xaml.cs">
       <DependentUpon>EvaluationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LocationPage.xaml.cs">
-      <DependentUpon>LocationPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ServicesPage.xaml.cs">
-      <DependentUpon>ServicesPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\NavigationHelper.cs" />
-    <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Objects\FrameExtender.cs" />
@@ -115,15 +105,12 @@
     <Compile Include="Objects\PageExtender.cs" />
     <Compile Include="Objects\QuicKEPage.cs" />
     <Compile Include="Objects\ViewModelAttribute.cs" />
-    <Compile Include="ProfilePage.xaml.cs">
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SummaryPage.xaml.cs">
-      <DependentUpon>SummaryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UpdateLocationPage.xaml.cs">
       <DependentUpon>UpdateLocationPage.xaml</DependentUpon>
@@ -138,6 +125,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BadgeLogo.scale-240.png" />
     <Content Include="Assets\bg.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -168,6 +156,8 @@
     <Content Include="Assets\Square71x71Logo.scale-240.png" />
     <Content Include="Assets\StoreLogo.scale-240.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
+    <None Include="Design\projectGuides.guides" />
+    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -176,14 +166,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Common\StandardStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MaidsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ChargePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -192,19 +174,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\LocationPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ServicesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\HomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,13 +183,13 @@
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
-    <Page Include="Views\RegisterPage.xaml">
+    <Page Include="Views\ProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SummaryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\RegisterPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UpdateLocationPage.xaml">
       <SubType>Designer</SubType>

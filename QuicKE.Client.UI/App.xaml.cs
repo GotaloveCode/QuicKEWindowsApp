@@ -9,28 +9,17 @@ using Windows.UI.Xaml.Controls;
 
 namespace QuicKE.Client.UI
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
     sealed partial class App : Application
     {
-        //private TransitionCollection transitions;
 
         /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
         public App()
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
             //this.Resuming += App_Resuming;
         }
-        //async void App_Resuming(object sender, object e)
-        //{
-        //    if (MFundiRuntime.HasLogonToken)
-        //        await MFundiRuntime.SetupNotificationChannelAsync();
-        //}
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used when the application is launched to open a specific file, to display
@@ -46,7 +35,7 @@ namespace QuicKE.Client.UI
             }
 #endif
             // start...
-             MFundiRuntime.Start("Client");
+            MFundiRuntime.Start("Client");
 
 
             Frame rootFrame = Window.Current.Content as Frame;
@@ -72,28 +61,29 @@ namespace QuicKE.Client.UI
 
             if (rootFrame.Content == null)
             {
+                var values = ApplicationData.Current.LocalSettings.Values;
                 // When the navigation stack isn't restored navigate to the home page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (ApplicationData.Current.LocalSettings.Values["LoggedIn"] != null &&
-                    ApplicationData.Current.LocalSettings.Values["LoggedIn"].ToString() == "True")
+
+                if (values.ContainsKey("LogonToken"))
                 {
-                        if (!rootFrame.Navigate(typeof(HomePage), e.Arguments))
-                            throw new Exception("Failed to create initial page");
+                    if (!rootFrame.Navigate(typeof(HomePage), e.Arguments))
+                        throw new Exception("Failed to create initial page");
 
                 }
                 else
                 {
                     if (!rootFrame.Navigate(typeof(RegisterPage), e.Arguments))
-                      throw new Exception("Failed to create initial page");
+                        throw new Exception("Failed to create initial page");
                 }
-               
+
             }
 
             // Ensure the current window is active
             Window.Current.Activate();
             // settings...
-            
+
         }
 
         /// <summary>
@@ -101,7 +91,7 @@ namespace QuicKE.Client.UI
         /// </summary>
         /// <param name="sender">The object where the handler is attached.</param>
         /// <param name="e">Details about the navigation event.</param>
-               /// <summary>
+        /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents
         /// of memory still intact.

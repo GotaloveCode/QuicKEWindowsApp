@@ -2,8 +2,9 @@
 {
     public class MaidItem 
     {
-       
+        public int ticketID { get; set; }
         public int id { get;set; }
+        public int remaining { get; set; }
         public string name { get;set; }
         public int age { get;set; }
         public string photo { get;set; }

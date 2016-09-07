@@ -2,80 +2,65 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.Storage;
 using Windows.UI.Popups;
 
 namespace QuicKE.Client
 {
     public class ChargePageViewModel : ViewModel, IChargePageViewModel
     {
-        
-        public ICommand BackCommand
-        {
-            get;private set;
-        }
+
 
         public string Cost { get { return GetValue<string>(); } set { SetValue(value); } }
-        
-        public string Status { get { return GetValue<string>(); } set { SetValue(value); } }
 
         public string Code { get { return GetValue<string>(); } set { SetValue(value); } }
 
-        public ICommand ProceedCommand
-        {
-            get; private set;
-        }
-
-        public ICommand MaidsCommand
-        {
-            get; private set;
-        }
+        public ICommand ProceedCommand { get; private set; }
 
         public string SummaryText { get { return GetValue<string>(); } set { SetValue(value); } }
 
         ErrorBucket errors = new ErrorBucket();
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
 
         public ChargePageViewModel()
         {
-
         }
 
         public override void Initialize(IViewModelHost host)
         {
             base.Initialize(host);
 
-            //Cost = "0";
-
             if (MFundiRuntime.ServiceTypeID == 1)
                 SummaryText = "A minimum standard fee will be charged on your account";
             else
                 SummaryText = "A minimum finder's fee will be charged on your account";
 
+            //prompt to pay and proceed to view maid
             ProceedCommand = new DelegateCommand((args) => Proceed(args as CommandExecutionContext));
-            MaidsCommand = new NavigateCommand<IViewMaidPageViewModel>(host);
-
 
         }
 
         public override async void Activated(object args)
         {
             base.Activated(args);
-            
+
             var proxy = TinyIoCContainer.Current.Resolve<IGetChargesServiceProxy>();
 
             using (EnterBusy())
             {
-                var result = await proxy.GetServicesAsync();            
+                var result = await proxy.GetServicesAsync();
 
                 if (!(result.HasErrors))
-                {                   
+                {
                     foreach (var item in result.Services)
                     {
-                        if(item.NativeId == MFundiRuntime.ServiceTypeID)
+                        if (item.Id == MFundiRuntime.ServiceTypeID)
                         {
-                            Cost = item.Cost.ToString();                           
+                            Cost = item.Cost.ToString();
                             return;
-                        }            
-                    }                         
+                        }
+                    }
                 }
                 else
                     errors.CopyFrom(result);
@@ -87,6 +72,7 @@ namespace QuicKE.Client
 
         }
 
+        //prompt to pay and proceed to view maid
         private async void Proceed(CommandExecutionContext context)
         {
             if (context == null)
@@ -94,7 +80,7 @@ namespace QuicKE.Client
 
             string message = string.Empty;
 
-            if (MFundiRuntime.ServiceTypeID ==2)
+            if (MFundiRuntime.ServiceTypeID == 2)
                 message = string.Format("A finders fee of KES {0} Will be charged from your MPESA to view the expert's full profile", Cost);
             else
                 message = string.Format("A Service charge of KES {0} Will be charged from your MPESA.Click below to proceed", Cost);
@@ -102,7 +88,7 @@ namespace QuicKE.Client
             MessageDialog dialog = new MessageDialog(message);
 
             dialog.Commands.Add(new UICommand("Cancel"));
-           
+
             dialog.Commands.Add(new UICommand("OK", async delegate (IUICommand command)
             {
                 await RequestPay();
@@ -114,58 +100,69 @@ namespace QuicKE.Client
         }
 
 
-        async Task RequestPay()
+        private async Task RequestPay()
         {
-            Status = "Requesting Payment..";
-            var proxy = TinyIoCContainer.Current.Resolve<IRequestPaymentServiceProxy>();           
-            
+            var proxy = TinyIoCContainer.Current.Resolve<IRequestPaymentServiceProxy>();
+
             using (EnterBusy())
             {
-                
+                await Host.ToggleProgressBar(true, "Requesting Payment ...");
+
                 var result = await proxy.RequestPaymentAsync(MFundiRuntime.ServiceTypeID);
-                
+
 
                 if (!(result.HasErrors))
                 {
                     Code = result.Data;
+                    //TODO remove after debug
+                    System.Diagnostics.Debug.WriteLine(Code);
                     if (!string.IsNullOrEmpty(Code))
                         await delay5();
                 }
                 else
+                {
                     errors.CopyFrom(result);
+                }
+
                 if (errors.HasErrors)
                     await Host.ShowAlertAsync(errors);
+
+                await Host.ToggleProgressBar(false);
+
             }
-            Status = string.Empty;
         }
 
-        //async Task delay15()
-        //{
-        //    await Task.Delay(15000);
-        //    await ConfirmPayment();
-        //}
-        async Task delay5()
+
+        private async Task delay5()
         {
+            //TODO remove after debug
+            System.Diagnostics.Debug.WriteLine("About to wait 5 seconds");
             await Task.Delay(5000);
             await ConfirmPayment();
         }
 
-        async Task ConfirmPayment()
+        //confirm mpesa received
+        private async Task ConfirmPayment()
         {
             var proxy = TinyIoCContainer.Current.Resolve<IConfirmPaymentServiceProxy>();
 
             using (EnterBusy())
             {
-                //Code = "R968FZWC";
+                Code = "925TDFUZ";
+                await Host.ToggleProgressBar(true, "Verifying Payment....");
+                //TODO remove after debug
+                System.Diagnostics.Debug.WriteLine("now about to verify payment");
+
                 var result = await proxy.ConfirmPaymentAsync(Code);
-                Status = "Verifying Payment..";
 
                 if (!(result.HasErrors))
                 {
+                    //TODO remove after debug
+                    System.Diagnostics.Debug.WriteLine("result returned Status: " + result.Status);
 
                     switch (result.Status)
                     {
-                        case  "canceled":
+                        case "canceled":
                             await Host.ShowAlertAsync("To proceed with transaction click 'Proceed to view Full profile'");
                             break;
                         case "error":
@@ -175,7 +172,8 @@ namespace QuicKE.Client
                             await delay5();
                             break;
                         case "success":
-                            await Host.ShowAlertAsync("We have received your payment.\n Kindy [proceed to view full profile");
+                            await Host.ToggleProgressBar(true, "We have received your payment.\n Kindy proceed to view full profile");
+                            localSettings.Values["Code"] = Code;
                             Host.ShowView(typeof(IViewMaidPageViewModel));
                             break;
                         default:
@@ -183,14 +181,19 @@ namespace QuicKE.Client
                     }
                 }
                 else
+                {
                     errors.CopyFrom(result);
+                }
+
                 if (errors.HasErrors)
                     await Host.ShowAlertAsync(errors);
+
+                await Host.ToggleProgressBar(false);
             }
-            Status = string.Empty;
         }
-    }
 
 
     }
+
+}
 

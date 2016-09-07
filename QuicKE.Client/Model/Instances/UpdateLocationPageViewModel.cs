@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.Storage;
 
-namespace QuicKE.Client.Model.Instances
+namespace QuicKE.Client
 {
-      // concrete implementation of the RegisterPage's view-model...
+    // concrete implementation of the RegisterPage's view-model...
     public class UpdateLocationPageViewModel : ViewModel, IUpdateLocationPageViewModel
     {
 
         public ICommand SubmitCommand { get; private set; }
-       
-
         public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
         ErrorBucket errors = new ErrorBucket();
@@ -28,8 +24,9 @@ namespace QuicKE.Client.Model.Instances
         public override void Initialize(IViewModelHost host)
         {
             base.Initialize(host);
-
-            Locations = new List<string>();
+             
+        //    Locations = new List<string>() { "Kenyatta Avenue", "Moi Avenue", "Tom Mboya Street", "Latema Road", "Mama Ngina Street", "Koinange Street",
+        //"Muindi Mbingu Street", "Taveta Street", "Kimathi Street", "Wabera Street", "Haile Selassie", "Mfangano Street","Harambee Avenue" };
             SubmitCommand = new DelegateCommand((args) => Submit(args as CommandExecutionContext));            
         }
 
@@ -43,19 +40,26 @@ namespace QuicKE.Client.Model.Instances
                 await Host.ShowAlertAsync("Select a Location");
             else
             {
-                var proxy = TinyIoCContainer.Current.Resolve<IVerifyServiceProxy>();
+                var proxy = TinyIoCContainer.Current.Resolve<IUpdateLocationServiceProxy>();
 
 
                 using (EnterBusy())
                 {
-                    var result = await proxy.VerifyAsync(SelectedLocation);
+                    var result = await proxy.UpdateLocationAsync(SelectedLocation);
 
                     // ok?
                     if (!(result.HasErrors))
                     {
                         if (result.Status != "success")
+                        {
                             errors.CopyFrom(result);
-                        await SettingItem.SetValueAsync("Location", SelectedLocation);
+                        }
+                        else
+                        {
+                            await Host.ShowAlertAsync(result.Message);
+                            ApplicationData.Current.LocalSettings.Values["Location"] = SelectedLocation;
+                        }
+                           
                     }
                     else
                         errors.CopyFrom(result);
@@ -79,15 +83,14 @@ namespace QuicKE.Client.Model.Instances
         public async override void Activated(object args)
         {
             base.Activated(args);
+
             using (EnterBusy())
             {
-              await LoadLocations();
-               
+                await LoadLocations();
             }
-     
         }
 
-        async Task LoadLocations()
+        public async Task LoadLocations()
         {
             var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
             // call...
@@ -96,6 +99,7 @@ namespace QuicKE.Client.Model.Instances
                 var result = await proxy.GetLocationsAsync();
                 if (!(result.HasErrors))
                 {
+                    Locations = new List<string>();
                     foreach (var item in result.Locations)
                         Locations.Add(item.name);
                 }
@@ -108,7 +112,6 @@ namespace QuicKE.Client.Model.Instances
                 await Host.ShowAlertAsync(errors);
 
         }
-
 
     }
 }

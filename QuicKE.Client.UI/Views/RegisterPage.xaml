@@ -30,38 +30,14 @@
         </Grid.Resources>
 
         <StackPanel x:Name="TitlePanel" VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" >
-            <ProgressBar VerticalAlignment="Top" IsIndeterminate="true"
-                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <TextBlock HorizontalAlignment="Center"
+             <TextBlock HorizontalAlignment="Center"
                        Text="Sign Up to QuicKE" Style="{StaticResource TitleTextBlockStyle}" Margin="0,10"/>
 
         </StackPanel>
         
             <StackPanel Grid.Row="1" Margin="0">
 
-
-                <!--<Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <StackPanel Margin="0,5,0,0">
-                    <Image Height="75"
-                          Source="ms-appx:///Assets/Microsoft.png" HorizontalAlignment="Center" />
-                    <TextBlock HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                               Text="Sign in via Windows Live Account" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" Foreground="#FF0E0E0E" />
-                </StackPanel>
-                <StackPanel Grid.Column="1" Margin="0,5,0,0">
-                    <Image Height="75" Source="ms-appx:///Assets/facebook.png" HorizontalAlignment="Center" />
-                    <TextBlock 
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Text="Connect Via Facebook" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" FontFamily="Segoe WP SemiLight" />
-                </StackPanel>
-
-            </Grid>-->
-                <Image Source="ms-appx:///Assets/quicke - red flat.png" Height="100" Margin="15,0"/>
+               <Image Source="ms-appx:///Assets/quicke - red flat.png" Height="100" Margin="15,0"/>
 
                 <TextBlock Text="Sign Up"
                        Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"

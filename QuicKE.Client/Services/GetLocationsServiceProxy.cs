@@ -10,10 +10,10 @@ namespace QuicKE.Client
         public GetLocationsServiceProxy()
             : base("estates") //change this to an id with time
         {
+            Url = MFundiRuntime.ServiceUrlBase + "estates";
         }
         public async Task<GetLocationsResult> GetLocationsAsync()
         {            
-            Url = MFundiRuntime.ServiceUrlBase + "estates";
             var executeResult = await this.GetAsync();
 
             // did it work?

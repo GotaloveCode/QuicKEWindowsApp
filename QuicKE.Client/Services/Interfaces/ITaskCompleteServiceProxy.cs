@@ -5,6 +5,6 @@ namespace QuicKE.Client
 
     public interface ITaskCompleteServiceProxy : IServiceProxy
     {
-        Task<TaskCompleteResult> TaskCompleteAsync(int ticketid);
+        Task<TaskCompleteResult> TaskCompleteAsync();
     }
 }

@@ -10,6 +10,7 @@ namespace QuicKE.Client
         public static string LogonToken { get; set; }
         internal static string Location { get; set; }
         public static int ServiceTypeID { get; set; }
+        public static string TicketID { get; set; }
 
 
         // defines the base URL of our services...

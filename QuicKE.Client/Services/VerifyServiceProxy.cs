@@ -19,7 +19,6 @@ namespace QuicKE.Client
             // call...
             var executeResult = await PostAsync(input);
 
-            // get the user ID from the server result...
             if (!(executeResult.HasErrors))
             {
                 string status = (string)executeResult.Output["status"];

@@ -84,7 +84,6 @@
     <Compile Include="Entities\ModelItem.cs" />
     <Compile Include="Entities\ProfileItem.cs" />
     <Compile Include="Entities\ServiceItem.cs" />
-    <Compile Include="Entities\WrappingModelItem.cs" />
     <Compile Include="Model\Base\CommandExecutionContext.cs" />
     <Compile Include="Model\Base\DelegateCommand.cs" />
     <Compile Include="Model\Base\IViewModel.cs" />
@@ -92,10 +91,18 @@
     <Compile Include="Model\Base\NavigateCommand.cs" />
     <Compile Include="Model\Instances\ChargePageViewModel.cs" />
     <Compile Include="Model\Instances\EvaluationPageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\IProfilePageViewModel.cs" />
+    <Compile Include="Model\Instances\Interfaces\ITaskCompletePageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\IViewMaidPageViewModel.cs" />
+    <Compile Include="Model\Instances\ProfilePageViewModel.cs" />
     <Compile Include="Model\Instances\UpdateLocationPageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\IUpdateLocationPageViewModel.cs" />
     <Compile Include="Services\ConfirmPaymentServiceProxy.cs" />
+    <Compile Include="Services\EvaluateServiceProxy.cs" />
+    <Compile Include="Services\GetMyProfileServiceProxy.cs" />
+    <Compile Include="Services\HireServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IEvaluateServiceProxy.cs" />
+    <Compile Include="Services\Interfaces\IGetMyProfileServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IHireServiceProxy.cs" />
     <Compile Include="Services\Interfaces\ITaskCompleteServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IUpdateLocationServiceProxy.cs" />
@@ -104,12 +111,8 @@
     <Compile Include="Model\Instances\ViewMaidPageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\IChargePageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\IEvaluationPageViewModel.cs" />
-    <Compile Include="Model\Instances\Interfaces\ILocationPageViewModel.cs" />
-    <Compile Include="Model\Instances\Interfaces\ISummaryPageViewModel.cs" />
-    <Compile Include="Model\Instances\LocationPageViewModel.cs" />
     <Compile Include="Model\Instances\HomePageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\IHomePageViewModel.cs" />
-    <Compile Include="Model\Instances\Interfaces\IServicesPageViewModel.cs" />
     <Compile Include="Model\Instances\Interfaces\IRegisterPageViewModel.cs" />
     <Compile Include="Model\Instances\RegisterPageViewModel.cs" />
     <Compile Include="Notifications\BadgeGlyph.cs" />
@@ -123,10 +126,8 @@
     <Compile Include="Objects\MFundiRuntime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Base\ViewModel.cs" />
-    <Compile Include="Services\errorhandlers\ErrorPOCO.cs" />
     <Compile Include="Services\GetLocationsServiceProxy.cs" />
     <Compile Include="Services\GetMaidsServiceProxy.cs" />
-    <Compile Include="Services\GetMyProfileServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IGetMonthlyMaidServiceProxy.cs" />
     <Compile Include="Services\RequestPaymentServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IRequestPaymentServiceProxy.cs" />
@@ -136,17 +137,16 @@
     <Compile Include="Services\Interfaces\ILogOutServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IVerifyServiceProxy.cs" />
     <Compile Include="Services\LogOutServiceProxy.cs" />
+    <Compile Include="Services\ServiceResults\EvaluateResult.cs" />
     <Compile Include="Services\ServiceResults\GetLocationsResult.cs" />
     <Compile Include="Services\ServiceResults\GetMaidResult.cs" />
     <Compile Include="Services\ServiceResults\GetProfileResult.cs" />
     <Compile Include="Services\ServiceResults\GetServicesResult.cs" />
     <Compile Include="Services\GetChargesServiceProxy.cs" />
-    <Compile Include="Services\ServiceResults\GetUserResult.cs" />
     <Compile Include="Services\Interfaces\IGetChargesServiceProxy.cs" />
     <Compile Include="Services\Interfaces\ISignInServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IRegisterServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IServiceProxy.cs" />
-    <Compile Include="Services\ServiceResults\HireResult.cs" />
     <Compile Include="Services\ServiceResults\SignInResult.cs" />
     <Compile Include="Services\ServiceResults\RegisterResult.cs" />
     <Compile Include="Services\RegisterServiceProxy.cs" />
@@ -161,27 +161,15 @@
     <Compile Include="Services\TaskCompleteServiceProxy.cs" />
     <Compile Include="Services\UpdateLocationServiceProxy.cs" />
     <Compile Include="Services\VerifyServiceProxy.cs" />
-    <Compile Include="SQLite.cs" />
-    <Compile Include="SQLiteAsync.cs" />
-    <Compile Include="Services\TestClasses\FakeRegisterServiceProxy.cs" />
     <Compile Include="TinyIoC.cs" />
     <Compile Include="TypeExtender.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <SDKReference Include="Microsoft.VCLibs, version=12.0">
-      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Phone</Name>
-    </SDKReference>
-    <SDKReference Include="SQLite.WP81, Version=3.13.0">
-      <Name>SQLite for Windows Phone 8.1</Name>
-    </SDKReference>
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\MFundi.Client.UI\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\QuicKE.Client.UI\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

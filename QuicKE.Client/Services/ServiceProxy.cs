@@ -16,8 +16,8 @@ namespace QuicKE.Client
         // the URL that the proxy connects to...
         public static string Url { get; set; }
 
-        internal const string jsonstr = "{\"status\":\"error\",\"error\":{\"code\":\"no_connection\",\"message\":\"No reliable internet connection\"}}";
         JObject output = new JObject();
+
         protected ServiceProxy(string handler)
         {
             Url = MFundiRuntime.ServiceUrlBase + handler;
@@ -49,17 +49,30 @@ namespace QuicKE.Client
             // some requests need a token...
             if (MFundiRuntime.HasLogonToken)
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MFundiRuntime.LogonToken);
-
+            //json response
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //no caching
+            client.DefaultRequestHeaders.IfModifiedSince = DateTimeOffset.Now;
 
             HttpResponseMessage response = await client.PostAsync(Url, content);
 
+            System.Diagnostics.Debug.WriteLine(Url);
+
+
             string outputJson = await response.Content.ReadAsStringAsync();
 
+            System.Diagnostics.Debug.WriteLine(outputJson);
+
+
+            output = JObject.Parse(outputJson);
+
             if (response.StatusCode == HttpStatusCode.OK)
-            {
-                output = JObject.Parse(outputJson);
+            {                
                 return new ServiceExecuteResult(output);
+            }
+            else if (response.StatusCode == HttpStatusCode.MethodNotAllowed)
+            {
+                return new ServiceExecuteResult(output, (string)output["message"]);
             }
             else
             {
@@ -99,18 +112,48 @@ namespace QuicKE.Client
 
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
+            //no caching
+            client.DefaultRequestHeaders.IfModifiedSince = DateTimeOffset.Now;
+
             HttpResponseMessage response = await client.GetAsync(Url);
+
+            System.Diagnostics.Debug.WriteLine(Url);
 
             string outputJson = await response.Content.ReadAsStringAsync();
 
+            System.Diagnostics.Debug.WriteLine( outputJson);
+
+            output = JObject.Parse(outputJson);
+
+            string error = "";
+
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                output = JObject.Parse(outputJson);
-                return new ServiceExecuteResult(output);
+                if ((string)output["status"] == "error")
+                {
+                        if (output["error"]["message"] is JArray)
+                        {
+                            List<string> errors = output["error"]["message"].Select(jv => (string)jv).ToList();
+                            return new ServiceExecuteResult(output, errors);
+                        }
+                        else
+                        {
+                            return new ServiceExecuteResult(output, (string)output["error"]["message"]);
+                        }
+
+                }
+                else
+                {
+                    return new ServiceExecuteResult(output);
+                }
+            }
+            else if(response.StatusCode == HttpStatusCode.MethodNotAllowed)
+            {
+                error = (string)output["message"];
+                return new ServiceExecuteResult(output, error);
             }
             else
             {
-                string error = "";
 
                 JToken jtoken = output["error"];
 
@@ -132,6 +175,9 @@ namespace QuicKE.Client
                 
             }
         }
+
+
+
     }
 
 }

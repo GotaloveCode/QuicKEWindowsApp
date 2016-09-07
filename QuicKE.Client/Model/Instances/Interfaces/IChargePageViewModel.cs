@@ -4,18 +4,14 @@ namespace QuicKE.Client
 {
     public interface IChargePageViewModel : IViewModel
     {
-        ICommand ProceedCommand
-        {
-            get;
-        }
+        ICommand ProceedCommand{get;}
 
-        ICommand BackCommand { get; }
+        string Cost {get;}
 
-        string Cost
-        {
-            get;
-        }
-       
-        
+        string Code {get;}
+
+        string SummaryText { get; }
+
+
     }
 }

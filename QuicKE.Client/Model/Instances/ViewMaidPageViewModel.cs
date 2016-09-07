@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace QuicKE.Client
@@ -13,17 +14,19 @@ namespace QuicKE.Client
         public ICommand CallCommand { get; private set; }
         public ICommand CancelCommand { get; private set; }
         public ICommand RequestOtherCommand { get; private set; }
-        public string name { get { return GetValue<string>(); } set { SetValue(value); } }
+
+        public int ticketID { get { return GetValue<int>(); } set { SetValue(value); } }
         public int id { get { return GetValue<int>(); } set { SetValue(value); } }
+        public string name { get { return GetValue<string>(); } set { SetValue(value); } }
         public string age { get { return GetValue<string>(); } set { SetValue(value); } }
         public string id_number { get { return GetValue<string>(); } set { SetValue(value); } }
         public string badge { get { return GetValue<string>(); } set { SetValue(value); } }
         public string phone { get { return GetValue<string>(); } set { SetValue(value); } }
-       
-        public bool IsMonthly { get; set; }
         public BitmapImage bitmap { get { return GetValue<BitmapImage>(); } set { SetValue(value); } }
+        public string Code { get { return GetValue<string>(); } set { SetValue(value); } }
+        public int Count { get { return GetValue<int>(); } set { SetValue(value); } }
+        public bool IsMonthly { get; set; }
 
-        ErrorBucket errors = new ErrorBucket();
         //xaml images cannot use a base64 string as their source. We'll need to create a bitmap image instead. 
          
 
@@ -35,28 +38,46 @@ namespace QuicKE.Client
         {
             base.Initialize(host);
 
-            HireCommand = new NavigateCommand<IViewMaidPageViewModel>(host);
+            HireCommand = new DelegateCommand((args) => Hire(args as CommandExecutionContext));
             CancelCommand = new NavigateCommand<IHomePageViewModel>(host);
             CallCommand = new DelegateCommand((args) => Call(args as CommandExecutionContext));
             RequestOtherCommand = new DelegateCommand((args) => Other(args as CommandExecutionContext));
             if (MFundiRuntime.ServiceTypeID == 2)
+            {
                 IsMonthly = true;
+            }
             else
+            {
                 IsMonthly = false;
+            }
         }
 
         public async override void Activated(object args)
         {
             base.Activated(args);
-            await GetMaid();
+            var values = ApplicationData.Current.LocalSettings.Values;
+
+            if (values.ContainsKey("Code"))
+            {
+                Code = ApplicationData.Current.LocalSettings.Values["Code"].ToString();
+                await GetMaid();
+            }else
+            {
+                await Host.ToggleProgressBar(true, "Payment not processed");
+                Host.ShowView(typeof(IChargePageViewModel));
+            }
 
         }
 
         private async Task GetMaid()
         {
+            ErrorBucket errors = new ErrorBucket();
+
             var proxy = TinyIoCContainer.Current.Resolve<IGetMaidsServiceProxy>();
             using (EnterBusy())
             {
+                await Host.ToggleProgressBar(true, "Fetching expert profile ...");
+
                 var result = await proxy.GetMaidAsync();
 
                 if (!(result.HasErrors))
@@ -77,16 +98,29 @@ namespace QuicKE.Client
                         }
                         //Bitmap is ready for binding to source
                     }
-
-
                     age = result.Maid.age.ToString();
                     badge = result.Maid.badge;
+                    ticketID = result.Maid.ticketID;
+
+                    MFundiRuntime.TicketID = result.Maid.ticketID.ToString();
+                    System.Diagnostics.Debug.WriteLine("TicketID: " + ticketID.ToString());
+
+                    ApplicationData.Current.LocalSettings.Values["TicketID"] = result.Maid.ticketID.ToString();
+
+                    if (MFundiRuntime.ServiceTypeID == 2)
+                        Count = result.Maid.remaining;
+
+                    System.Diagnostics.Debug.WriteLine(Count);
                 }
                 else
+                {
                     errors.CopyFrom(result);
+                }
 
                 if (errors.HasErrors)
                     await Host.ShowAlertAsync(errors);
+
+                await Host.ToggleProgressBar(false);
             }
         }
                 
@@ -110,6 +144,7 @@ namespace QuicKE.Client
             if (context == null)
                 context = new CommandExecutionContext();
 
+            if(Count>0)
             await GetMaid();
         }
 
@@ -120,19 +155,26 @@ namespace QuicKE.Client
             if (context == null)
                 context = new CommandExecutionContext();
 
+            ErrorBucket errors = new ErrorBucket();
+
             //servicecall 
             var proxy = TinyIoCContainer.Current.Resolve<IHireServiceProxy>();
             // call...
             using (EnterBusy())
             {
-                var result = await proxy.HireAsync(id);
+                await Host.ToggleProgressBar(true, "Confirming expert as hired ...");
+
+                var result = await proxy.HireAsync(ticketID);
+
                 if (!(result.HasErrors))
                 {
-
+                    await Host.ToggleProgressBar(true, result.Message);
                     Host.ShowView(typeof(IHomePageViewModel));
                 }
                 else
                     errors.CopyFrom(result);
+
+                await Host.ToggleProgressBar(false);
             }
             if (errors.HasErrors)
                 await this.Host.ShowAlertAsync(errors);

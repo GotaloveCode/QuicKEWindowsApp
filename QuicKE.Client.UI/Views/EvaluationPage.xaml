@@ -8,17 +8,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <ScrollViewer>
         <Grid Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <StackPanel>
                 <ProgressBar VerticalAlignment="Top" IsIndeterminate="true" 
 			Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" >
+                <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" Orientation="Horizontal" >
                     <AppBarButton x:Name="backButton" Icon="Back" 
 				Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}" 
 				Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=Self}}"
@@ -42,7 +45,7 @@
                         <Setter Property="FontSize" Value="{StaticResource TextStyleMediumFontSize}"/>
                         <Setter Property="Foreground" Value="{StaticResource MyBlue}"/>
                         <Setter Property="TextWrapping" Value="Wrap"/>
-                        <Setter Property="Margin" Value="0,5,0,0"/>
+                        <Setter Property="Margin" Value="0,7,0,0"/>
                     </Style>
                 </StackPanel.Resources>
 
@@ -50,60 +53,32 @@
                     <TextBlock Text="Did you enjoy the experience?Kindly take a few minutes to rate our experts"/>
                     <TextBlock Text="Evaluation Form" FontSize="{StaticResource TextStyleLargeFontSize}" FontWeight="Bold" Margin="0,12,0,0"/>
                     <TextBlock Text="1. How would you rate the service you received:" FontWeight="Bold"/>
-                    <ComboBox Background="{StaticResource MyBlue}">
-                        <ComboBoxItem Content="Great" IsSelected="True"/>
-                        <ComboBoxItem Content="Good"/>
-                        <ComboBoxItem Content="Satisfactory"/>
-                        <ComboBoxItem Content="Poor"/>
-                        <ComboBoxItem Content="Unacceptable"/>
-                    </ComboBox>
-                    <TextBlock Text="2. How would you rate the expert's workmanship on a scale of 1-5 on the following?" FontWeight="Bold"/>
-                    <TextBlock Text="Professionalism" Margin="15,5,0,0"/>
-                    <rating:RatingControl Background="{StaticResource MyBlue}" RoundValueSlice= "1" ItemsCount="5" Value="{Binding ProfessionalRate}" IsEditable="True" Height="29" HorizontalAlignment="Left" Margin="15,0,0,0" />
-                    <!--<ComboBox Background="{StaticResource MyBlue}">
-                        <ComboBoxItem Content="1" IsSelected="True"/>
-                        <ComboBoxItem Content="2"/>
-                        <ComboBoxItem Content="3"/>
-                        <ComboBoxItem Content="4"/>
-                        <ComboBoxItem Content="5"/>
-                    </ComboBox>-->
-                    <TextBlock Text="Speed of task execution" Margin="15,5,0,0"/>
-                    <rating:RatingControl Background="{StaticResource MyBlue}" RoundValueSlice= "1" ItemsCount="5" Value="{Binding SpeedRate}" IsEditable="True" Height="29" HorizontalAlignment="Left" Margin="15,0,0,0" BorderBrush="{StaticResource MyBlue}">
-                       
-                    </rating:RatingControl>
-                    <!--<ComboBox Background="{StaticResource MyBlue}">
-                        <ComboBoxItem Content="1" IsSelected="True"/>
-                        <ComboBoxItem Content="2"/>
-                        <ComboBoxItem Content="3"/>
-                        <ComboBoxItem Content="4"/>
-                        <ComboBoxItem Content="5"/>
-                    </ComboBox>-->
-                    <TextBlock Text="Quality of work" Margin="15,5,0,0"/>
-                    <rating:RatingControl RoundValueSlice= "1" Background="{StaticResource MyBlue}" Foreground="White" ItemsCount="5" Value="{Binding QualityRate}" IsEditable="True" Height="29" HorizontalAlignment="Left" Margin="15,0,0,0" />
-                    <!--<ComboBox Background="{StaticResource MyBlue}">
-                        <ComboBoxItem Content="1" IsSelected="True"/>
-                        <ComboBoxItem Content="2"/>
-                        <ComboBoxItem Content="3"/>
-                        <ComboBoxItem Content="4"/>
-                        <ComboBoxItem Content="5"/>
-                    </ComboBox>-->
-                    <TextBlock Text="3. Would you want to work with this expert again?" FontWeight="Bold"/>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton GroupName="workwith" Content="Yes" IsChecked="True" Foreground="{StaticResource MyBlue}" BorderBrush="{StaticResource MyBlue}" Background="{StaticResource MyBlue}"/>
+                    <rating:RatingControl RoundValueSlice= "1" ItemsCount="5" Value="{Binding Rating,Mode=TwoWay}" IsEditable="True" Height="50" HorizontalAlignment="Left" Margin="15,5,5,5" />
 
-                        <RadioButton GroupName="workwith" Content="No"  Foreground="{StaticResource MyBlue}" BorderBrush="{StaticResource MyBlue}" Background="{StaticResource MyBlue}"/>
-                    </StackPanel>
-                    <TextBlock Text="4. Any Other commet? Please provide us with any other feedback" FontWeight="Bold"/>
-                    <TextBox  TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="200"  BorderBrush="{StaticResource MyBlue}"/>
+                 <TextBlock Text="2. Any other comment? Please provide us with any other feedback" FontWeight="Bold"/>
+                 
+                 <TextBox Text="{Binding Review,Mode=TwoWay}"  TextWrapping="Wrap" AcceptsReturn="True" MaxHeight="200"  BorderBrush="{StaticResource MyBlue}" MinHeight="50"/>
 
                 </StackPanel>
-                <Button Grid.Row="2"
-			Command="{Binding ContinueCommand}"
-			Content="Exit"
+                
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <Button 
+			Command="{Binding SubmitCommand}"
+			Content="Submit"
 			IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
 			Background="{StaticResource MyOrange}"
-			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" BorderBrush="{StaticResource MyOrange}" Margin="0,-5,0,-8"/>
+			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" BorderBrush="{StaticResource MyOrange}" Margin="0"/>
+                <StackPanel Background="{StaticResource MyBlue}" Margin="0,20,0,0">
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.HomePage"/>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                    <TextBlock Text="Cancel" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="{StaticResource TextStyleLargeFontSize}" VerticalAlignment="Stretch" Margin="0,10" Foreground="White"></TextBlock>
+                </StackPanel>
             </StackPanel>
+           
 
 
         </Grid>

@@ -16,16 +16,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ProgressBar VerticalAlignment="Top" IsIndeterminate="true" 
-			Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" >
-            <AppBarButton x:Name="backButton" Icon="Back" 
-				Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}" 
-				Visibility="{Binding IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=Self}}"
-				AutomationProperties.Name="Back"
-				AutomationProperties.AutomationId="BackButton"
-				AutomationProperties.ItemType="Navigation Button"/>
-            <TextBlock Text="Back" Style="{StaticResource TitleTextBlockStyle}"  VerticalAlignment="Center" />
+       <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" >
+            <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Background="#F5F5F5">
             <Image MaxHeight="100"
@@ -96,7 +88,7 @@
                 <Button Command="{Binding HireCommand}"
 			Content="Hire this Expert"
 			IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
-			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" Margin="0" 
+			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"  Margin="0" 
                         Background="#FF72BB52" 
                         BorderBrush="#FF72BB52" />
             </StackPanel>

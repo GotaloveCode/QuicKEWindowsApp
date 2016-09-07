@@ -1,17 +1,12 @@
 ﻿using Newtonsoft.Json;
-using SQLite;
 
 namespace QuicKE.Client
 {
     public class ServiceItem : ModelItem
     {
-        // key field...
-        [AutoIncrement(), PrimaryKey(), JsonIgnore]
-        public int Id { get;set; }
 
-        // other fields...
         [JsonProperty("id")]
-        public int NativeId { get;set; }
+        public int Id { get;set; }
         [JsonProperty("name")]
         public string Name { get;set; }
         [JsonProperty("cost")]

@@ -5,11 +5,12 @@
     {
 
         public string Status { get; private set; }
+        public string Message { get; private set; }
 
-        public UpdateLocationResult(string status)
+        public UpdateLocationResult(string status,string message)
         {
-
-            this.Status = status;
+            Message = message;
+            Status = status;
         }
 
         internal UpdateLocationResult(ErrorBucket bucket)

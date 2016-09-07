@@ -5,7 +5,7 @@ namespace QuicKE.Client
     public interface IEvaluationPageViewModel : IViewModel
     {
         ICommand SubmitCommand { get; }
-        ICommand ExitCommand { get; }
-
+        double Rating { get; }
+        string Review { get; }
     }
 }

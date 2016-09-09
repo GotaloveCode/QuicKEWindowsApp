@@ -6,15 +6,15 @@
     xmlns:local="using:QuicKE.Client.UI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <local:OppositeBoolConverter x:Key="OppositeBoolConverter"/>
-        
     </Page.Resources>
     <ScrollViewer>
     <Grid x:Name="LayoutRoot" Background="White">
-
        <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -29,23 +29,18 @@
             </Style>
         </Grid.Resources>
 
-        <StackPanel x:Name="TitlePanel" VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" >
-             <TextBlock HorizontalAlignment="Center"
-                       Text="Sign Up to QuicKE" Style="{StaticResource TitleTextBlockStyle}" Margin="0,10"/>
-
-        </StackPanel>
+        <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" >
+                <Image Grid.Column="1" Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
+            </StackPanel>
         
             <StackPanel Grid.Row="1" Margin="0">
 
-               <Image Source="ms-appx:///Assets/quicke - red flat.png" Height="100" Margin="15,0"/>
-
-                <TextBlock Text="Sign Up"
-                       Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"
+                <TextBlock Text="{Binding SignInText}"                      
                        HorizontalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" FontFamily="Segoe WP Semibold" FontWeight="Bold" Margin="0,10,0,5"/>
                 <StackPanel Margin="15,0">
-                    <TextBox  HorizontalAlignment="Stretch" 
+                    <TextBox x:Uid="txtFullName" HorizontalAlignment="Stretch" 
                       Text="{Binding FullName, Mode=TwoWay}"
-                      PlaceholderText="Full Name" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
+                      Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
                       Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
                     <TextBox Text="{Binding PhoneNumber, Mode=TwoWay}" 
                         PlaceholderText="254" BorderBrush="{StaticResource MyBlue}" VerticalAlignment="Center" BorderThickness="1,0,1,1" 
@@ -56,80 +51,54 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBox  HorizontalAlignment="Stretch" 
+                        <TextBox x:Uid="txtVerification" HorizontalAlignment="Stretch" 
                       Text="{Binding Code, Mode=TwoWay}"
-                      PlaceholderText="Verification Code" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
+                       Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
                               Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" VerticalAlignment="Bottom"/>
                       
-                        <Button Grid.Column="1" Content="Verify" BorderThickness="0" HorizontalAlignment="Left" Foreground="{StaticResource MyBlue}"
+                        <Button x:Uid="btnVerify" Grid.Column="1" Content="Verify" BorderThickness="0" HorizontalAlignment="Left" Foreground="{StaticResource MyBlue}"
                              Command="{Binding VerifyCommand}" Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" VerticalAlignment="Center"/>
                     </Grid>
 
 
-                    <PasswordBox Password="{Binding Password, Mode=TwoWay}" 
-                HorizontalAlignment="Stretch" PlaceholderText="Password" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" >
+                    <PasswordBox x:Uid="Password" PlaceholderText="Password"   Password="{Binding Password, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" >
                     </PasswordBox>
-                    <PasswordBox Password="{Binding Confirm, Mode=TwoWay}" 
-                HorizontalAlignment="Stretch" PlaceholderText="Confirm Password" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" RenderTransformOrigin="0.489,0.609"
+                    <PasswordBox x:Uid="ConfirmPassword" PlaceholderText="Confirm Password" Password="{Binding Confirm, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" RenderTransformOrigin="0.489,0.609"
                           Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
                     </PasswordBox>
-                    
-                    <ComboBox MaxDropDownHeight="200"
-                    VerticalAlignment="Center" Width="Auto" Margin="0"
-                      ItemsSource="{Binding Locations}" Background="{StaticResource MyBlue}"
-                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" PlaceholderText="Choose your Location"
-                      SelectedItem="{Binding SelectedLocation,Mode=TwoWay}"  />
+                    <TextBox  HorizontalAlignment="Stretch" PlaceholderText="Email"
+                      Text="{Binding Email, Mode=TwoWay}"
+                      x:Uid="txtEmail" InputScope="EmailSmtpAddress" Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
+                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
+                    <Border Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="2,0,2,2" Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">
+                        <AutoSuggestBox x:Uid="cmbSelectLocation"
+                                        PlaceholderText="Choose your Location"
+                            ItemsSource="{Binding Locations}"
+                    VerticalAlignment="Center" Width="Auto"                       
+                    Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" 
+                      Text="{Binding SelectedLocation,Mode=TwoWay}">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="TextChanged">
+                                    <core:InvokeCommandAction Command="{Binding UpdateListCommand}"/>
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </AutoSuggestBox>
+                    </Border>
 
-                    <!--<Border BorderThickness="1,0,1,1" BorderBrush="{StaticResource MyBlue}">
-                    <AutoSuggestBox PlaceholderText="Enter your location" ItemsSource="{Binding Locations}" 
-                                    VerticalAlignment="Stretch"
-                                    SuggestionChosen=""
-                                     Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}"/>
-                    </Border>-->
-                    <!--<Button Content="Choose your Location" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{StaticResource MyBlue}">
-                        <Button.Flyout>
-                            <Flyout>
-                                
-                                    <StackPanel HorizontalAlignment="Center" Margin="10" MaxHeight="400">
-                                        <ListBox VerticalAlignment="Center" Width="Auto" Margin="0"
-                      ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Background="{StaticResource MyBlue}"
-                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" AllowDrop="True" >
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate >
-                                                    <StackPanel>
-                                                        <TextBlock Text="{Binding name }" TextWrapping="Wrap" />
-                                                        <TextBlock Text="{Binding id }" Visibility="Collapsed" />
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
-                                    </StackPanel>
-                                
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>-->
 
-                    <!--<ListBox VerticalAlignment="Center" Width="Auto" Margin="0"
-                      ItemsSource="{Binding Locations}" SelectedItem="{Binding SelectedLocation}" Background="{StaticResource MyBlue}"
-                      Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" AllowDrop="True" >
-                    <ListBox.ItemTemplate>
-                        <DataTemplate >
-                            <StackPanel>
-                                <TextBlock Text="{Binding name }" TextWrapping="Wrap" />
-                                <TextBlock Text="{Binding id }" Visibility="Collapsed" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>-->
-                    <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}"
+
+                    <CheckBox x:Uid="chkHasAccount" Content="Already have an account?"
+                        IsChecked="{Binding IsSelected,Mode=TwoWay}"
                 Background="{StaticResource MyBlue}"    
                 Foreground="{StaticResource MyBlue}"                      
-                Content="Already have an account?" 
-                      Margin="0" FontSize="14" FontFamily="Segoe WP Semibold" FontWeight="Bold"/>
+                                      Margin="0" FontSize="14" FontFamily="Segoe WP Semibold" FontWeight="Bold"/>
 
 
                 </StackPanel>
-                <Button Background="{StaticResource MyBlue}"
+                <Button x:Uid="btnSignIn"
+                    Background="{StaticResource MyBlue}"
                     Content="Sign In"
                     Foreground="white"
                     VerticalAlignment="Center"
@@ -139,12 +108,12 @@
                     Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Margin="0,15,0,0" 
                     BorderBrush="{StaticResource MyBlue}"/>
-                <HyperlinkButton HorizontalAlignment="Center"
+                <HyperlinkButton  x:Uid="ForgotPassword" HorizontalAlignment="Center"
                 Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,15,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0"
-                                 Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}">Forgot Password?</HyperlinkButton>
+                                 Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" Content="Forgot Password?"/>
             </StackPanel>
         
-        <Button Grid.Row="2"  
+        <Button Grid.Row="2" x:Uid="btnSignUp" 
                  Command="{Binding SignUpCommand}"
                  HorizontalAlignment="Stretch" 
                  VerticalAlignment="Stretch" 

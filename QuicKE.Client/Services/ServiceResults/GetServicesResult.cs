@@ -1,8 +1,6 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace QuicKE.Client
 {
@@ -12,8 +10,8 @@ namespace QuicKE.Client
 
         internal GetServicesResult(IEnumerable<ServiceItem> items)
         {
-            this.Services = new List<ServiceItem>();
-            this.Services.AddRange(items);
+            Services = new List<ServiceItem>();
+            Services.AddRange(items);
         }
 
         internal GetServicesResult(ErrorBucket bucket)

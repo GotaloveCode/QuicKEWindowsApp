@@ -69,7 +69,7 @@ namespace QuicKE.Client
                 }
 
                 if (errors.HasErrors)
-                    await this.Host.ShowAlertAsync(errors);
+                    await Host.ShowAlertAsync(errors);
             }
         }
 

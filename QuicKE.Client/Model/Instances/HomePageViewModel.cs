@@ -45,75 +45,78 @@ namespace QuicKE.Client
                 await LogOut();
             });
 
-            TaskDoneCommand = new DelegateCommand(async (e) =>
-            { // mark task done dialog
-                await TaskDone();
+            TaskDoneCommand = new DelegateCommand((e) =>
+            { // mark task as complete
+                Host.ShowView(typeof(IPendingTicketsPageViewModel));
             });
 
 
         }
 
-        //mark task done dialog
-        private async Task TaskDone()
-        {
-            MessageDialog dialog = new MessageDialog("Please Mark Task as done", "Task Complete");
+        ////mark task done dialog
+        //private async Task TaskDone()
+        //{
+        //    MessageDialog dialog = new MessageDialog("Please Mark Task as done", "Task Complete");
 
-            dialog.Commands.Add(new UICommand("Cancel"));
+        //    dialog.Commands.Add(new UICommand("Cancel"));
 
-            dialog.Commands.Add(new UICommand("Confirm", async delegate (IUICommand command)
-            {
-                await SetDone();
+        //    dialog.Commands.Add(new UICommand("Confirm", async delegate (IUICommand command)
+        //    {
+        //        await SetDone();
 
-            }));
+        //    }));
 
-            await dialog.ShowAsync();
-        }
+        //    await dialog.ShowAsync();
+        //}
 
-        //server call toset task done #TODO
-        private async Task SetDone()
-        {
-            ErrorBucket errors = new ErrorBucket();
+        ////server call toset task done #TODO
+        //private async Task SetDone()
+        //{
+        //    ErrorBucket errors = new ErrorBucket();
 
-            var proxy = TinyIoCContainer.Current.Resolve<ITaskCompleteServiceProxy>();
+        //    var proxy = TinyIoCContainer.Current.Resolve<ITaskCompleteServiceProxy>();
 
-            using (EnterBusy())
-            {
-                var result = await proxy.TaskCompleteAsync();
+        //    using (EnterBusy())
+        //    {
+        //        var result = await proxy.TaskCompleteAsync();
 
-                // ok?
-                if (!(result.HasErrors))
-                {
-                    if (result.Status != "success")
-                    {
-                        errors.CopyFrom(result);
-                    }
-                    else
-                    {
-                        await Host.ShowAlertAsync(result.Message);
-                        if (ApplicationData.Current.LocalSettings.Values.ContainsKey("TicketID"))
-                        {
-                            if (string.IsNullOrEmpty(MFundiRuntime.TicketID))
-                                MFundiRuntime.TicketID = ApplicationData.Current.LocalSettings.Values["TicketID"].ToString();
-                            ApplicationData.Current.LocalSettings.Values.Remove("TicketID");
-                        }
-                        Host.ShowView(typeof(IEvaluationPageViewModel));
-                    }
-                }
-                else
-                {
-                    errors.CopyFrom(result);
-                }
+        //        // ok?
+        //        if (!(result.HasErrors))
+        //        {
+        //            if (result.Status != "success")
+        //            {
+        //                errors.CopyFrom(result);
+        //            }
+        //            else
+        //            {
+        //                var toast = new ToastNotificationBuilder(new string[] { result.Message });
+        //                toast.Update();
+        //                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("DailyTicketID"))
+        //                {
+        //                    if (string.IsNullOrEmpty(MFundiRuntime.TicketID))
+        //                        MFundiRuntime.TicketID = ApplicationData.Current.LocalSettings.Values["DailyTicketID"].ToString();
+        //                    //remove ticketid as is done
+        //                    ApplicationData.Current.LocalSettings.Values.Remove("DailyTicketID");
+        //                }
+        //                Host.ShowView(typeof(IEvaluationPageViewModel));
+        //            }
+        //        }
+        //        else
+        //        {
+        //            errors.CopyFrom(result);
+        //        }
 
-                if (errors.HasErrors)
-                    await Host.ShowAlertAsync(errors.GetErrorsAsString());
-            }
+        //        if (errors.HasErrors)
+        //            await Host.ShowAlertAsync(errors.GetErrorsAsString());
+        //    }
 
 
-        }
+        //}
 
 
 
         //logout
+
         private async Task LogOut()
         {
             ErrorBucket errors = new ErrorBucket();
@@ -151,14 +154,16 @@ namespace QuicKE.Client
             base.Activated(args);
 
             var values = ApplicationData.Current.LocalSettings.Values;
-
-            if (values.ContainsKey("TicketID"))
+           
+            if (values.ContainsKey("DailyTicketID"))
             {
-                TicketId = int.Parse(localSettings.Values["TicketID"].ToString());
+                TicketId = int.Parse(localSettings.Values["DailyTicketID"].ToString());
                 HasPendingTask = true;
             }
             else
+            {
                 HasPendingTask = false;
+            }
 
             //If doesn't have location data grab and save profile data
             if (!values.ContainsKey("Location"))

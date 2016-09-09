@@ -7,9 +7,10 @@ namespace QuicKE.Client.UI
     {
         public UpdateLocationPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             this.InitializeViewModel();
         }
-        
+
+       
     }
 }

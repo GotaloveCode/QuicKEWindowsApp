@@ -14,6 +14,9 @@
 
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="ms-appx:///Assets/homescreen.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -25,8 +28,7 @@
             <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-         <AppBarButton Icon="List"                           
-                          Click="AppBarButton_Click">
+         <AppBarButton Icon="List" Click="AppBarButton_Click">
                 <Button.Flyout>
                     <Flyout x:Name="MySettingsFlyOut" Placement="Left">
                         <Grid Background="White">
@@ -37,18 +39,43 @@
                             <StackPanel Background="{StaticResource MyOrange}">
                                 <StackPanel Margin="0,15">
                                     <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80" Margin="0,0,0,10" />
-                                   
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Grid.Row="1">
                                 <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                                     <interactivity:Interaction.Behaviors>
                                         <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.HistoryPage"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+
+                                    <Image Source="ms-appx:///Assets/img_ticket.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
+                                    <TextBlock Text="Ongoing Tickets" x:Uid="OngoingTickets"
+                                               FontSize="{StaticResource TextStyleLargeFontSize}" 
+                                               Foreground="Black" 
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.PendingTicketsPage"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+
+                                    <Image Source="ms-appx:///Assets/img_ticket_selected.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
+                                    <TextBlock Text="Closed Tickets" x:Uid="CurrentTickets"
+                                               FontSize="{StaticResource TextStyleLargeFontSize}" 
+                                               Foreground="Black" 
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
                                             <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.ProfilePage"/>
                                         </core:EventTriggerBehavior>                                        
                                     </interactivity:Interaction.Behaviors>
-                                    <Image Source="ms-appx:///Assets/img_profile_selected.png" Height="50" HorizontalAlignment="Left" Margin="15,0,30,0" />
-                                    <TextBlock Text="Profile" 
+                                    <Image Source="ms-appx:///Assets/img_user_profile.png" Height="50" HorizontalAlignment="Left" Margin="15,0,30,0" />
+                                    <TextBlock Text="Profile" x:Uid="Profile"
                                                FontSize="{StaticResource TextStyleLargeFontSize}" 
                                                Foreground="Black" 
                                                VerticalAlignment="Center"/>
@@ -62,19 +89,20 @@
                                     </interactivity:Interaction.Behaviors>
 
                                     <Image Source="ms-appx:///Assets/img_location_pin.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
-                                    <TextBlock Text="Change Location" 
+                                    <TextBlock Text="Change Location" x:Uid="ChangeLocation"
                                                FontSize="{StaticResource TextStyleLargeFontSize}" 
                                                Foreground="Black" 
                                                VerticalAlignment="Center"/>
                                 </StackPanel>
+                                
                                 <StackPanel Orientation="Horizontal" Margin="0,15">
                                     <interactivity:Interaction.Behaviors>
                                         <core:EventTriggerBehavior EventName="Tapped">
                                             <core:InvokeCommandAction Command="{Binding LogoutCommand}"/>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
-                                    <Image Source="ms-appx:///Assets/img_profile_selected.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
-                                    <TextBlock Text="Logout" 
+                                    <Image Source="ms-appx:///Assets/logout.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
+                                    <TextBlock Text="Logout" x:Uid="LogOut"
                                                FontSize="{StaticResource TextStyleLargeFontSize}" 
                                                Foreground="Black" 
                                                VerticalAlignment="Center">
@@ -100,7 +128,7 @@
             </Image>
         </Grid>
         
-        <Image Source="ms-appx:///Assets/homescreen.jpg" Stretch="UniformToFill" Grid.Row="1" Margin="0"/>
+        <!--<Image Source="ms-appx:///Assets/homescreen.jpg" Stretch="UniformToFill" Grid.Row="1" Margin="0"/>-->
         
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
@@ -119,7 +147,7 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Image Height="100"  Source="ms-appx:///Assets/day service.png" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0"/>
-                <TextBlock Text="QuicKE Day Service" TextAlignment="Center" 
+                <TextBlock x:Uid="DayService" Text="QuicKE Day Service" TextAlignment="Center" 
                            VerticalAlignment="Bottom" Style="{StaticResource TitleTextBlockStyle}"
                            Margin="0,5"/>
             </StackPanel>
@@ -130,7 +158,7 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Image Height="100"  Source="ms-appx:///Assets/monthly service.png" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,10,50,0"/>
-                <TextBlock Text="QuicKE Monthly Service" TextAlignment="Center" 
+                <TextBlock x:Uid="MonthlyService" Text="QuicKE Monthly Service" TextAlignment="Center" 
                            VerticalAlignment="Bottom" Style="{StaticResource TitleTextBlockStyle}" Margin="0,5" />
             </StackPanel>
            

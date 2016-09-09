@@ -8,30 +8,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid>       
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/polygon-background.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>    
-        <StackPanel Background="{StaticResource MyBlue}"  VerticalAlignment="Top" Grid.Row="0" Grid.ColumnSpan="2">
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Background="{StaticResource MyBlue}"  VerticalAlignment="Top" Grid.Row="0">
             <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
-            <Image MaxHeight="100"
-				Stretch="Fill"
-				Source="ms-appx:///Assets/polygon-background.jpg" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
         </StackPanel>
-    <StackPanel Grid.Row="1" Background="White">       
-        <StackPanel Background="#FFE6E6E6">
-            <TextBlock Text="We have an expert available for you" 
+        <StackPanel Grid.Row="1"></StackPanel>
+        <StackPanel Grid.Row="2" Background="White">
+            <StackPanel Background="#FFE6E6E6">
+                <TextBlock x:Uid="HaveExpert"  Text="We have an expert available for you" 
 					Style="{ThemeResource TitleTextBlockStyle}" 
 					Margin="15,5,0,5"                       
 					Foreground="{StaticResource MyBlue}"/>
-        </StackPanel>
+            </StackPanel>
             <TextBlock TextWrapping="Wrap" 
                        FontSize="{StaticResource TextStyleMediumFontSize}" Foreground="{StaticResource MyBlue}" 
                        Text="{Binding SummaryText}"
                        HorizontalAlignment="Center" Margin="0,20,-4,0"/>
-            <TextBlock Text="Charges:" 
+            <TextBlock Text="Charges:" x:Uid="Charges" 
                        FontSize="{StaticResource TextStyleLargeFontSize}" FontWeight="Bold" Foreground="{StaticResource MyBlue}" HorizontalAlignment="Center" Margin="0,30" />
             <TextBlock FontSize="{StaticResource TextStyleExtraLargeFontSize}" FontWeight="Bold" Foreground="{StaticResource MyBlue}" HorizontalAlignment="Center">
                 <Run>KES. </Run>
@@ -40,13 +42,15 @@
 
 
         </StackPanel>
-        <StackPanel Grid.Row="2" Background="White">
-            <Button Command="{Binding ProceedCommand}"
+        <StackPanel Grid.Row="3" Background="White">
+            <Button 
+                x:Uid="ProceedTo"
+                Command="{Binding ProceedCommand}"
 			Content="Proceed to view Full profile"
 			IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
 			Background="{StaticResource MyBlue}"
 			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" BorderBrush="{StaticResource MyBlue}" Padding="9.5,5" />
-            <Button 
+            <Button x:Uid="Cancel"
 			Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}" 
 			Content="Cancel"
 			IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
@@ -54,6 +58,6 @@
 			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" BorderBrush="{StaticResource MyOrange}" Margin="0,10,0,0" Padding="9.5,5"/>
         </StackPanel>
 
-    
+
     </Grid>
 </local:QuicKEPage>

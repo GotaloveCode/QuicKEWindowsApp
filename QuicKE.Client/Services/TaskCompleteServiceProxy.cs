@@ -7,14 +7,15 @@ namespace QuicKE.Client.Services
     public class TaskCompleteServiceProxy : ServiceProxy, ITaskCompleteServiceProxy
     {
         public TaskCompleteServiceProxy()
-            : base(string.Format("expert/tickets/{0}/complete", ApplicationData.Current.LocalSettings.Values["TicketID"].ToString()))
+            : base("")
         {
             
         }
 
-        public async Task<TaskCompleteResult> TaskCompleteAsync()
+        public async Task<TaskCompleteResult> TaskCompleteAsync(int TicketID)
         {
-            Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{0}/complete", ApplicationData.Current.LocalSettings.Values["TicketID"].ToString());
+            Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{0}/complete", TicketID);
+            //Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{0}/complete", ApplicationData.Current.LocalSettings.Values["DailyTicketID"].ToString());
 
             JsonObject input = new JsonObject();
 

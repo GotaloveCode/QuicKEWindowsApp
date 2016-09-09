@@ -12,6 +12,7 @@ namespace QuicKE.Client
         public string Location { get { return GetValue<string>(); } set { SetValue(value); } }
         public string FullName { get { return GetValue<string>(); } set { SetValue(value); } }
         public string PhoneNumber { get { return GetValue<string>(); } set { SetValue(value); } }
+        public string Email { get { return GetValue<string>(); } set { SetValue(value); } }
         public BitmapImage bitmap { get { return GetValue<BitmapImage>(); } set { SetValue(value); } }
 
         ErrorBucket errors = new ErrorBucket();
@@ -32,6 +33,7 @@ namespace QuicKE.Client
                 Location = localSettings.Values["Location"].ToString();
                 FullName = localSettings.Values["FullName"].ToString();
                 PhoneNumber = localSettings.Values["PhoneNumber"].ToString();
+                Email = localSettings.Values["Email"].ToString();
                 string Photo = localSettings.Values["Photo"].ToString();
                 bitmap = new BitmapImage();
                 if (!string.IsNullOrEmpty(Photo))
@@ -76,6 +78,7 @@ namespace QuicKE.Client
                     FullName = result.Profile.name;
                     Location = result.Profile.location;
                     PhoneNumber = result.Profile.phone;
+                    Email = result.Profile.email;
                     bitmap = new BitmapImage();
                     if (!string.IsNullOrEmpty(result.Profile.photo))
                     {

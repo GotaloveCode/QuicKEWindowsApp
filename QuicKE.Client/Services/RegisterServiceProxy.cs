@@ -10,7 +10,7 @@ namespace QuicKE.Client
         {
         }
 
-        public async Task<RegisterResult> RegisterAsync(string fullname, string phone_number, string password, string location,string code)
+        public async Task<RegisterResult> RegisterAsync(string fullname, string phone_number, string password, string location, string code, string email)
         {
             // package up the request...
             JsonObject input = new JsonObject();
@@ -19,6 +19,7 @@ namespace QuicKE.Client
             input.Add("password", password);
             input.Add("location", location);
             input.Add("code", code);
+            input.Add("email", email);
 
 
             // call...

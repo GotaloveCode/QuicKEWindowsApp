@@ -1,6 +1,9 @@
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\QuicKE.Client.dll
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\QuicKE.Client.pdb
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\QuicKE.Client.pri
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\Newtonsoft.Json.dll
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\Newtonsoft.Json.xml
+C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\QuicKE.Client.csprojResolveAssemblyReference.cache
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\QuicKE.Client.dll
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\QuicKE.Client.pdb
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\priconfig.xml
@@ -14,6 +17,3 @@ C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\AR
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\qualifiers.txt
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\qualifiers.txt.intermediate
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\MultipleQualifiersPerDimensionFound.txt
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\Newtonsoft.Json.dll
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\bin\ARM\Debug\Newtonsoft.Json.xml
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\ARM\Debug\QuicKE.Client.csprojResolveAssemblyReference.cache

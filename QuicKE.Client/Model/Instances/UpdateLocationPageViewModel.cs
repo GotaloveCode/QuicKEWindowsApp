@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
@@ -11,8 +12,10 @@ namespace QuicKE.Client
     {
 
         public ICommand SubmitCommand { get; private set; }
+        public ICommand UpdateListCommand { get; private set; }
+        private List<string> locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
-        public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
+        public string SelectedLocation { get { return GetValue<string>();} set { SetValue(value); }}
         ErrorBucket errors = new ErrorBucket();
 
 
@@ -24,10 +27,21 @@ namespace QuicKE.Client
         public override void Initialize(IViewModelHost host)
         {
             base.Initialize(host);
-             
-        //    Locations = new List<string>() { "Kenyatta Avenue", "Moi Avenue", "Tom Mboya Street", "Latema Road", "Mama Ngina Street", "Koinange Street",
-        //"Muindi Mbingu Street", "Taveta Street", "Kimathi Street", "Wabera Street", "Haile Selassie", "Mfangano Street","Harambee Avenue" };
-            SubmitCommand = new DelegateCommand((args) => Submit(args as CommandExecutionContext));            
+            Locations = new List<string>();
+            locations = new List<string>();
+            //    Locations = new List<string>() { "Kenyatta Avenue", "Moi Avenue", "Tom Mboya Street", "Latema Road", "Mama Ngina Street", "Koinange Street",
+            //"Muindi Mbingu Street", "Taveta Street", "Kimathi Street", "Wabera Street", "Haile Selassie", "Mfangano Street","Harambee Avenue" };
+            SubmitCommand = new DelegateCommand((args) => Submit(args as CommandExecutionContext));
+            UpdateListCommand = new DelegateCommand((args) => Suggest(args as CommandExecutionContext));
+        }
+
+        //autosuggest filter
+        private void Suggest(CommandExecutionContext context) 
+        {
+            if (context == null)
+                context = new CommandExecutionContext();
+            if (!string.IsNullOrEmpty(SelectedLocation))
+                Locations = locations.Where(x => x.ToLower().Contains(SelectedLocation.ToLower())).ToList();
         }
 
         //verify number
@@ -58,6 +72,7 @@ namespace QuicKE.Client
                         {
                             await Host.ShowAlertAsync(result.Message);
                             ApplicationData.Current.LocalSettings.Values["Location"] = SelectedLocation;
+                            Host.ShowView(typeof(IHomePageViewModel));
                         }
                            
                     }
@@ -98,10 +113,13 @@ namespace QuicKE.Client
             {
                 var result = await proxy.GetLocationsAsync();
                 if (!(result.HasErrors))
-                {
-                    Locations = new List<string>();
+                {                   
                     foreach (var item in result.Locations)
+                    {
                         Locations.Add(item.name);
+                        locations.Add(item.name);
+                    }
+                    
                 }
                 else
                     errors.CopyFrom(result);

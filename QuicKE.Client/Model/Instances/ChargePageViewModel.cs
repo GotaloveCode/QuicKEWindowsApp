@@ -172,7 +172,9 @@ namespace QuicKE.Client
                             await delay5();
                             break;
                         case "success":
-                            await Host.ToggleProgressBar(true, "We have received your payment.\n Kindy proceed to view full profile");
+                            var toast = new ToastNotificationBuilder(new string[] { "Payment Received.", "We have received your payment.\n Kindy proceed to view full profile" });
+                           // toast.ImageUri = "ms-appx:///Assets/Toast.jpg";
+                            toast.Update();
                             localSettings.Values["Code"] = Code;
                             Host.ShowView(typeof(IViewMaidPageViewModel));
                             break;

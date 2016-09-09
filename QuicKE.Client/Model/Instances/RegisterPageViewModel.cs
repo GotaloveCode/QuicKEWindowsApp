@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
@@ -14,20 +15,36 @@ namespace QuicKE.Client
         public ICommand SignUpCommand { get; private set; }
         public ICommand SignInCommand { get; private set ; }
         public ICommand VerifyCommand { get; private set; }
-        
+        public ICommand UpdateListCommand { get; private set; }
+        private int TicketID { get { return GetValue<int>(); } set { SetValue(value); } }
+        private List<string> locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
-        ErrorBucket errors = new ErrorBucket();
-
-        public bool IsSelected { get { return GetValue<bool>(); } set { SetValue(value); } }
+        public string SignInText { get { return GetValue<string>(); } set { SetValue(value); } }
+        public bool IsSelected {
+            get {
+               
+                return GetValue<bool>();
+            }
+            set {
+                if (value == true)
+                    SignInText = "SIGN IN";
+                else
+                    SignInText = "SIGN UP";
+                SetValue(value);
+            }
+        }
         public string FullName { get { return GetValue<string>(); } set { SetValue(value); } }        
         public string Password { get { return GetValue<string>(); } set { SetValue(value); } }
         public string Confirm { get { return GetValue<string>(); } set { SetValue(value); } }
+        public string Email { get { return GetValue<string>(); } set { SetValue(value); } }
         public string PhoneNumber { get { return phoneNumber; } set { phoneNumber = value; } }
         private string phoneNumber = "254";
         public string Code { get { return GetValue<string>(); } set { SetValue(value); } }
+
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-        
+        ErrorBucket errors = new ErrorBucket();
+
 
         public RegisterPageViewModel()
         {
@@ -36,12 +53,16 @@ namespace QuicKE.Client
         public override void Initialize(IViewModelHost host)
         {
             base.Initialize(host);
-            
+
             Locations = new List<string>();
+            locations = new List<string>();
             SignUpCommand = new DelegateCommand((args) => DoRegister(args as CommandExecutionContext));
             SignInCommand = new DelegateCommand((args) => DoLogin(args as CommandExecutionContext));
             VerifyCommand = new DelegateCommand((args) => Verify(args as CommandExecutionContext));
-            IsSelected = true;         
+            UpdateListCommand = new DelegateCommand((args) => Suggest(args as CommandExecutionContext));
+            IsSelected = true;
+
+           
         }
 
         //verify number
@@ -123,6 +144,7 @@ namespace QuicKE.Client
                 await Host.ShowAlertAsync(errors);
         }
 
+        //register
         private async void DoRegister(CommandExecutionContext context)
         {
             // if we don't have a context, create one...
@@ -144,7 +166,7 @@ namespace QuicKE.Client
                 {
                     await Host.ToggleProgressBar(true, "Signing In...");
 
-                    var result = await proxy.RegisterAsync(FullName, PhoneNumber, Password, SelectedLocation, Code);
+                    var result = await proxy.RegisterAsync(FullName, PhoneNumber, Password, SelectedLocation, Code, Email);
 
                     // ok?
                     if (!(result.HasErrors))
@@ -163,6 +185,7 @@ namespace QuicKE.Client
                             localSettings.Values["Location"] = SelectedLocation;
                             localSettings.Values["FullName"] = FullName;
                             localSettings.Values["PhoneNumber"] = PhoneNumber;
+                            localSettings.Values["Email"] = Email;
 
 
                             await Host.ToggleProgressBar(false);
@@ -193,6 +216,7 @@ namespace QuicKE.Client
                 await Host.ShowAlertAsync(errors);
         }
 
+        //validate login
         private void Validate(ErrorBucket errors)
         {
             // do basic data presence validation...
@@ -203,6 +227,7 @@ namespace QuicKE.Client
                 errors.AddError("Password must be at least 6 characters.");
         }
 
+        //validate register
         private void ValidateSignUp(ErrorBucket errors)
         {
             // do basic data presence validation...
@@ -217,6 +242,8 @@ namespace QuicKE.Client
                 errors.AddError("The passwords do not match.");
             if ( Password.Length < 6)
                 errors.AddError("The passwords must be at least 6 characters.");
+            if (string.IsNullOrEmpty(Email))
+                errors.AddError("Email is required.");
             if (string.IsNullOrEmpty(PhoneNumber))
                 errors.AddError("PhoneNumber is required.");
             if ((string.IsNullOrEmpty(PhoneNumber)) && PhoneNumber.Length < 12)
@@ -235,6 +262,7 @@ namespace QuicKE.Client
             }
         }
 
+        //get locations
         private async Task LoadLocations()
         {
             var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
@@ -244,8 +272,12 @@ namespace QuicKE.Client
                 var result = await proxy.GetLocationsAsync();
                 if (!(result.HasErrors))
                 {
-                    foreach (var item in result.Locations) 
+                    foreach (var item in result.Locations)
+                    {
                         Locations.Add(item.name);
+                        locations.Add(item.name);
+                    }
+                        
                 }
                 else
                     errors.CopyFrom(result);
@@ -256,6 +288,48 @@ namespace QuicKE.Client
                 await Host.ShowAlertAsync(errors);
            
         }
+
+        //autosuggest filter
+        private void Suggest(CommandExecutionContext context)
+        {
+            if (context == null)
+                context = new CommandExecutionContext();
+            if (!string.IsNullOrEmpty(SelectedLocation))
+                Locations = locations.Where(x => x.ToLower().Contains(SelectedLocation.ToLower())).ToList();
+        }
+
+        //get pendingtickets
+        private async Task GetCurrentTickets()
+        {
+
+            ErrorBucket errors = new ErrorBucket();
+
+            var proxy = TinyIoCContainer.Current.Resolve<IGetPendingTicketsServiceProxy>();
+
+            using (EnterBusy())
+            {
+                var result = await proxy.GetTicketAsync();
+
+                if (!(result.HasErrors))
+                {
+                   
+                    if (result.tickets.Count > 0)
+                    {
+                        TicketID = result.tickets.First().Id;
+                        ApplicationData.Current.LocalSettings.Values["TicketID"] = TicketID; 
+                        ApplicationData.Current.LocalSettings.Values["DailyTicketID"] = TicketID; 
+                   }
+                }
+                else
+                {
+                    errors.CopyFrom(result);
+                }
+
+                if (errors.HasErrors)
+                    await Host.ShowAlertAsync(errors.GetErrorsAsString());
+            }
+        }
+
 
 
     }

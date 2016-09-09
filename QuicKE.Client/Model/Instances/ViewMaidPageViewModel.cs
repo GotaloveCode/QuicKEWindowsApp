@@ -104,12 +104,17 @@ namespace QuicKE.Client
 
                     MFundiRuntime.TicketID = result.Maid.ticketID.ToString();
                     System.Diagnostics.Debug.WriteLine("TicketID: " + ticketID.ToString());
-
+                    //save TicketID to use to mark task as done
                     ApplicationData.Current.LocalSettings.Values["TicketID"] = result.Maid.ticketID.ToString();
-
                     if (MFundiRuntime.ServiceTypeID == 2)
-                        Count = result.Maid.remaining;
-
+                    {
+                        Count = result.Maid.remaining;                        
+                    }                        
+                    else //set as daily to set task done icon on home page
+                    {
+                       ApplicationData.Current.LocalSettings.Values["DailyTicketID"] = result.Maid.ticketID.ToString();
+                    }
+                       
                     System.Diagnostics.Debug.WriteLine(Count);
                 }
                 else
@@ -145,7 +150,9 @@ namespace QuicKE.Client
                 context = new CommandExecutionContext();
 
             if(Count>0)
-            await GetMaid();
+                await GetMaid();
+            else
+                await Host.ShowAlertAsync("Please pay to view other experts");
         }
 
 
@@ -168,7 +175,11 @@ namespace QuicKE.Client
 
                 if (!(result.HasErrors))
                 {
-                    await Host.ToggleProgressBar(true, result.Message);
+                    var toast = new ToastNotificationBuilder(new string[] { result.Message });                    
+                    toast.Update();
+                    //hired maid so clear ticketid and code
+                    ApplicationData.Current.LocalSettings.Values.Remove("Code");
+                    ApplicationData.Current.LocalSettings.Values.Remove("TicketID");
                     Host.ShowView(typeof(IHomePageViewModel));
                 }
                 else
@@ -177,7 +188,7 @@ namespace QuicKE.Client
                 await Host.ToggleProgressBar(false);
             }
             if (errors.HasErrors)
-                await this.Host.ShowAlertAsync(errors);
+                await Host.ShowAlertAsync(errors);
         }
 
 

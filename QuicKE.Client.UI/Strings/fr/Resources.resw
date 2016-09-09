@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="btnSignIn.Content" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="btnSignUp.Content" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="btnVerify.Content" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="chkHasAccount.Content" xml:space="preserve">
+    <value>Already have an account?</value>
+  </data>
+  <data name="cmbSelectLocation.PlaceholderText" xml:space="preserve">
+    <value>Choose your Location</value>
+  </data>
+  <data name="ConfirmPassword.PlaceholderText" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="ForgotPassword.Content" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
+  <data name="Password.PlaceholderText" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="txtEmail.PlaceholderText" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="txtFullName.PlaceholderText" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="txtVerification.PlaceholderText" xml:space="preserve">
+    <value>Verification Code</value>
+  </data>
+  <data name="Age.Text" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="btnCall.Content" xml:space="preserve">
+    <value>Call</value>
+  </data>
+  <data name="CallTo.Text" xml:space="preserve">
+    <value>Call to speak with the expert</value>
+  </data>
+  <data name="Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChangeLocation.Text" xml:space="preserve">
+    <value>Change Location</value>
+  </data>
+  <data name="Charges.Text" xml:space="preserve">
+    <value>Charges</value>
+  </data>
+  <data name="Comment.Text" xml:space="preserve">
+    <value>2. Any other comment? Please provide us with any other feedback</value>
+  </data>
+  <data name="CurrentTickets.Text" xml:space="preserve">
+    <value>Current Tickets</value>
+  </data>
+  <data name="DayService.Text" xml:space="preserve">
+    <value>QuicKE Day Service</value>
+  </data>
+  <data name="Enjoy.Text" xml:space="preserve">
+    <value>Did you enjoy the experience?Kindly take a few minutes to rate our experts</value>
+  </data>
+  <data name="Evaluation.Text" xml:space="preserve">
+    <value>Evaluation Form</value>
+  </data>
+  <data name="HaveExpert.Text" xml:space="preserve">
+    <value>We have an expert available for you</value>
+  </data>
+  <data name="Hire.Content" xml:space="preserve">
+    <value>Hire Expert</value>
+  </data>
+  <data name="IDNo.Text" xml:space="preserve">
+    <value>ID No</value>
+  </data>
+  <data name="left.Text" xml:space="preserve">
+    <value>left</value>
+  </data>
+  <data name="LogOut.Text" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="MonthlyService.Text" xml:space="preserve">
+    <value>QuicKE Monthly Service</value>
+  </data>
+  <data name="Name.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ProceedTo.Content" xml:space="preserve">
+    <value>Proceed to view Full profile</value>
+  </data>
+  <data name="Profile.Text" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Rate.Text" xml:space="preserve">
+    <value>1. How would you rate the service you received:</value>
+  </data>
+  <data name="Request.Text" xml:space="preserve">
+    <value>Request another</value>
+  </data>
+  <data name="ServiceRequest.Text" xml:space="preserve">
+    <value>Service Requests</value>
+  </data>
+  <data name="Submit.Content" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="TagNo.Text" xml:space="preserve">
+    <value>Tag No</value>
+  </data>
+  <data name="Thank.Text" xml:space="preserve">
+    <value>Thank you for using QuicKE!</value>
+  </data>
+  <data name="txtCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Email.Text" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Home.Text" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Location.Text" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="MyProfile.Text" xml:space="preserve">
+    <value>My Profile</value>
+  </data>
+  <data name="Phone.Text" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="SelectLocation.Text" xml:space="preserve">
+    <value>Select Location</value>
+  </data>
+  <data name="Done.Content" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="MarkTask.Text" xml:space="preserve">
+    <value>Mark Task as Done</value>
+  </data>
+</root>

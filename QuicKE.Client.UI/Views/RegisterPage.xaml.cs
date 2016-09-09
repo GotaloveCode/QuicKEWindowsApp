@@ -1,19 +1,12 @@
-﻿
-namespace QuicKE.Client.UI
+﻿namespace QuicKE.Client.UI
 {
-   
     [ViewModel(typeof(IRegisterPageViewModel))]
     public sealed partial class RegisterPage : QuicKEPage
     {
-        
         public RegisterPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             this.InitializeViewModel();
-
-           
         }
-
-        
       }
 }

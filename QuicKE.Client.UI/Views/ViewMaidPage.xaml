@@ -11,20 +11,23 @@
         <local:OppositeBoolConverter x:Key="OppositeBoolConverter"/>
     </Page.Resources>
     <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="ms-appx:///Assets/polygon-background.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-       <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" >
+        <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" >
             <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" Background="#F5F5F5">
-            <Image MaxHeight="100"
-				Stretch="Fill"
-				Source="ms-appx:///Assets/polygon-background.jpg" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+        <StackPanel Grid.Row="1"/>
+        <StackPanel Grid.Row="2" Background="#F5F5F5">
             <StackPanel Background="#FFE6E6E6">
-                <TextBlock Text="Call to speak with the expert" 
+                <TextBlock x:Uid="CallTo"
+                    Text="Call to speak with the expert" 
 					Style="{ThemeResource TitleTextBlockStyle}" 
 					Margin="15,5,0,5"                       
 					Foreground="{StaticResource MyBlue}"/>
@@ -48,24 +51,29 @@
                 <Image Source="{Binding bitmap}" Width="150" Height="150" Margin="3,3,5,0" />
                 <StackPanel Grid.Column="1">
                     <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
-                         <Run FontWeight="Bold">Name: </Run>
-                         <Run  Text="{Binding name}"/>
+                         <Run FontWeight="Bold" x:Uid="Name" Text="Name"/>
+                        <Run  Text=": "/> 
+                        <Run  Text="{Binding name}"/>
                     </TextBlock>
                     <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
-                         <Run FontWeight="Bold" Text="Age:"/>
-                         <Run  Text="{Binding age}"/>
+                         <Run FontWeight="Bold" Text="Age" x:Uid="Age"/>
+                        <Run  Text=": "/>  
+                        <Run  Text="{Binding age}"/>
                     </TextBlock>
                     <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
-                         <Run FontWeight="Bold" Text="ID No:"/>
-                         <Run  Text="{Binding id_number}"/>
+                         <Run FontWeight="Bold" Text="ID No"  x:Uid="IDNo" />
+                        <Run  Text=": "/>  
+                        <Run  Text="{Binding id_number}"/>
                     </TextBlock>
                     <TextBlock  TextWrapping="Wrap" Margin="0,10,0,0">
-                         <Run FontWeight="Bold" Text="Tag No:"/>
-                         <Run  Text="{Binding badge}"/>
+                         <Run x:Uid="TagNo" FontWeight="Bold" Text="Tag No"/>
+                        <Run  Text=": "/>  
+                        <Run  Text="{Binding badge}"/>
                     </TextBlock>
-                    
+
                 </StackPanel>
-                <Button Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource MyBlue}"
+                <Button x:Uid="btnCall"
+                    Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource MyBlue}"
                         Command="{Binding CallCommand}"
                         Content="Call" HorizontalAlignment="Stretch" Margin="40,30" VerticalAlignment="Center"/>
 
@@ -74,19 +82,20 @@
 
 
         </StackPanel>
-        <StackPanel Visibility="{Binding IsMonthly, Converter={StaticResource OppositeBoolConverter}}" Grid.Row="2" Background="{StaticResource MyOrange}">
-            <Button Background="{StaticResource MyOrange}" Content="Cancel"
+        <StackPanel Visibility="{Binding IsMonthly, Converter={StaticResource OppositeBoolConverter}}" Grid.Row="3" Background="{StaticResource MyOrange}">
+            <Button x:Uid="Cancel"
+                Background="{StaticResource MyOrange}" Content="Cancel"
                     Command="{Binding CancelCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{StaticResource MyOrange}"/>
 
         </StackPanel>
-        <Grid Visibility="{Binding IsMonthly, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="2" Background="#FFE6E6E6">
+        <Grid Visibility="{Binding IsMonthly, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Row="3" Background="#FFE6E6E6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <StackPanel Background="#FF72BB52" Margin="20,20,10,20">
                 <Button Command="{Binding HireCommand}"
-			Content="Hire this Expert"
+			Content="Hire Expert" x:Uid="Hire"
 			IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"
 			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"  Margin="0" 
                         Background="#FF72BB52" 
@@ -99,10 +108,11 @@
 			Background="{StaticResource MyOrange}"
 			HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" UseLayoutRounding="True" BorderBrush="{StaticResource MyOrange}" Margin="0">
                     <StackPanel>
-                        <TextBlock Text="Request another"></TextBlock>
+                        <TextBlock x:Uid="Request" Text="Request another"></TextBlock>
                         <TextBlock>(
-                            <Run Text="{Binding Count}"></Run>
-                            left)
+                            <Run Text="{Binding Count}"/>
+                            <Run x:Uid="left" Text="left"/>
+                            )
                         </TextBlock>
                     </StackPanel>
                 </Button>

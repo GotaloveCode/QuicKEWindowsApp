@@ -14,6 +14,7 @@
         public string profession { get;set; }
         public string location { get;set; }
         public string email { get;set; }
-
+        public string expert_type { get; set; }
+        public string code { get; set; }
     }
 }

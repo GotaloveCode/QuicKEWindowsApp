@@ -9,6 +9,7 @@
         public string user_type { get;set;}
         public string location { get;set;}
         public string photo { get;set;}
+        public string email { get; set; }
         public ProfileItem()
         {
         }

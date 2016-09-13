@@ -77,7 +77,7 @@
 
 
         <StackPanel Grid.Row="3" Background="White">
-            <StackPanel Background="{StaticResource MyBlue}" Margin="0,0,0,15">
+            <StackPanel Background="{StaticResource MyBlue}" Margin="0,0,0,10">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
                         <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.UpdateLocationPage"/>
@@ -91,7 +91,7 @@
                         <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.HomePage"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
-                <TextBlock x:Uid="Home" Text="Home" HorizontalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" VerticalAlignment="Stretch" Margin="0,10"></TextBlock>
+                <TextBlock x:Uid="Back" Text="Back" HorizontalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" VerticalAlignment="Stretch" Margin="0,10"></TextBlock>
             </StackPanel>
         </StackPanel>
 

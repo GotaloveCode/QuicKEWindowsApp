@@ -27,7 +27,8 @@ namespace QuicKE.Client
                     phone = (string)executeResult.Output["data"]["phone"],                    
                     user_type = (string)executeResult.Output["data"]["user_type"],
                     location = (string)executeResult.Output["data"]["location"],
-                    photo = (string)executeResult.Output["data"]["photo"]
+                    photo = (string)executeResult.Output["data"]["photo"],
+                    email = (string)executeResult.Output["data"]["email"]
                 };
                                
 

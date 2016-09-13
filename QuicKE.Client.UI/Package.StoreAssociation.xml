@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
   <Publisher>CN=E664CD61-4AFB-4722-88DF-BBB47A27B492</Publisher>
-  <PublisherDisplayName>MP Fusion</PublisherDisplayName>
+  <PublisherDisplayName>Masterpiece Fusion</PublisherDisplayName>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="true" />
@@ -364,8 +364,8 @@
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
-    <MainPackageIdentityName>37455MPFusion.TekeTekeBusiness</MainPackageIdentityName>
     <MainPackageIdentityName>37455MPFusion.373098DE03868</MainPackageIdentityName>
+    <MainPackageIdentityName>37455MPFusion.2693225B01B3</MainPackageIdentityName>
     <MainPackageIdentityName>37455MPFusion.TekeTekePremium</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9NBLGGH4SZVD" />

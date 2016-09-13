@@ -57,7 +57,7 @@ namespace QuicKE.Client
                     {
                         if (item.Id == MFundiRuntime.ServiceTypeID)
                         {
-                            Cost = item.Cost.ToString();
+                            Cost = item.Cost.ToString();                            
                             return;
                         }
                     }

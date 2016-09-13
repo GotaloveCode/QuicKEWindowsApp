@@ -118,141 +118,153 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnSignIn.Content" xml:space="preserve">
-    <value>Sign In</value>
+    <value>Connexion</value>
   </data>
   <data name="btnSignUp.Content" xml:space="preserve">
-    <value>Sign Up</value>
+    <value>Créer un compte</value>
   </data>
   <data name="btnVerify.Content" xml:space="preserve">
-    <value>Verify</value>
+    <value>Vérifier</value>
   </data>
   <data name="chkHasAccount.Content" xml:space="preserve">
-    <value>Already have an account?</value>
+    <value>Vous avez déjà un compte?</value>
   </data>
   <data name="cmbSelectLocation.PlaceholderText" xml:space="preserve">
-    <value>Choose your Location</value>
+    <value>Choisissez votre emplacement</value>
   </data>
   <data name="ConfirmPassword.PlaceholderText" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Confirmer le mot de passe</value>
   </data>
   <data name="ForgotPassword.Content" xml:space="preserve">
-    <value>Forgot Password</value>
+    <value>Mot de passe oublié</value>
   </data>
   <data name="Password.PlaceholderText" xml:space="preserve">
-    <value>Password</value>
+    <value>Mot de passe</value>
   </data>
   <data name="txtEmail.PlaceholderText" xml:space="preserve">
-    <value>Email</value>
+    <value>Courriel</value>
   </data>
   <data name="txtFullName.PlaceholderText" xml:space="preserve">
-    <value>Full Name</value>
+    <value>Nom Complet</value>
   </data>
   <data name="txtVerification.PlaceholderText" xml:space="preserve">
-    <value>Verification Code</value>
+    <value>Code de Vérification</value>
   </data>
   <data name="Age.Text" xml:space="preserve">
-    <value>Age</value>
+    <value>Âge</value>
   </data>
   <data name="btnCall.Content" xml:space="preserve">
-    <value>Call</value>
+    <value>Appel</value>
   </data>
   <data name="CallTo.Text" xml:space="preserve">
-    <value>Call to speak with the expert</value>
+    <value>Appelez pour parler avec l'expert</value>
   </data>
   <data name="Cancel.Content" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuler</value>
   </data>
   <data name="ChangeLocation.Text" xml:space="preserve">
-    <value>Change Location</value>
+    <value>Changer Location</value>
   </data>
   <data name="Charges.Text" xml:space="preserve">
     <value>Charges</value>
   </data>
   <data name="Comment.Text" xml:space="preserve">
-    <value>2. Any other comment? Please provide us with any other feedback</value>
+    <value>2. Tout autre commentaire? Veuillez nous fournir d'autres commentaires</value>
   </data>
   <data name="CurrentTickets.Text" xml:space="preserve">
-    <value>Current Tickets</value>
+    <value>Tickets Courants</value>
   </data>
   <data name="DayService.Text" xml:space="preserve">
-    <value>QuicKE Day Service</value>
+    <value>QuicKE Service de jour</value>
   </data>
   <data name="Enjoy.Text" xml:space="preserve">
-    <value>Did you enjoy the experience?Kindly take a few minutes to rate our experts</value>
+    <value>Avez-vous apprécié l'expérience?Veuillez prendre quelques minutes pour évaluer nos experts</value>
   </data>
   <data name="Evaluation.Text" xml:space="preserve">
-    <value>Evaluation Form</value>
+    <value>Formulaire d'évaluation</value>
   </data>
   <data name="HaveExpert.Text" xml:space="preserve">
-    <value>We have an expert available for you</value>
+    <value>Nous avons un expert disponible pour vous</value>
   </data>
   <data name="Hire.Content" xml:space="preserve">
-    <value>Hire Expert</value>
+    <value>Retenir les services d'experts</value>
   </data>
   <data name="IDNo.Text" xml:space="preserve">
     <value>ID No</value>
   </data>
   <data name="left.Text" xml:space="preserve">
-    <value>left</value>
+    <value>restant</value>
   </data>
   <data name="LogOut.Text" xml:space="preserve">
-    <value>Log Out</value>
+    <value>Déconnexion</value>
   </data>
   <data name="MonthlyService.Text" xml:space="preserve">
-    <value>QuicKE Monthly Service</value>
+    <value>QuicKE Service mensuel</value>
   </data>
   <data name="Name.Text" xml:space="preserve">
-    <value>Name</value>
+    <value>Nom</value>
   </data>
   <data name="ProceedTo.Content" xml:space="preserve">
-    <value>Proceed to view Full profile</value>
+    <value>Passez à afficher le profil complet</value>
   </data>
   <data name="Profile.Text" xml:space="preserve">
-    <value>Profile</value>
+    <value>Profil</value>
   </data>
   <data name="Rate.Text" xml:space="preserve">
-    <value>1. How would you rate the service you received:</value>
+    <value>1. Comment évaluez-vous le service que vous avez reçu :</value>
   </data>
   <data name="Request.Text" xml:space="preserve">
-    <value>Request another</value>
+    <value>Demander à un autre</value>
   </data>
   <data name="ServiceRequest.Text" xml:space="preserve">
-    <value>Service Requests</value>
+    <value>Les demandes de service</value>
   </data>
   <data name="Submit.Content" xml:space="preserve">
-    <value>Submit</value>
+    <value>Soumettre</value>
   </data>
   <data name="TagNo.Text" xml:space="preserve">
-    <value>Tag No</value>
+    <value>Numéro d'étiquette</value>
   </data>
   <data name="Thank.Text" xml:space="preserve">
-    <value>Thank you for using QuicKE!</value>
+    <value>Nous vous remercions d'utiliser QuicKE!</value>
   </data>
   <data name="txtCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuler</value>
   </data>
   <data name="Email.Text" xml:space="preserve">
-    <value>Email</value>
+    <value>Courriel</value>
   </data>
   <data name="Home.Text" xml:space="preserve">
-    <value>Home</value>
+    <value>Accueil</value>
   </data>
   <data name="Location.Text" xml:space="preserve">
     <value>Location</value>
   </data>
   <data name="MyProfile.Text" xml:space="preserve">
-    <value>My Profile</value>
+    <value>Mon Profil</value>
   </data>
   <data name="Phone.Text" xml:space="preserve">
-    <value>Phone</value>
+    <value>Téléphone</value>
   </data>
   <data name="SelectLocation.Text" xml:space="preserve">
-    <value>Select Location</value>
+    <value>Sélectionner un emplacement</value>
   </data>
   <data name="Done.Content" xml:space="preserve">
-    <value>Done</value>
+    <value>Terminez</value>
   </data>
   <data name="MarkTask.Text" xml:space="preserve">
-    <value>Mark Task as Done</value>
+    <value>Marquer la tâche comme terminée</value>
+  </data>
+  <data name="ChangeLanguage.Text" xml:space="preserve">
+    <value>Changer de langue</value>
+  </data>
+  <data name="cmbLanguage.PlaceholderText" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
+  <data name="LanguageSettings.Text" xml:space="preserve">
+    <value>Paramètres de langue</value>
+  </data>
+  <data name="SelectLanguage.Text" xml:space="preserve">
+    <value>Select Language</value>
   </data>
 </root>

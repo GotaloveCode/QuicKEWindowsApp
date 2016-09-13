@@ -11,9 +11,7 @@ namespace QuicKE.Client
         public GetPendingTicketsServiceProxy()
             : base("tickets?token=" + MFundiRuntime.LogonToken)
         {
-            MFundiRuntime.LogonToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEwNywiaXNzIjoiaHR0cDpcL1wvMTM5LjU5LjE4Ni4xMFwvbWZ1bmRpXC9wdWJsaWNcL2FwaVwvYXV0aCIsImlhdCI6MTQ3MzMzOTk3OCwiZXhwIjoxNTA0ODc1OTc4LCJuYmYiOjE0NzMzMzk5NzgsImp0aSI6ImRmZDA2MzE2MjU0M2VkNWQ1ZTNkNzVlZGMxYjQzYmM1In0.A1MCNgzCHmAeKu7QV8i6M7NY8y_7c-TaQhetqL0RAN4";
-
-            Url = MFundiRuntime.ServiceUrlBase + "tickets?token=" + MFundiRuntime.LogonToken;
+            //Url = MFundiRuntime.ServiceUrlBase + "tickets?token=" + MFundiRuntime.LogonToken;
         }
 
         public async Task<PendingTicketsResult> GetTicketAsync()

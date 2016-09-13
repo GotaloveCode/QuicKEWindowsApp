@@ -105,7 +105,6 @@ namespace QuicKE.Client
             if (context == null)
                 context = new CommandExecutionContext();
 
-            ErrorBucket errors = new ErrorBucket();
             Validate(errors);
 
             // ok?
@@ -131,8 +130,13 @@ namespace QuicKE.Client
                         // save the logontoken
                         localSettings.Values["LogonToken"] = result.token;
 
+                        //fetch pendingtickets & navigate to home
+                        await GetCurrentTickets();
+
                         // navigate to home page...
                         Host.ShowView(typeof(IHomePageViewModel));
+
+
                     }
                     else
                         errors.CopyFrom(result);
@@ -301,9 +305,6 @@ namespace QuicKE.Client
         //get pendingtickets
         private async Task GetCurrentTickets()
         {
-
-            ErrorBucket errors = new ErrorBucket();
-
             var proxy = TinyIoCContainer.Current.Resolve<IGetPendingTicketsServiceProxy>();
 
             using (EnterBusy())
@@ -311,22 +312,15 @@ namespace QuicKE.Client
                 var result = await proxy.GetTicketAsync();
 
                 if (!(result.HasErrors))
-                {
-                   
+                {                   
                     if (result.tickets.Count > 0)
                     {
                         TicketID = result.tickets.First().Id;
                         ApplicationData.Current.LocalSettings.Values["TicketID"] = TicketID; 
-                        ApplicationData.Current.LocalSettings.Values["DailyTicketID"] = TicketID; 
-                   }
+                        ApplicationData.Current.LocalSettings.Values["DailyTicketID"] = TicketID;
+                    }                   
                 }
-                else
-                {
-                    errors.CopyFrom(result);
-                }
-
-                if (errors.HasErrors)
-                    await Host.ShowAlertAsync(errors.GetErrorsAsString());
+                //to avoid no pending tickets error don't check for errors
             }
         }
 

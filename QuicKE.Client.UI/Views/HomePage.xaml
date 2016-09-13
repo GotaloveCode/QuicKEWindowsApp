@@ -94,6 +94,20 @@
                                                Foreground="Black" 
                                                VerticalAlignment="Center"/>
                                 </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                                    <interactivity:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.LanguageSettingsPage"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+
+                                    <Image Source="ms-appx:///Assets/settings.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
+                                    <TextBlock Text="Language Settings" x:Uid="LanguageSettings"
+                                               FontSize="{StaticResource TextStyleLargeFontSize}" 
+                                               Foreground="Black" 
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
                                 
                                 <StackPanel Orientation="Horizontal" Margin="0,15">
                                     <interactivity:Interaction.Behaviors>

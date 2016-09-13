@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
 using Windows.Storage;
-using Windows.UI.Popups;
 
 namespace QuicKE.Client
 {
@@ -128,9 +126,19 @@ namespace QuicKE.Client
                 var result = await proxy.LogOutAsync();
                 if (!(result.HasErrors))
                 {
-
-                    localSettings.Values.Remove("LoggedIn");
                     localSettings.Values.Remove("LogonToken");
+
+                    if (localSettings.Values.ContainsKey("DailyTicketID"))
+                        localSettings.Values.Remove("DailyTicketID");
+
+                    if (localSettings.Values.ContainsKey("TicketID"))
+                        localSettings.Values.Remove("TicketID");
+
+                    localSettings.Values.Remove("Location");
+                    localSettings.Values.Remove("FullName");
+                    localSettings.Values.Remove("PhoneNumber");
+                    localSettings.Values.Remove("Email");
+                    localSettings.Values.Remove("Photo");
 
                     MFundiRuntime.LogonToken = null;
 
@@ -179,7 +187,7 @@ namespace QuicKE.Client
             var proxy = TinyIoCContainer.Current.Resolve<IGetMyProfileServiceProxy>();
             using (EnterBusy())
             {
-                await Host.ToggleProgressBar(true, "Fetching your Location data ...");
+                await Host.ToggleProgressBar(true, "Fetching your Profile information ...");
 
                 var result = await proxy.GetProfileAsync();
 
@@ -190,6 +198,7 @@ namespace QuicKE.Client
                     localSettings.Values["Name"] = result.Profile.name;
                     localSettings.Values["Phone"] = result.Profile.phone;
                     localSettings.Values["Id"] = result.Profile.id;
+                    localSettings.Values["Email"] = result.Profile.email;
 
                     MFundiRuntime.Location = result.Profile.location;
                 }

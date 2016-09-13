@@ -255,4 +255,19 @@
   <data name="MarkTask.Text" xml:space="preserve">
     <value>Mark Task as Done</value>
   </data>
+  <data name="Back.Text" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="ChangeLanguage.Text" xml:space="preserve">
+    <value>Change Language</value>
+  </data>
+  <data name="cmbLanguage.PlaceholderText" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
+  <data name="LanguageSettings.Text" xml:space="preserve">
+    <value>Language Settings</value>
+  </data>
+  <data name="SelectLanguage.Text" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
 </root>

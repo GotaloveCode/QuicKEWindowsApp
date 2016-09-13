@@ -11,7 +11,7 @@ namespace QuicKE.Client
         }
         public async Task<GetMaidResult> GetMaidAsync()
         {
-            Url = MFundiRuntime.ServiceUrlBase + string.Format("tickets/{0}/history?token={1}",ApplicationData.Current.LocalSettings.Values["ticketID"].ToString(), MFundiRuntime.LogonToken);
+            //Url = MFundiRuntime.ServiceUrlBase + string.Format("tickets/{0}/history?token={1}",ApplicationData.Current.LocalSettings.Values["ticketID"].ToString(), MFundiRuntime.LogonToken);
             
            var executeResult = await this.GetAsync();
 

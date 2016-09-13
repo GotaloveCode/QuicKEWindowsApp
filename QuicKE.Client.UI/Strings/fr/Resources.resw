@@ -154,7 +154,7 @@
     <value>Âge</value>
   </data>
   <data name="btnCall.Content" xml:space="preserve">
-    <value>Appel</value>
+    <value>Appeler</value>
   </data>
   <data name="CallTo.Text" xml:space="preserve">
     <value>Appelez pour parler avec l'expert</value>
@@ -266,5 +266,8 @@
   </data>
   <data name="SelectLanguage.Text" xml:space="preserve">
     <value>Select Language</value>
+  </data>
+  <data name="OngoingTickets.Text" xml:space="preserve">
+    <value>Tickets en Cours</value>
   </data>
 </root>

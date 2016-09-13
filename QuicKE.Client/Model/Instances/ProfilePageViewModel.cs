@@ -28,7 +28,7 @@ namespace QuicKE.Client
         {
             base.Activated(args);
 
-            if (localSettings.Values.ContainsKey("Email"))
+            if (localSettings.Values.ContainsKey("FullName") && localSettings.Values.ContainsKey("Email"))
             {
                 Location = localSettings.Values["Location"].ToString();
                 FullName = localSettings.Values["FullName"].ToString();

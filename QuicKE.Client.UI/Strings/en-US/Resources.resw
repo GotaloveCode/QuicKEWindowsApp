@@ -270,4 +270,7 @@
   <data name="SelectLanguage.Text" xml:space="preserve">
     <value>Select Language</value>
   </data>
+  <data name="OngoingTickets.Text" xml:space="preserve">
+    <value>Ongoing Tickets</value>
+  </data>
 </root>

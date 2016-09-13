@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -21,6 +22,7 @@ namespace QuicKE.Client
         public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
         public string SignInText { get { return GetValue<string>(); } set { SetValue(value); } }
+        CultureInfo culture = CultureInfo.CurrentCulture;
         public bool IsSelected {
             get {
                
@@ -28,9 +30,20 @@ namespace QuicKE.Client
             }
             set {
                 if (value == true)
-                    SignInText = "SIGN IN";
+                {
+                    if(culture.Name == "en-US")
+                        SignInText = "SIGN IN";
+                    else
+                     SignInText = "CONNEXION";
+                }
                 else
-                    SignInText = "SIGN UP";
+                {
+                    if (culture.Name == "en-US")
+                        SignInText = "SIGN UP";
+                    else
+                        SignInText = "CRÉER UN COMPTE";
+                }
+                    
                 SetValue(value);
             }
         }

@@ -91,7 +91,7 @@
                         <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.HomePage"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
-                <TextBlock x:Uid="Back" Text="Back" HorizontalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" VerticalAlignment="Stretch" Margin="0,10"></TextBlock>
+                <TextBlock x:Uid="txtCancel" Text="Cancel" HorizontalAlignment="Center" FontSize="{StaticResource TextStyleLargeFontSize}" VerticalAlignment="Stretch" Margin="0,10"></TextBlock>
             </StackPanel>
         </StackPanel>
 

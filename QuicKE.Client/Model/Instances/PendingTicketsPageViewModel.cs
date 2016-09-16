@@ -30,8 +30,7 @@ namespace QuicKE.Client
         {
             base.Initialize(host);
 
-            SubmitCommand = 
-                new DelegateCommand(async (e) => {
+            SubmitCommand = new DelegateCommand(async (e) => {
 
                     TicketID = (int)e;
                     MFundiRuntime.TicketID = TicketID.ToString();
@@ -69,45 +68,6 @@ namespace QuicKE.Client
 
         }
 
-        //private async Task MarkComplete(e)
-        //{
-            
-            
-
-        //    if (!string.IsNullOrEmpty(SelectedTicket.Name))
-        //    {
-        //        TicketID = SelectedTicket.Id;
-
-        //    }
-
-        //    var proxy = TinyIoCContainer.Current.Resolve<ITaskCompleteServiceProxy>();
-
-        //    using (EnterBusy())
-        //    {
-        //        var result = await proxy.TaskCompleteAsync(TicketID);
-
-        //        if (!(result.HasErrors))
-        //        {
-        //            if (result.Status != "success")
-        //            {
-        //                errors.CopyFrom(result);
-        //            }
-        //            else
-        //            {
-        //                var toast = new ToastNotificationBuilder(new string[] { result.Message });
-        //                toast.Update();
-        //                Host.ShowView(typeof(IEvaluationPageViewModel));
-        //            }
-        //        }
-        //        else
-        //        {
-        //            errors.CopyFrom(result);
-        //        }
-
-        //        if (errors.HasErrors)
-        //            await Host.ShowAlertAsync(errors.GetErrorsAsString());
-        //    }
-        //}
 
         public async override void Activated(object args)
         {

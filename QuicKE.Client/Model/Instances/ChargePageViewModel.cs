@@ -94,32 +94,33 @@ namespace QuicKE.Client
 
             if (MFundiRuntime.ServiceTypeID == 2)
             {
-                if (culture.Name == "en-US")
-                    message = string.Format("A finders fee of KES {0} Will be charged from your MPESA to view the expert's full profile", Cost);
-                else
+                if (culture.Name == "fr")
                     message = string.Format("Une commission d'intermédiaire de KES {0} sera débité de votre MPESA pour voir le profil complet de l'expert", Cost);
+                else
+                    message = string.Format("A finders fee of KES {0} Will be charged from your MPESA to view the expert's full profile", Cost);
+
             }
             else
             {
-                if (culture.Name == "en-US")
-                    message = string.Format("A Service charge of KES {0} Will be charged from your MPESA.Click below to proceed", Cost);
-                else
+                if (culture.Name == "fr")
                     message = string.Format("Un frais de service de KES {0} sera débité de votre MPESA.Click ci-dessous pour procéder", Cost);
+                else
+                    message = string.Format("A Service charge of KES {0} Will be charged from your MPESA.Click below to proceed", Cost);
             }
 
             MessageDialog dialog = new MessageDialog(message);
-            if (culture.Name == "en-US")
-            {
-                dialog.Commands.Add(new UICommand("Cancel"));
-                dialog.Commands.Add(new UICommand("OK", async delegate (IUICommand command)
-                {
-                    await RequestPay();
-                }));
-            }
-            else
+            if (culture.Name == "fr")
             {
                 dialog.Commands.Add(new UICommand("Annuler"));
                 dialog.Commands.Add(new UICommand("D'accord", async delegate (IUICommand command)
+                {
+                    await RequestPay();
+                }));                
+            }
+            else
+            {
+                dialog.Commands.Add(new UICommand("Cancel"));
+                dialog.Commands.Add(new UICommand("OK", async delegate (IUICommand command)
                 {
                     await RequestPay();
                 }));
@@ -138,7 +139,10 @@ namespace QuicKE.Client
 
             using (EnterBusy())
             {
-                await Host.ToggleProgressBar(true, "Requesting Payment ...");
+                if (culture.Name == "fr")
+                    await Host.ToggleProgressBar(true, "Demande de Paiement ...");
+                else
+                    await Host.ToggleProgressBar(true, "Requesting Payment ...");
 
                 var result = await proxy.RequestPaymentAsync(MFundiRuntime.ServiceTypeID);
 
@@ -170,10 +174,10 @@ namespace QuicKE.Client
             //TODO remove after debug
             System.Diagnostics.Debug.WriteLine("About to wait 5 seconds");
             await Task.Delay(5000);
-            if (culture.Name == "en-US")
-                await ConfirmPayment();
-            else
+            if (culture.Name == "fr")
                 await ConfirmerPayment();
+            else
+                await ConfirmPayment();
         }
 
         //confirm mpesa received

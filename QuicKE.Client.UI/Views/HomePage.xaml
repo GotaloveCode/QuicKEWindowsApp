@@ -38,7 +38,7 @@
                             </Grid.RowDefinitions>
                             <StackPanel Background="{StaticResource MyOrange}">
                                 <StackPanel Margin="0,15">
-                                    <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80" Margin="0,0,0,10" />
+                                    <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80" Margin="0" />
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Grid.Row="1">
@@ -142,7 +142,6 @@
             </Image>
         </Grid>
         
-        <!--<Image Source="ms-appx:///Assets/homescreen.jpg" Stretch="UniformToFill" Grid.Row="1" Margin="0"/>-->
         
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>

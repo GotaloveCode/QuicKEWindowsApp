@@ -63,7 +63,7 @@
                                     </interactivity:Interaction.Behaviors>
 
                                     <Image Source="ms-appx:///Assets/img_ticket_selected.png" Height="40" HorizontalAlignment="Left" Margin="15,0,30,0" />
-                                    <TextBlock Text="Closed Tickets" x:Uid="CurrentTickets"
+                                    <TextBlock Text="Current Tickets" x:Uid="CurrentTickets"
                                                FontSize="{StaticResource TextStyleLargeFontSize}" 
                                                Foreground="Black" 
                                                VerticalAlignment="Center"/>

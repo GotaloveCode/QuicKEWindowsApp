@@ -255,9 +255,6 @@
   <data name="MarkTask.Text" xml:space="preserve">
     <value>Mark Task as Done</value>
   </data>
-  <data name="Back.Text" xml:space="preserve">
-    <value>Back</value>
-  </data>
   <data name="ChangeLanguage.Text" xml:space="preserve">
     <value>Change Language</value>
   </data>
@@ -272,5 +269,8 @@
   </data>
   <data name="OngoingTickets.Text" xml:space="preserve">
     <value>Ongoing Tickets</value>
+  </data>
+  <data name="changeAddress.Text" xml:space="preserve">
+    <value>CHANGE ADDRESS</value>
   </data>
 </root>

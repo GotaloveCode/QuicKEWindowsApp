@@ -127,10 +127,10 @@
     <value>Vérifier</value>
   </data>
   <data name="chkHasAccount.Content" xml:space="preserve">
-    <value>Vous avez déjà un compte?</value>
+    <value>Avez-vous déjà un compte?</value>
   </data>
   <data name="cmbSelectLocation.PlaceholderText" xml:space="preserve">
-    <value>Choisissez votre emplacement</value>
+    <value>Choisir votre emplacement</value>
   </data>
   <data name="ConfirmPassword.PlaceholderText" xml:space="preserve">
     <value>Confirmer le mot de passe</value>
@@ -157,28 +157,28 @@
     <value>Appeler</value>
   </data>
   <data name="CallTo.Text" xml:space="preserve">
-    <value>Appelez pour parler avec l'expert</value>
+    <value>Appeler l'expert</value>
   </data>
   <data name="Cancel.Content" xml:space="preserve">
     <value>Annuler</value>
   </data>
   <data name="ChangeLocation.Text" xml:space="preserve">
-    <value>Changer Location</value>
+    <value>Changer l'emplacement</value>
   </data>
   <data name="Charges.Text" xml:space="preserve">
-    <value>Charges</value>
+    <value>Frais</value>
   </data>
   <data name="Comment.Text" xml:space="preserve">
     <value>2. Tout autre commentaire? Veuillez nous fournir d'autres commentaires</value>
   </data>
   <data name="CurrentTickets.Text" xml:space="preserve">
-    <value>Tickets Courants</value>
+    <value>Tâche en cours</value>
   </data>
   <data name="DayService.Text" xml:space="preserve">
-    <value>QuicKE Service de jour</value>
+    <value>QuicKE Service d'un jour</value>
   </data>
   <data name="Enjoy.Text" xml:space="preserve">
-    <value>Avez-vous apprécié l'expérience?Veuillez prendre quelques minutes pour évaluer nos experts</value>
+    <value>Avez-vous apprécié le service? Veuillez évaluer notre expert</value>
   </data>
   <data name="Evaluation.Text" xml:space="preserve">
     <value>Formulaire d'évaluation</value>
@@ -187,13 +187,13 @@
     <value>Nous avons un expert disponible pour vous</value>
   </data>
   <data name="Hire.Content" xml:space="preserve">
-    <value>Retenir les services d'experts</value>
+    <value>Embaucher l’expert</value>
   </data>
   <data name="IDNo.Text" xml:space="preserve">
-    <value>ID No</value>
+    <value>N° de l’ID</value>
   </data>
   <data name="left.Text" xml:space="preserve">
-    <value>restant</value>
+    <value>Gauche</value>
   </data>
   <data name="LogOut.Text" xml:space="preserve">
     <value>Déconnexion</value>
@@ -205,28 +205,28 @@
     <value>Nom</value>
   </data>
   <data name="ProceedTo.Content" xml:space="preserve">
-    <value>Passez à afficher le profil complet</value>
+    <value>Passer à l’affichage du profil complet</value>
   </data>
   <data name="Profile.Text" xml:space="preserve">
     <value>Profil</value>
   </data>
   <data name="Rate.Text" xml:space="preserve">
-    <value>1. Comment évaluez-vous le service que vous avez reçu :</value>
+    <value>1. Veuillez évaluer le service reçu :</value>
   </data>
   <data name="Request.Text" xml:space="preserve">
-    <value>Demander à un autre</value>
+    <value>Rechercher un autre Expert</value>
   </data>
   <data name="ServiceRequest.Text" xml:space="preserve">
     <value>Les demandes de service</value>
   </data>
   <data name="Submit.Content" xml:space="preserve">
-    <value>Soumettre</value>
+    <value>Appliquer</value>
   </data>
   <data name="TagNo.Text" xml:space="preserve">
-    <value>Numéro d'étiquette</value>
+    <value>N° du badge</value>
   </data>
   <data name="Thank.Text" xml:space="preserve">
-    <value>Nous vous remercions d'utiliser QuicKE!</value>
+    <value>Merci d’avoir utilisé QuicKE!</value>
   </data>
   <data name="txtCancel.Text" xml:space="preserve">
     <value>Annuler</value>
@@ -238,19 +238,19 @@
     <value>Accueil</value>
   </data>
   <data name="Location.Text" xml:space="preserve">
-    <value>Location</value>
+    <value>Emplacement</value>
   </data>
   <data name="MyProfile.Text" xml:space="preserve">
     <value>Mon Profil</value>
   </data>
   <data name="Phone.Text" xml:space="preserve">
-    <value>Téléphone</value>
+    <value>N° de téléphone portable</value>
   </data>
   <data name="SelectLocation.Text" xml:space="preserve">
     <value>Sélectionner un emplacement</value>
   </data>
   <data name="Done.Content" xml:space="preserve">
-    <value>Terminez</value>
+    <value>Terminer</value>
   </data>
   <data name="MarkTask.Text" xml:space="preserve">
     <value>Marquer la tâche comme terminée</value>
@@ -259,15 +259,18 @@
     <value>Changer de langue</value>
   </data>
   <data name="cmbLanguage.PlaceholderText" xml:space="preserve">
-    <value>Select Language</value>
+    <value>Choisir la langue</value>
   </data>
   <data name="LanguageSettings.Text" xml:space="preserve">
     <value>Paramètres de langue</value>
   </data>
   <data name="SelectLanguage.Text" xml:space="preserve">
-    <value>Select Language</value>
+    <value>Sélectionner la langue</value>
   </data>
   <data name="OngoingTickets.Text" xml:space="preserve">
     <value>Tickets en Cours</value>
+  </data>
+  <data name="changeAddress.Text" xml:space="preserve">
+    <value>Changer l'adresse</value>
   </data>
 </root>

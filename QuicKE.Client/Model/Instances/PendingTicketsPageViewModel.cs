@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
-using Windows.Storage;
 
 namespace QuicKE.Client
 {

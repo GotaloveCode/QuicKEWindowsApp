@@ -54,9 +54,7 @@ namespace QuicKE.Client
             //no caching
             client.DefaultRequestHeaders.IfModifiedSince = DateTimeOffset.Now;
 
-            HttpResponseMessage response = await client.PostAsync(Url, content);
-
-            System.Diagnostics.Debug.WriteLine(Url);
+            HttpResponseMessage response = await client.PostAsync(Url, content);           
 
 
             string outputJson = await response.Content.ReadAsStringAsync();

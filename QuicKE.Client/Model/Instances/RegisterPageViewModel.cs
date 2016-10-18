@@ -14,7 +14,7 @@ namespace QuicKE.Client
     {
 
         public ICommand SignUpCommand { get; private set; }
-        public ICommand SignInCommand { get; private set ; }
+        public ICommand SignInCommand { get; private set; }
         public ICommand VerifyCommand { get; private set; }
         public ICommand UpdateListCommand { get; private set; }
         private int TicketID { get { return GetValue<int>(); } set { SetValue(value); } }
@@ -23,31 +23,34 @@ namespace QuicKE.Client
         public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
         public string SignInText { get { return GetValue<string>(); } set { SetValue(value); } }
         CultureInfo culture = CultureInfo.CurrentCulture;
-        public bool IsSelected {
-            get {
-               
+        public bool IsSelected
+        {
+            get
+            {
+
                 return GetValue<bool>();
             }
-            set {
+            set
+            {
                 if (value == true)
                 {
-                    if(culture.Name == "en-US")
-                        SignInText = "SIGN IN";
+                    if (culture.Name == "fr")
+                        SignInText = "CONNEXION";
                     else
-                     SignInText = "CONNEXION";
+                        SignInText = "SIGN IN";
                 }
                 else
                 {
-                    if (culture.Name == "en-US")
-                        SignInText = "SIGN UP";
-                    else
+                    if (culture.Name == "fr")
                         SignInText = "CRÉER UN COMPTE";
+                    else
+                        SignInText = "SIGN UP";
                 }
-                    
+
                 SetValue(value);
             }
         }
-        public string FullName { get { return GetValue<string>(); } set { SetValue(value); } }        
+        public string FullName { get { return GetValue<string>(); } set { SetValue(value); } }
         public string Password { get { return GetValue<string>(); } set { SetValue(value); } }
         public string Confirm { get { return GetValue<string>(); } set { SetValue(value); } }
         public string Email { get { return GetValue<string>(); } set { SetValue(value); } }
@@ -75,7 +78,7 @@ namespace QuicKE.Client
             UpdateListCommand = new DelegateCommand((args) => Suggest(args as CommandExecutionContext));
             IsSelected = true;
 
-           
+
         }
 
         //verify number
@@ -85,7 +88,12 @@ namespace QuicKE.Client
                 context = new CommandExecutionContext();
 
             if (string.IsNullOrEmpty(PhoneNumber) || PhoneNumber.Length < 12)
-                await Host.ShowAlertAsync("Enter valid phone number");
+            {
+                if (culture.Name == "fr")
+                    await Host.ShowAlertAsync("Entrer un numéro de téléphone valide");
+                else
+                    await Host.ShowAlertAsync("Enter a valid phone number");
+            }
             else
             {
                 var proxy = TinyIoCContainer.Current.Resolve<IVerifyServiceProxy>();
@@ -108,7 +116,7 @@ namespace QuicKE.Client
                         await Host.ShowAlertAsync(errors.GetErrorsAsString());
                 }
             }
-            
+
         }
 
         //login
@@ -128,16 +136,19 @@ namespace QuicKE.Client
                 // call...
                 using (EnterBusy())
                 {
-                    await Host.ToggleProgressBar(true, "Signing In ...");
+                    if (culture.Name == "fr")
+                        await Host.ToggleProgressBar(true, "Connexion en cours ...");
+                    else
+                        await Host.ToggleProgressBar(true, "Signing In ...");
 
                     var result = await proxy.SignInAsync(PhoneNumber, Password);
 
                     if (!(result.HasErrors))
                     {
-                       
+
                         var values = ApplicationData.Current.LocalSettings.Values;
-                        
-                       //assign new token to global class
+
+                        //assign new token to global class
                         MFundiRuntime.LogonToken = result.token;
 
                         // save the logontoken
@@ -153,7 +164,7 @@ namespace QuicKE.Client
                     }
                     else
                         errors.CopyFrom(result);
-                   await Host.ToggleProgressBar(false);
+                    await Host.ToggleProgressBar(false);
                 }
             }
             // errors?
@@ -179,52 +190,56 @@ namespace QuicKE.Client
                 var proxy = TinyIoCContainer.Current.Resolve<IRegisterServiceProxy>();
 
 
-                using (EnterBusy())
+                if (culture.Name == "fr")
+                    await Host.ToggleProgressBar(true, "Enregistrement en cours ...");
+                else
+                    await Host.ToggleProgressBar(true, "Signing Up ...");
+
+                var result = await proxy.RegisterAsync(FullName, PhoneNumber, Password, SelectedLocation, Code, Email);
+
+                // ok?
+                if (!(result.HasErrors))
                 {
-                    await Host.ToggleProgressBar(true, "Signing In...");
-
-                    var result = await proxy.RegisterAsync(FullName, PhoneNumber, Password, SelectedLocation, Code, Email);
-
-                    // ok?
-                    if (!(result.HasErrors))
-                    {                                                
-                        if (result.status == "success")
-                        {
+                    if (result.status == "success")
+                    {
+                        if (culture.Name == "fr")
+                            await Host.ToggleProgressBar(true, string.Format("{0} votre compte a été enregistré avec succès.", FullName));
+                        else
                             await Host.ToggleProgressBar(true, string.Format("{0} your account has been registered successfuly.", FullName));
 
-                            //assign new token to global class
-                            MFundiRuntime.LogonToken = result.token;
+                        //assign new token to global class
+                        MFundiRuntime.LogonToken = result.token;
 
-                            // save logontoken
-                            localSettings.Values["LogonToken"] = result.token;
+                        // save logontoken
+                        localSettings.Values["LogonToken"] = result.token;
 
-                            //save Location                        
-                            localSettings.Values["Location"] = SelectedLocation;
-                            localSettings.Values["FullName"] = FullName;
-                            localSettings.Values["PhoneNumber"] = PhoneNumber;
-                            localSettings.Values["Email"] = Email;
+                        //save Location                        
+                        localSettings.Values["Location"] = SelectedLocation;
+                        localSettings.Values["FullName"] = FullName;
+                        localSettings.Values["PhoneNumber"] = PhoneNumber;
+                        localSettings.Values["Email"] = Email;
 
 
-                            await Host.ToggleProgressBar(false);
+                        await Host.ToggleProgressBar(false);
 
-                            Host.ShowView(typeof(IHomePageViewModel));
-
-                        }
-                        else
-                        {
-                            await Host.ToggleProgressBar(false);
-
-                            errors.AddError(result.status);
-                            await Host.ShowAlertAsync(errors);
-                        }
+                        Host.ShowView(typeof(IHomePageViewModel));
 
                     }
                     else
                     {
-                        errors.CopyFrom(result);
                         await Host.ToggleProgressBar(false);
+
+                        errors.AddError(result.status);
+                        await Host.ShowAlertAsync(errors);
                     }
+
                 }
+                else
+                {
+                    errors.CopyFrom(result);
+                    await Host.ToggleProgressBar(false);
+                }
+
 
             }
 
@@ -238,10 +253,21 @@ namespace QuicKE.Client
         {
             // do basic data presence validation...
             if (string.IsNullOrEmpty(PhoneNumber))
-                errors.AddError("PhoneNumber is required.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Numéro de téléphone est exigé.");
+                else
+                    errors.AddError("PhoneNumber is required.");
+            }
 
             if (string.IsNullOrEmpty(Password) || Password.Length < 6)
-                errors.AddError("Password must be at least 6 characters.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Le mot de passe doit être au moins de 6 caractères");
+                else
+                    errors.AddError("The Password must be at least 6 characters.");
+            }
+
         }
 
         //validate register
@@ -249,24 +275,78 @@ namespace QuicKE.Client
         {
             // do basic data presence validation...
             if (string.IsNullOrEmpty(FullName))
-                errors.AddError("FullName is required.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Nom complet est exigé.");
+                else
+                    errors.AddError("FullName is required.");
+            }
+                
             if (string.IsNullOrEmpty(Password))
-                errors.AddError("Password is required.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Mot de passe requis.");
+                else
+                    errors.AddError("Password is required.");
+            }
+            
             if (string.IsNullOrEmpty(Confirm))
-                errors.AddError("Confirm password is required.");            
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Confirmer le mot de passe.");
+                else
+                    errors.AddError("Confirm password.");
+            }
+            
             // check the passwords...
             if (!(string.IsNullOrEmpty(Password)) && Password != Confirm)
-                errors.AddError("The passwords do not match.");
-            if ( Password.Length < 6)
-                errors.AddError("The passwords must be at least 6 characters.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Le mot de passe ne correspond pas.");
+                else
+                    errors.AddError("The passwords do not match.");
+            }
+            
+            if (Password.Length < 6)
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Le mot de passe doit être au moins de 6 caractères.");
+                else
+                    errors.AddError("The password must be at least 6 characters.");
+            }
+            
             if (string.IsNullOrEmpty(Email))
-                errors.AddError("Email is required.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Adresse e-mail est exigé.");
+                else
+                    errors.AddError("Email is required.");
+            }
+            
             if (string.IsNullOrEmpty(PhoneNumber))
-                errors.AddError("PhoneNumber is required.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Numéro de téléphone est exigé.");
+                else
+                    errors.AddError("PhoneNumber is required.");
+            }
+            
             if ((string.IsNullOrEmpty(PhoneNumber)) && PhoneNumber.Length < 12)
-                errors.AddError("Invalid phone number.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Numéro de téléphone invalide.");
+                else
+                    errors.AddError("Invalid phone number.");
+            }
+            
             if (string.IsNullOrEmpty(Code))
-                errors.AddError("Verification Code is required.");
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Code de vérification est exigé.");
+                else
+                    errors.AddError("Verification Code is required.");
+            }
+            
         }
 
         public async override void Activated(object args)
@@ -275,7 +355,7 @@ namespace QuicKE.Client
 
             using (EnterBusy())
             {
-               await LoadLocations();                
+                await LoadLocations();
             }
         }
 
@@ -294,7 +374,7 @@ namespace QuicKE.Client
                         Locations.Add(item.name);
                         locations.Add(item.name);
                     }
-                        
+
                 }
                 else
                     errors.CopyFrom(result);
@@ -303,7 +383,7 @@ namespace QuicKE.Client
             // errors?
             if (errors.HasErrors)
                 await Host.ShowAlertAsync(errors);
-           
+
         }
 
         //autosuggest filter
@@ -325,13 +405,13 @@ namespace QuicKE.Client
                 var result = await proxy.GetTicketAsync();
 
                 if (!(result.HasErrors))
-                {                   
+                {
                     if (result.tickets.Count > 0)
                     {
                         TicketID = result.tickets.First().Id;
-                        ApplicationData.Current.LocalSettings.Values["TicketID"] = TicketID; 
+                        ApplicationData.Current.LocalSettings.Values["TicketID"] = TicketID;
                         ApplicationData.Current.LocalSettings.Values["DailyTicketID"] = TicketID;
-                    }                   
+                    }
                 }
                 //to avoid no pending tickets error don't check for errors
             }

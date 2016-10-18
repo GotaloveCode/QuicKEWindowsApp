@@ -45,7 +45,7 @@ namespace QuicKE.Client
                 if (culture.Name == "en-US")
                     SummaryText = "A minimum finder's fee will be charged on your account";
                 else
-                    SummaryText = "Les honoraires d'intermédiation minimum sera facturé sur votre compte";
+                    SummaryText = "Des frais minimum seront facturés sur votre compte";
             }
 
             //prompt to pay and proceed to view maid
@@ -95,7 +95,7 @@ namespace QuicKE.Client
             if (MFundiRuntime.ServiceTypeID == 2)
             {
                 if (culture.Name == "fr")
-                    message = string.Format("Une commission d'intermédiaire de KES {0} sera débité de votre MPESA pour voir le profil complet de l'expert", Cost);
+                    message = string.Format("Un frais de KES {0} sera facturé sur votre MPESA pour voir le profil complet de l'expert", Cost);
                 else
                     message = string.Format("A finders fee of KES {0} Will be charged from your MPESA to view the expert's full profile", Cost);
 
@@ -103,7 +103,7 @@ namespace QuicKE.Client
             else
             {
                 if (culture.Name == "fr")
-                    message = string.Format("Un frais de service de KES {0} sera débité de votre MPESA.Click ci-dessous pour procéder", Cost);
+                    message = string.Format("Des frais de service de KES {0} seront débités de votre MPESA. Cliquer ci-dessous pour précéder.", Cost);
                 else
                     message = string.Format("A Service charge of KES {0} Will be charged from your MPESA.Click below to proceed", Cost);
             }
@@ -171,8 +171,7 @@ namespace QuicKE.Client
 
         private async Task delay5()
         {
-            //TODO remove after debug
-            System.Diagnostics.Debug.WriteLine("About to wait 5 seconds");
+           
             await Task.Delay(5000);
             if (culture.Name == "fr")
                 await ConfirmerPayment();
@@ -188,16 +187,12 @@ namespace QuicKE.Client
             using (EnterBusy())
             {
                 //Code = "925TDFUZ";
-                await Host.ToggleProgressBar(true, "Verifying Payment....");
-                //TODO remove after debug
-                System.Diagnostics.Debug.WriteLine("now about to verify payment");
+                await Host.ToggleProgressBar(true, "Verifying Payment....");               
 
                 var result = await proxy.ConfirmPaymentAsync(Code);
 
                 if (!(result.HasErrors))
                 {
-                    //TODO remove after debug
-                    System.Diagnostics.Debug.WriteLine("result returned Status: " + result.Status);
 
                     switch (result.Status)
                     {
@@ -243,15 +238,12 @@ namespace QuicKE.Client
             {
                 //Code = "925TDFUZ";
                 await Host.ToggleProgressBar(true, "Paiement Vérification....");
-                //TODO remove after debug
-                System.Diagnostics.Debug.WriteLine("now about to verifier Paiement");
+                
 
                 var result = await proxy.ConfirmPaymentAsync(Code);
 
                 if (!(result.HasErrors))
-                {
-                    //TODO remove after debug
-                    System.Diagnostics.Debug.WriteLine("result returned Status: " + result.Status);
+                {                   
 
                     switch (result.Status)
                     {
@@ -265,7 +257,7 @@ namespace QuicKE.Client
                             await delay5();
                             break;
                         case "success":
-                            var toast = new ToastNotificationBuilder(new string[] { "Paiement reçu.", "Nous avons reçu votre paiement.\n Kindy proceed to view full profile" });
+                            var toast = new ToastNotificationBuilder(new string[] { "Paiement reçu.", "Nous avons reçu votre paiement.\n Passer à l’affichage du profil complet " });
                             // toast.ImageUri = "ms-appx:///Assets/Toast.jpg";
                             toast.Update();
                             localSettings.Values["Code"] = Code;

@@ -159,7 +159,6 @@
     <Compile Include="Services\Interfaces\IRegisterServiceProxy.cs" />
     <Compile Include="Services\Interfaces\IServiceProxy.cs" />
     <Compile Include="Services\ServiceResults\PendingTicketsResult.cs" />
-    <Compile Include="Services\ServiceResults\SignInResult.cs" />
     <Compile Include="Services\ServiceResults\RegisterResult.cs" />
     <Compile Include="Services\RegisterServiceProxy.cs" />
     <Compile Include="Services\ServiceResults\ServiceExecuteResult.cs" />

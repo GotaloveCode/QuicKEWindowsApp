@@ -38,7 +38,7 @@
 
         <StackPanel Background="white" Grid.Row="1">
             <StackPanel Background="#FFE6E6E6" Grid.Row="2">
-                <TextBlock Text="CHANGE ADDRESS" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10"/>               
+                <TextBlock x:Uid="changeAddress" Text="CHANGE ADDRESS" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10"/>               
             </StackPanel>
             <TextBlock x:Uid="SelectLocation" Text="Select Location" Margin="15,20,15,0"/>
             <Border BorderThickness="1,0,1,1" BorderBrush="{StaticResource MyBlue}" Margin="15,20,15,0">

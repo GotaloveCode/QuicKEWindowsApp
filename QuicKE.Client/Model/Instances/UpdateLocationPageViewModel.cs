@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -7,7 +8,7 @@ using Windows.Storage;
 
 namespace QuicKE.Client
 {
-    // concrete implementation of the RegisterPage's view-model...
+
     public class UpdateLocationPageViewModel : ViewModel, IUpdateLocationPageViewModel
     {
 
@@ -17,6 +18,7 @@ namespace QuicKE.Client
         public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public string SelectedLocation { get { return GetValue<string>();} set { SetValue(value); }}
         ErrorBucket errors = new ErrorBucket();
+        CultureInfo culture = CultureInfo.CurrentCulture;
 
 
 
@@ -29,8 +31,7 @@ namespace QuicKE.Client
             base.Initialize(host);
             Locations = new List<string>();
             locations = new List<string>();
-            //    Locations = new List<string>() { "Kenyatta Avenue", "Moi Avenue", "Tom Mboya Street", "Latema Road", "Mama Ngina Street", "Koinange Street",
-            //"Muindi Mbingu Street", "Taveta Street", "Kimathi Street", "Wabera Street", "Haile Selassie", "Mfangano Street","Harambee Avenue" };
+            
             SubmitCommand = new DelegateCommand((args) => Submit(args as CommandExecutionContext));
             UpdateListCommand = new DelegateCommand((args) => Suggest(args as CommandExecutionContext));
         }
@@ -51,7 +52,12 @@ namespace QuicKE.Client
                 context = new CommandExecutionContext();
 
             if (string.IsNullOrEmpty(SelectedLocation))
-                await Host.ShowAlertAsync("Select a Location");
+            {
+                if (culture.Name == "fr")
+                    await Host.ShowAlertAsync("Sélectionner un emplacement");
+                else
+                    await Host.ShowAlertAsync("Select a Location");
+            }                
             else
             {
                 var proxy = TinyIoCContainer.Current.Resolve<IUpdateLocationServiceProxy>();
@@ -91,8 +97,13 @@ namespace QuicKE.Client
         {
             // do basic data presence validation...
             if (string.IsNullOrEmpty(SelectedLocation))
-                errors.AddError("Select a Location");
-
+            {
+                if (culture.Name == "fr")
+                    errors.AddError("Sélectionner un emplacement");
+                else
+                    errors.AddError("Select a Location");                
+            }
+                
         }
 
         public async override void Activated(object args)

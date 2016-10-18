@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ namespace QuicKE.Client
 {
     public class ViewMaidPageViewModel : ViewModel, IViewMaidPageViewModel
     {
+        CultureInfo culture = CultureInfo.CurrentCulture;
         public ICommand HireCommand { get; private set; }
         public ICommand CallCommand { get; private set; }
         public ICommand CancelCommand { get; private set; }
@@ -63,7 +65,11 @@ namespace QuicKE.Client
                 await GetMaid();
             }else
             {
-                await Host.ToggleProgressBar(true, "Payment not processed");
+                if (culture.Name == "fr")
+                    await Host.ToggleProgressBar(true, "Paiement non traité");
+                else
+                    await Host.ToggleProgressBar(true, "Payment not processed");
+
                 Host.ShowView(typeof(IChargePageViewModel));
             }
 
@@ -76,7 +82,10 @@ namespace QuicKE.Client
             var proxy = TinyIoCContainer.Current.Resolve<IGetMaidsServiceProxy>();
             using (EnterBusy())
             {
-                await Host.ToggleProgressBar(true, "Fetching expert profile ...");
+                if (culture.Name == "fr")
+                    await Host.ToggleProgressBar(true, "Obtention du profil expert ...");
+                else
+                    await Host.ToggleProgressBar(true, "Fetching expert profile ...");
 
                 var result = await proxy.GetMaidAsync();
 
@@ -149,10 +158,18 @@ namespace QuicKE.Client
             if (context == null)
                 context = new CommandExecutionContext();
 
-            if(Count>0)
+            if (Count > 0)
+            {
                 await GetMaid();
+            }
             else
-                await Host.ShowAlertAsync("Please pay to view other experts");
+            {
+                if (culture.Name == "fr")
+                    await Host.ShowAlertAsync(" S'il vous plaît payer pour voir d'autres experts");
+                else
+                    await Host.ShowAlertAsync("Please pay to view other experts");
+            }
+                
         }
 
 
@@ -169,7 +186,10 @@ namespace QuicKE.Client
             // call...
             using (EnterBusy())
             {
-                await Host.ToggleProgressBar(true, "Confirming expert as hired ...");
+                if (culture.Name == "fr")
+                    await Host.ToggleProgressBar(true, "Confirmant expert embauché ...");                
+                else
+                    await Host.ToggleProgressBar(true, "Confirming expert as hired ...");
 
                 var result = await proxy.HireAsync(ticketID);
 

@@ -105,7 +105,6 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Objects\FrameExtender.cs" />
-    <Compile Include="Objects\FrameworkElementExtender.cs" />
     <Compile Include="Objects\PageExtender.cs" />
     <Compile Include="Objects\QuicKEPage.cs" />
     <Compile Include="Objects\ViewModelAttribute.cs" />

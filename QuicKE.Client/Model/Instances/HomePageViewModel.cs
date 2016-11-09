@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 
 namespace QuicKE.Client
@@ -17,6 +19,7 @@ namespace QuicKE.Client
         public int TicketId { get { return GetValue<int>(); } set { SetValue(value); } }
         public bool HasPendingTask { get { return GetValue<bool>(); } set { SetValue(value); } }
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
 
         public HomePageViewModel()
         {
@@ -187,7 +190,9 @@ namespace QuicKE.Client
             var proxy = TinyIoCContainer.Current.Resolve<IGetMyProfileServiceProxy>();
             using (EnterBusy())
             {
-                await Host.ToggleProgressBar(true, "Fetching your Profile information ...");
+                await Host.ToggleProgressBar(true, res.GetString("Loading"));
+
+                Debug.WriteLine("GetMyProfile");
 
                 var result = await proxy.GetProfileAsync();
 

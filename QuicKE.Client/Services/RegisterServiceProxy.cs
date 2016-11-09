@@ -8,6 +8,7 @@ namespace QuicKE.Client
         public RegisterServiceProxy()
             : base("register")
         {
+            Url = MFundiRuntime.ServiceUrlBase + "register";
         }
 
         public async Task<RegisterResult> RegisterAsync(string fullname, string phone_number, string password, string location, string code, string email)

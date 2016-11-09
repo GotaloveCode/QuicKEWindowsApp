@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using TinyIoC;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 
 namespace QuicKE.Client
@@ -10,8 +10,8 @@ namespace QuicKE.Client
         public double Rating { get { return GetValue<double>(); } set { SetValue(value); } }
         public string Review { get { return GetValue<string>(); } set { SetValue(value); } }
         public string TicketID { get { return GetValue<string>(); } set { SetValue(value); } }
-        ErrorBucket errors = new ErrorBucket();
-        CultureInfo culture = CultureInfo.CurrentCulture;
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
+        
 
         public ICommand SubmitCommand
         {
@@ -38,15 +38,13 @@ namespace QuicKE.Client
 
         private async void Evaluate(CommandExecutionContext context)
         {
+            ErrorBucket errors = new ErrorBucket();
             // if we don't have a context, create one...
             if (context == null)
                 context = new CommandExecutionContext();
             if(Rating < 0.5 || Review == null)
             {
-                if (culture.Name == "fr")
-                    await Host.ShowAlertAsync("S'il vous plaît fournir une note et un commentaire");
-                else
-                    await Host.ShowAlertAsync("Please provide a rating and comment");
+                await Host.ShowAlertAsync(res.GetString("Rating"));                
             }
             else
             {
@@ -55,10 +53,7 @@ namespace QuicKE.Client
                 // call...
                 using (EnterBusy())
                 {
-                    if (culture.Name == "fr")
-                        await Host.ShowAlertAsync("Envoi de vos commentaires ...");
-                    else
-                        await Host.ToggleProgressBar(true, "Sending your comments...");
+                    await Host.ToggleProgressBar(true, res.GetString("SendingComments"));
 
                     var result = await proxy.EvaluateAsync(Rating, Review, MFundiRuntime.TicketID);
 

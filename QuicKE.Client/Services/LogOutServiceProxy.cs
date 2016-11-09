@@ -13,6 +13,7 @@ namespace QuicKE.Client.Services
         public LogOutServiceProxy()
              : base("logout")
         {
+            Url = MFundiRuntime.ServiceUrlBase + "logout";
         }
 
         public async Task<SignOutResult> LogOutAsync()

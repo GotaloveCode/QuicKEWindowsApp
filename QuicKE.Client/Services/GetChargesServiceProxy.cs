@@ -7,13 +7,14 @@ namespace QuicKE.Client
     public class GetChargesServiceProxy : ServiceProxy, IGetChargesServiceProxy
     {
         public GetChargesServiceProxy()
-            : base("professions/1/services?token=" + MFundiRuntime.LogonToken) //change this to an id with time
-        {           
+            : base("professions/1/services") //change this to an id with time
+        {
+           Url = MFundiRuntime.ServiceUrlBase + "professions/1/services";
         }
+
         public async Task<GetServicesResult> GetServicesAsync()
         {
-            Url = MFundiRuntime.ServiceUrlBase + "professions/1/services?token=" + MFundiRuntime.LogonToken;
-            var executeResult = await this.GetAsync();
+           var executeResult = await this.GetAsync();
            
             // did it work?
             if (!(executeResult.HasErrors))

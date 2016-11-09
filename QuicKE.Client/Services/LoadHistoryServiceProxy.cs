@@ -6,14 +6,14 @@ namespace QuicKE.Client
     public class LoadTicketServiceProxy : ServiceProxy, ILoadHistoryServiceProxy
     {
         public LoadTicketServiceProxy()
-            : base(string.Format("tickets/{0}/history?token={1}", ApplicationData.Current.LocalSettings.Values["ticketID"].ToString(), MFundiRuntime.LogonToken))
+            : base(string.Format("tickets/{0}/history", ApplicationData.Current.LocalSettings.Values["ticketID"].ToString()))
         {
+            Url = MFundiRuntime.ServiceUrlBase + string.Format("tickets/{0}/history", ApplicationData.Current.LocalSettings.Values["ticketID"].ToString());
         }
         public async Task<GetMaidResult> GetMaidAsync()
-        {
-            //Url = MFundiRuntime.ServiceUrlBase + string.Format("tickets/{0}/history?token={1}",ApplicationData.Current.LocalSettings.Values["ticketID"].ToString(), MFundiRuntime.LogonToken);
+        {          
             
-           var executeResult = await this.GetAsync();
+           var executeResult = await GetAsync();
 
             // did it work?
             if (!(executeResult.HasErrors))

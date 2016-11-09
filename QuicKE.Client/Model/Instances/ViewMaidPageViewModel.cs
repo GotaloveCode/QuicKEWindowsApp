@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -11,7 +11,6 @@ namespace QuicKE.Client
 {
     public class ViewMaidPageViewModel : ViewModel, IViewMaidPageViewModel
     {
-        CultureInfo culture = CultureInfo.CurrentCulture;
         public ICommand HireCommand { get; private set; }
         public ICommand CallCommand { get; private set; }
         public ICommand CancelCommand { get; private set; }
@@ -28,9 +27,10 @@ namespace QuicKE.Client
         public string Code { get { return GetValue<string>(); } set { SetValue(value); } }
         public int Count { get { return GetValue<int>(); } set { SetValue(value); } }
         public bool IsMonthly { get; set; }
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
 
         //xaml images cannot use a base64 string as their source. We'll need to create a bitmap image instead. 
-         
+
 
         public ViewMaidPageViewModel()
         {
@@ -65,11 +65,8 @@ namespace QuicKE.Client
                 await GetMaid();
             }else
             {
-                if (culture.Name == "fr")
-                    await Host.ToggleProgressBar(true, "Paiement non traité");
-                else
-                    await Host.ToggleProgressBar(true, "Payment not processed");
-
+                await Host.ToggleProgressBar(true, res.GetString("NotProcessed"));
+               
                 Host.ShowView(typeof(IChargePageViewModel));
             }
 
@@ -82,10 +79,7 @@ namespace QuicKE.Client
             var proxy = TinyIoCContainer.Current.Resolve<IGetMaidsServiceProxy>();
             using (EnterBusy())
             {
-                if (culture.Name == "fr")
-                    await Host.ToggleProgressBar(true, "Obtention du profil expert ...");
-                else
-                    await Host.ToggleProgressBar(true, "Fetching expert profile ...");
+                await Host.ToggleProgressBar(true, res.GetString("FetchExpert"));
 
                 var result = await proxy.GetMaidAsync();
 
@@ -164,10 +158,7 @@ namespace QuicKE.Client
             }
             else
             {
-                if (culture.Name == "fr")
-                    await Host.ShowAlertAsync(" S'il vous plaît payer pour voir d'autres experts");
-                else
-                    await Host.ShowAlertAsync("Please pay to view other experts");
+                await Host.ShowAlertAsync(res.GetString("Pay"));                
             }
                 
         }
@@ -186,10 +177,7 @@ namespace QuicKE.Client
             // call...
             using (EnterBusy())
             {
-                if (culture.Name == "fr")
-                    await Host.ToggleProgressBar(true, "Confirmant expert embauché ...");                
-                else
-                    await Host.ToggleProgressBar(true, "Confirming expert as hired ...");
+                await Host.ToggleProgressBar(true, res.GetString("ConfirmExpert"));
 
                 var result = await proxy.HireAsync(ticketID);
 

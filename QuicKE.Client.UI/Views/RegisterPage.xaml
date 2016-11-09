@@ -53,10 +53,10 @@
                         </Grid.ColumnDefinitions>
                         <TextBox x:Uid="txtVerification" HorizontalAlignment="Stretch" 
                       Text="{Binding Code, Mode=TwoWay}"
-                       Margin="0,0,0,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
-                              Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" VerticalAlignment="Bottom"/>
+                       Margin="0,0,5,3" BorderBrush="{StaticResource MyBlue}" BorderThickness="1,0,1,1" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" VerticalAlignment="Center"/>
                       
-                        <Button x:Uid="btnVerify" Grid.Column="1" Content="Verify" BorderThickness="0" HorizontalAlignment="Left" Foreground="{StaticResource MyBlue}"
+                        <Button x:Uid="btnVerify" Grid.Column="1" Content="VERIFY" BorderThickness="0" HorizontalAlignment="Left" Background="{StaticResource MyBlue}"
                              Command="{Binding VerifyCommand}" Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" VerticalAlignment="Center"/>
                     </Grid>
 
@@ -99,7 +99,7 @@
                 </StackPanel>
                 <Button x:Uid="btnSignIn"
                     Background="{StaticResource MyBlue}"
-                    Content="Sign In"
+                    Content="SIGN IN"
                     Foreground="white"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Stretch"
@@ -108,9 +108,9 @@
                     Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Margin="0,15,0,0" 
                     BorderBrush="{StaticResource MyBlue}"/>
-                <HyperlinkButton  x:Uid="ForgotPassword" HorizontalAlignment="Center"
-                Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,15,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0"
-                                 Visibility="{Binding IsSelected, Converter={StaticResource OppositeBoolConverter}}" Content="Forgot Password?"/>
+                <Button x:Uid="ForgotPassword" HorizontalAlignment="Center" Command="{Binding ForgotCommand}"
+                        Foreground="{StaticResource MyBlue}" FontSize="16" FontWeight="SemiBold" Margin="0,15,15,0" BorderBrush="{StaticResource MyBlue}" BorderThickness="0,0,0,1" Padding="0,3,0,0"
+                                 Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" Content="Forgot Password?"/>
             </StackPanel>
         
         <Button Grid.Row="2" x:Uid="btnSignUp" 

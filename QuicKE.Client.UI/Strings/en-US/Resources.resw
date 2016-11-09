@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnSignIn.Content" xml:space="preserve">
-    <value>Sign In</value>
+    <value>SIGN IN</value>
   </data>
   <data name="btnSignUp.Content" xml:space="preserve">
-    <value>Sign Up</value>
+    <value>SIGN UP</value>
   </data>
   <data name="btnVerify.Content" xml:space="preserve">
     <value>Verify</value>
@@ -272,5 +272,116 @@
   </data>
   <data name="changeAddress.Text" xml:space="preserve">
     <value>CHANGE ADDRESS</value>
+  </data>
+  <data name="btnReset.Content" xml:space="preserve">
+    <value>RESET PASSWORD</value>
+  </data>
+  <data name="InvalidPhone" xml:space="preserve">
+    <value>Invalid phone number.</value>
+  </data>
+  <data name="MatchPassword" xml:space="preserve">
+    <value>The passwords do not match.</value>
+  </data>
+  <data name="RequiredCode" xml:space="preserve">
+    <value>Verification Code is required.</value>
+  </data>
+  <data name="RequiredEmail" xml:space="preserve">
+    <value>Email is required.</value>
+  </data>
+  <data name="RequiredName" xml:space="preserve">
+    <value>FullName is required.</value>
+  </data>
+  <data name="RequiredPassword" xml:space="preserve">
+    <value>Password is required.</value>
+  </data>
+  <data name="RequiredPhone" xml:space="preserve">
+    <value>PhoneNumber is required.</value>
+  </data>
+  <data name="txtCode.Text" xml:space="preserve">
+    <value>Verification Code</value>
+  </data>
+  <data name="txtConfirm.Text" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="txtPassword.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="ValidPassword" xml:space="preserve">
+    <value>The password must be at least 6 characters.</value>
+  </data>
+  <data name="Kindly.Text" xml:space="preserve">
+    <value>"Kindly Enter your phone number below, A  verification code will be sent to you to help reset your password."</value>
+  </data>
+  <data name="registered" xml:space="preserve">
+    <value>{0} your account has been registered successfuly.</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>Signing In</value>
+  </data>
+  <data name="SigningUp" xml:space="preserve">
+    <value>Signing Up</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Signing Out ...</value>
+  </data>
+  <data name="NoInternet" xml:space="preserve">
+    <value>No internet connectivity</value>
+  </data>
+  <data name="ConfirmExpert" xml:space="preserve">
+    <value>Confirming expert as hired</value>
+  </data>
+  <data name="ErrorRequest" xml:space="preserve">
+    <value>An error occured while trying to complete your request</value>
+  </data>
+  <data name="FetchExpert" xml:space="preserve">
+    <value>Fetching expert profile</value>
+  </data>
+  <data name="FinderFee" xml:space="preserve">
+    <value>A minimum finder's fee will be charged on your account</value>
+  </data>
+  <data name="Finders" xml:space="preserve">
+    <value>A finders fee of KES {0} Will be charged from your MPESA to view the expert's full profile</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="NoPending" xml:space="preserve">
+    <value>No pending tickets</value>
+  </data>
+  <data name="NotProcessed" xml:space="preserve">
+    <value>Payment not processed</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Pay" xml:space="preserve">
+    <value>Please pay to view other experts</value>
+  </data>
+  <data name="PaymentReceived" xml:space="preserve">
+    <value>Payment Received</value>
+  </data>
+  <data name="ProceedTransaction" xml:space="preserve">
+    <value>To proceed with transaction click 'Proceed to view Full profile'</value>
+  </data>
+  <data name="RequestingPayment" xml:space="preserve">
+    <value>Requesting Payment</value>
+  </data>
+  <data name="SendingComments" xml:space="preserve">
+    <value>Sending your comments</value>
+  </data>
+  <data name="ServiceCharge" xml:space="preserve">
+    <value>A Service charge of KES {0} Will be charged from your MPESA.Click below to proceed</value>
+  </data>
+  <data name="StandardFee" xml:space="preserve">
+    <value>A minimum standard fee will be charged on your account</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Please provide a rating and comment</value>
+  </data>
+  <data name="VerifyingPayment" xml:space="preserve">
+    <value>Verifying Payment</value>
+  </data>
+  <data name="WeReceived" xml:space="preserve">
+    <value>We have received your payment.\n Kindly proceed to view full profile</value>
   </data>
 </root>

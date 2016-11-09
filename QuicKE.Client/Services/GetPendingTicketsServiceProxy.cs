@@ -9,12 +9,15 @@ namespace QuicKE.Client
     public class GetPendingTicketsServiceProxy : ServiceProxy, IGetPendingTicketsServiceProxy
     {
         public GetPendingTicketsServiceProxy()
-            : base("tickets?token=" + MFundiRuntime.LogonToken)
+            : base("tickets")
         {
+            Url = MFundiRuntime.ServiceUrlBase + "tickets";
+            System.Diagnostics.Debug.WriteLine("GetPendingTicketsServiceProxy" + Url);
         }
 
         public async Task<PendingTicketsResult> GetTicketAsync()
         {
+            
             var executeResult = await GetAsync();
 
             // did it work?

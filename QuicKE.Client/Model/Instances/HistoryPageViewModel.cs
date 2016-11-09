@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace QuicKE.Client
 {
-     public class HistoryPageViewModel : ViewModel, IHistoryPageViewModel
+    public class HistoryPageViewModel : ViewModel, IHistoryPageViewModel
     {
         public ICommand HireCommand { get; private set; }
         public ICommand CallCommand { get; private set; }
@@ -30,6 +28,7 @@ namespace QuicKE.Client
         public int Count { get { return GetValue<int>(); } set { SetValue(value); } }
         public bool IsMonthly { get { return GetValue<bool>(); } set { SetValue(value); } }
 
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
         //xaml images cannot use a base64 string as their source. We'll need to create a bitmap image instead. 
 
 
@@ -65,7 +64,7 @@ namespace QuicKE.Client
             }
             else
             {
-                await Host.ShowAlertAsync("No pending tickets");                
+                await Host.ShowAlertAsync(res.GetString("NoPending"));                
             }
 
         }
@@ -136,7 +135,7 @@ namespace QuicKE.Client
             var proxy = TinyIoCContainer.Current.Resolve<ILoadHistoryServiceProxy>();
             using (EnterBusy())
             {
-                await Host.ToggleProgressBar(true, "Fetching expert profile ...");
+                await Host.ToggleProgressBar(true, res.GetString("Loading"));
 
                 var result = await proxy.GetMaidAsync();
 
@@ -214,7 +213,7 @@ namespace QuicKE.Client
             if (Count > 0)
                 await GetMaid();
             else
-                await Host.ShowAlertAsync("Please pay to view other experts");
+                await Host.ShowAlertAsync(res.GetString("Pay"));
         }
 
 
@@ -231,7 +230,7 @@ namespace QuicKE.Client
             // call...
             using (EnterBusy())
             {
-                await Host.ToggleProgressBar(true, "Confirming expert as hired ...");
+                await Host.ToggleProgressBar(true, res.GetString("ConfirmExpert"));
 
                 var result = await proxy.HireAsync(ticketID);
 

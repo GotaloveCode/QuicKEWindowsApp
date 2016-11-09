@@ -3,15 +3,15 @@ using Windows.Data.Json;
 
 namespace QuicKE.Client
 {
-    public class VerifyServiceProxy : ServiceProxy, IVerifyServiceProxy
+
+    public class ForgotPassServiceProxy : ServiceProxy, IForgotPassServiceProxy
     {
-        public VerifyServiceProxy()
-            : base("phone/verify")
+        public ForgotPassServiceProxy ()
+            : base("forgot-password")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "phone/verify";
         }
 
-        public async Task<VerifyResult> VerifyAsync(string phone_number)
+        public async Task<NewPassResult> VerifyAsync(string phone_number)
         {
             // package up the request...
             JsonObject input = new JsonObject();
@@ -23,10 +23,12 @@ namespace QuicKE.Client
             if (!(executeResult.HasErrors))
             {
                 string status = (string)executeResult.Output["status"];
-                return new VerifyResult(status);
+                string message = (string)executeResult.Output["message"];
+
+                return new NewPassResult(status,message);
             }
             else
-                return new VerifyResult(executeResult);
+                return new NewPassResult(executeResult);
         }
 
     }

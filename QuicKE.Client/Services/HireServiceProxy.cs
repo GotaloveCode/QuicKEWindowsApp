@@ -12,6 +12,7 @@ namespace QuicKE.Client
         public HireServiceProxy()
             : base("experts/hire")
         {
+            Url = MFundiRuntime.ServiceUrlBase + "experts/hire";
         }
 
         public async Task<TaskCompleteResult> HireAsync(int ticketID)

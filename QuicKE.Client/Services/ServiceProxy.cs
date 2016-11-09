@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Data.Json;
 using Windows.Networking.Connectivity;
 
@@ -13,8 +15,9 @@ namespace QuicKE.Client
 {
     public abstract class ServiceProxy : IServiceProxy
     {
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
         // the URL that the proxy connects to...
-        public static string Url { get; set; }
+        public string Url { get; set; }
 
         JObject output = new JObject();
 
@@ -37,8 +40,8 @@ namespace QuicKE.Client
         public async Task<ServiceExecuteResult> PostAsync(JsonObject input)
         {
             //no internet
-            if (NetworkInformation.GetInternetConnectionProfile() == null)
-                return new ServiceExecuteResult(output, "No internet connectivity");
+            if (!HasInternetConnection())
+                return new ServiceExecuteResult(output, res.GetString("NoInternet"));
 
             var json = input.Stringify();
 
@@ -52,28 +55,32 @@ namespace QuicKE.Client
             //json response
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             //no caching
+
             client.DefaultRequestHeaders.IfModifiedSince = DateTimeOffset.Now;
 
-            HttpResponseMessage response = await client.PostAsync(Url, content);           
+            HttpResponseMessage response = await client.PostAsync(Url, content);
 
 
             string outputJson = await response.Content.ReadAsStringAsync();
 
-            System.Diagnostics.Debug.WriteLine(outputJson);
 
 
             output = JObject.Parse(outputJson);
 
             if (response.StatusCode == HttpStatusCode.OK)
-            {                
+            {
+                Debug.WriteLine("POST - 200:" + Url + ": " + outputJson);
                 return new ServiceExecuteResult(output);
             }
             else if (response.StatusCode == HttpStatusCode.MethodNotAllowed)
             {
+                Debug.WriteLine("POST - 405:" + Url + ": " + outputJson);
+
                 return new ServiceExecuteResult(output, (string)output["message"]);
             }
             else
             {
+                Debug.WriteLine("POST- Error: " + response.StatusCode.ToString() + ": " + Url + ": " + outputJson);
                 string error = "";
 
                 JToken jtoken = output["error"];
@@ -103,23 +110,23 @@ namespace QuicKE.Client
         public async Task<ServiceExecuteResult> GetAsync()
         {
             //no internet
-            if (NetworkInformation.GetInternetConnectionProfile() == null)
-                return new ServiceExecuteResult(output, "No internet connectivity");
+            if (!HasInternetConnection())
+                return new ServiceExecuteResult(output, res.GetString("NoInternet"));
 
             HttpClient client = new HttpClient();
 
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            //no caching
+            // some requests need a token...
+            if (MFundiRuntime.HasLogonToken)
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MFundiRuntime.LogonToken);
+            //no caching           
             client.DefaultRequestHeaders.IfModifiedSince = DateTimeOffset.Now;
 
             HttpResponseMessage response = await client.GetAsync(Url);
 
-            System.Diagnostics.Debug.WriteLine(Url);
 
             string outputJson = await response.Content.ReadAsStringAsync();
-
-            System.Diagnostics.Debug.WriteLine( outputJson);
 
             output = JObject.Parse(outputJson);
 
@@ -127,17 +134,18 @@ namespace QuicKE.Client
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
+                Debug.WriteLine("GET - 200:" + Url + ": " + outputJson);
                 if ((string)output["status"] == "error")
                 {
-                        if (output["error"]["message"] is JArray)
-                        {
-                            List<string> errors = output["error"]["message"].Select(jv => (string)jv).ToList();
-                            return new ServiceExecuteResult(output, errors);
-                        }
-                        else
-                        {
-                            return new ServiceExecuteResult(output, (string)output["error"]["message"]);
-                        }
+                    if (output["error"]["message"] is JArray)
+                    {
+                        List<string> errors = output["error"]["message"].Select(jv => (string)jv).ToList();
+                        return new ServiceExecuteResult(output, errors);
+                    }
+                    else
+                    {
+                        return new ServiceExecuteResult(output, (string)output["error"]["message"]);
+                    }
 
                 }
                 else
@@ -145,14 +153,15 @@ namespace QuicKE.Client
                     return new ServiceExecuteResult(output);
                 }
             }
-            else if(response.StatusCode == HttpStatusCode.MethodNotAllowed)
+            else if (response.StatusCode == HttpStatusCode.MethodNotAllowed)
             {
+                Debug.WriteLine("GET - 405:" + Url + ": " + outputJson);
                 error = (string)output["message"];
                 return new ServiceExecuteResult(output, error);
             }
             else
             {
-
+                Debug.WriteLine("GET - Error: " + response.StatusCode.ToString() + ": " + Url + ": " + outputJson);
                 JToken jtoken = output["error"];
 
                 if (jtoken != null)
@@ -168,13 +177,18 @@ namespace QuicKE.Client
                         return new ServiceExecuteResult(output, error);
                     }
                 }
-                else                
+                else
                     return new ServiceExecuteResult(output);
-                
+
             }
         }
 
 
+        public static bool HasInternetConnection()
+        {
+            ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+            return (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess);
+        }
 
     }
 

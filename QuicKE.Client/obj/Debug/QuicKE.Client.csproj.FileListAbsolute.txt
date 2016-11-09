@@ -16,4 +16,3 @@ C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\De
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\Debug\qualifiers.txt
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\Debug\qualifiers.txt.intermediate
 C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\Debug\MultipleQualifiersPerDimensionFound.txt
-C:\Users\marti\Documents\Visual Studio 2015\Projects\QuicKE\QuicKE.Client\obj\Debug\QuicKE.Client.csprojResolveAssemblyReference.cache

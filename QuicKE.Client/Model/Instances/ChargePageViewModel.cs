@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Popups;
 
@@ -22,7 +22,7 @@ namespace QuicKE.Client
 
         ErrorBucket errors = new ErrorBucket();
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-        CultureInfo culture = CultureInfo.CurrentCulture;
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
 
 
         public ChargePageViewModel()
@@ -35,17 +35,11 @@ namespace QuicKE.Client
 
             if (MFundiRuntime.ServiceTypeID == 1)
             {
-                if (culture.Name == "en-US")
-                    SummaryText = "A minimum standard fee will be charged on your account";
-                else
-                    SummaryText = "Des frais minimum seront facturés sur votre compte";
+               SummaryText = res.GetString("StandardFee");                
             }
             else
             {
-                if (culture.Name == "en-US")
-                    SummaryText = "A minimum finder's fee will be charged on your account";
-                else
-                    SummaryText = "Des frais minimum seront facturés sur votre compte";
+                SummaryText = res.GetString("FinderFee");               
             }
 
             //prompt to pay and proceed to view maid
@@ -94,40 +88,21 @@ namespace QuicKE.Client
 
             if (MFundiRuntime.ServiceTypeID == 2)
             {
-                if (culture.Name == "fr")
-                    message = string.Format("Un frais de KES {0} sera facturé sur votre MPESA pour voir le profil complet de l'expert", Cost);
-                else
-                    message = string.Format("A finders fee of KES {0} Will be charged from your MPESA to view the expert's full profile", Cost);
-
+                message = string.Format(res.GetString("Finders"), Cost);
             }
             else
             {
-                if (culture.Name == "fr")
-                    message = string.Format("Des frais de service de KES {0} seront débités de votre MPESA. Cliquer ci-dessous pour précéder.", Cost);
-                else
-                    message = string.Format("A Service charge of KES {0} Will be charged from your MPESA.Click below to proceed", Cost);
+                message = string.Format(res.GetString("ServiceCharge"), Cost);
             }
 
             MessageDialog dialog = new MessageDialog(message);
-            if (culture.Name == "fr")
+            dialog.Commands.Add(new UICommand(res.GetString("Cancel/Content")));
+            dialog.Commands.Add(new UICommand(res.GetString("OK"), async delegate (IUICommand command)
             {
-                dialog.Commands.Add(new UICommand("Annuler"));
-                dialog.Commands.Add(new UICommand("D'accord", async delegate (IUICommand command)
-                {
-                    await RequestPay();
-                }));                
-            }
-            else
-            {
-                dialog.Commands.Add(new UICommand("Cancel"));
-                dialog.Commands.Add(new UICommand("OK", async delegate (IUICommand command)
-                {
-                    await RequestPay();
-                }));
-            }
+                await RequestPay();
+            }));
 
-
-
+            
             await dialog.ShowAsync();
 
         }
@@ -139,11 +114,8 @@ namespace QuicKE.Client
 
             using (EnterBusy())
             {
-                if (culture.Name == "fr")
-                    await Host.ToggleProgressBar(true, "Demande de Paiement ...");
-                else
-                    await Host.ToggleProgressBar(true, "Requesting Payment ...");
-
+                await Host.ToggleProgressBar(true, res.GetString("RequestingPayment"));
+                
                 var result = await proxy.RequestPaymentAsync(MFundiRuntime.ServiceTypeID);
 
 
@@ -171,12 +143,10 @@ namespace QuicKE.Client
 
         private async Task delay5()
         {
-           
+
             await Task.Delay(5000);
-            if (culture.Name == "fr")
-                await ConfirmerPayment();
-            else
-                await ConfirmPayment();
+
+            await ConfirmPayment();
         }
 
         //confirm mpesa received
@@ -187,7 +157,7 @@ namespace QuicKE.Client
             using (EnterBusy())
             {
                 //Code = "925TDFUZ";
-                await Host.ToggleProgressBar(true, "Verifying Payment....");               
+                await Host.ToggleProgressBar(true, res.GetString("VerifyingPayment"));
 
                 var result = await proxy.ConfirmPaymentAsync(Code);
 
@@ -197,16 +167,16 @@ namespace QuicKE.Client
                     switch (result.Status)
                     {
                         case "canceled":
-                            await Host.ShowAlertAsync("To proceed with transaction click 'Proceed to view Full profile'");
+                            await Host.ShowAlertAsync(res.GetString("ProceedTransaction"));
                             break;
                         case "error":
-                            await Host.ShowAlertAsync("An error occured while trying to complete your request.");
+                            await Host.ShowAlertAsync(res.GetString("ErrorRequest."));
                             break;
                         case "waiting":
                             await delay5();
                             break;
                         case "success":
-                            var toast = new ToastNotificationBuilder(new string[] { "Payment Received.", "We have received your payment.\n Kindly proceed to view full profile" });
+                            var toast = new ToastNotificationBuilder(new string[] { res.GetString("PaymentReceived"), res.GetString("WeReceived") });
                             // toast.ImageUri = "ms-appx:///Assets/Toast.jpg";
                             toast.Update();
                             localSettings.Values["Code"] = Code;
@@ -228,56 +198,6 @@ namespace QuicKE.Client
             }
         }
 
-
-        //confirm mpesa french received
-        private async Task ConfirmerPayment()
-        {
-            var proxy = TinyIoCContainer.Current.Resolve<IConfirmPaymentServiceProxy>();
-
-            using (EnterBusy())
-            {
-                //Code = "925TDFUZ";
-                await Host.ToggleProgressBar(true, "Paiement Vérification....");
-                
-
-                var result = await proxy.ConfirmPaymentAsync(Code);
-
-                if (!(result.HasErrors))
-                {                   
-
-                    switch (result.Status)
-                    {
-                        case "canceled":
-                            await Host.ShowAlertAsync("Pour procéder à la transaction , cliquez sur 'Continuer pour afficher le profil complet'");
-                            break;
-                        case "error":
-                            await Host.ShowAlertAsync("Une erreur est survenue en essayant de compléter votre demande.");
-                            break;
-                        case "waiting":
-                            await delay5();
-                            break;
-                        case "success":
-                            var toast = new ToastNotificationBuilder(new string[] { "Paiement reçu.", "Nous avons reçu votre paiement.\n Passer à l’affichage du profil complet " });
-                            // toast.ImageUri = "ms-appx:///Assets/Toast.jpg";
-                            toast.Update();
-                            localSettings.Values["Code"] = Code;
-                            Host.ShowView(typeof(IViewMaidPageViewModel));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    errors.CopyFrom(result);
-                }
-
-                if (errors.HasErrors)
-                    await Host.ShowAlertAsync(errors);
-
-                await Host.ToggleProgressBar(false);
-            }
-        }
 
 
 

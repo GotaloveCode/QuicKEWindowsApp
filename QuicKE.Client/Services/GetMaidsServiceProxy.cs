@@ -7,15 +7,15 @@ namespace QuicKE.Client
     public class GetMaidsServiceProxy : ServiceProxy, IGetMaidsServiceProxy
     {
         public GetMaidsServiceProxy()
-            : base("experts/profession/1/day?code=" + ApplicationData.Current.LocalSettings.Values["Code"].ToString() + "&token=" + MFundiRuntime.LogonToken)
+            : base("experts/profession/1/day?code=" + ApplicationData.Current.LocalSettings.Values["Code"].ToString())
         {
         }
         public async Task<GetMaidResult> GetMaidAsync()
         {
             if (MFundiRuntime.ServiceTypeID == 1)
-                Url = MFundiRuntime.ServiceUrlBase + "experts/profession/1/day?code=" + ApplicationData.Current.LocalSettings.Values["Code"].ToString() + "&token=" + MFundiRuntime.LogonToken;
+                Url = MFundiRuntime.ServiceUrlBase + "experts/profession/1/day?code=" + ApplicationData.Current.LocalSettings.Values["Code"].ToString();
             else
-                Url = MFundiRuntime.ServiceUrlBase + "experts/profession/1/fulltime?code=" + ApplicationData.Current.LocalSettings.Values["Code"].ToString() + "&token=" + MFundiRuntime.LogonToken;
+                Url = MFundiRuntime.ServiceUrlBase + "experts/profession/1/fulltime?code=" + ApplicationData.Current.LocalSettings.Values["Code"].ToString();
 
             var executeResult = await this.GetAsync();
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 
 namespace QuicKE.Client
@@ -16,13 +17,13 @@ namespace QuicKE.Client
         public ICommand SignUpCommand { get; private set; }
         public ICommand SignInCommand { get; private set; }
         public ICommand VerifyCommand { get; private set; }
+        public ICommand ForgotCommand { get; private set; }
         public ICommand UpdateListCommand { get; private set; }
         private int TicketID { get { return GetValue<int>(); } set { SetValue(value); } }
         private List<string> locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public string SelectedLocation { get { return GetValue<string>(); } set { SetValue(value); } }
         public string SignInText { get { return GetValue<string>(); } set { SetValue(value); } }
-        CultureInfo culture = CultureInfo.CurrentCulture;
         public bool IsSelected
         {
             get
@@ -34,17 +35,11 @@ namespace QuicKE.Client
             {
                 if (value == true)
                 {
-                    if (culture.Name == "fr")
-                        SignInText = "CONNEXION";
-                    else
-                        SignInText = "SIGN IN";
+                  SignInText = res.GetString("btnSignIn/Content");                   
                 }
                 else
                 {
-                    if (culture.Name == "fr")
-                        SignInText = "CRÉER UN COMPTE";
-                    else
-                        SignInText = "SIGN UP";
+                    SignInText = res.GetString("btnSignUp/Content");
                 }
 
                 SetValue(value);
@@ -59,7 +54,8 @@ namespace QuicKE.Client
         public string Code { get { return GetValue<string>(); } set { SetValue(value); } }
 
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-        ErrorBucket errors = new ErrorBucket();
+        
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
 
 
         public RegisterPageViewModel()
@@ -75,24 +71,32 @@ namespace QuicKE.Client
             SignUpCommand = new DelegateCommand((args) => DoRegister(args as CommandExecutionContext));
             SignInCommand = new DelegateCommand((args) => DoLogin(args as CommandExecutionContext));
             VerifyCommand = new DelegateCommand((args) => Verify(args as CommandExecutionContext));
+            ForgotCommand = new DelegateCommand((args) => ForgotPassword(args as CommandExecutionContext));
             UpdateListCommand = new DelegateCommand((args) => Suggest(args as CommandExecutionContext));
             IsSelected = true;
 
 
         }
 
+        private void ForgotPassword(CommandExecutionContext context)
+        {
+            if (context == null)
+                context = new CommandExecutionContext();
+            // navigate to home page...
+            Host.ShowView(typeof(IForgotPassPageViewModel));
+        }
+
         //verify number
         private async void Verify(CommandExecutionContext context)
         {
+            ErrorBucket errors = new ErrorBucket();
+
             if (context == null)
                 context = new CommandExecutionContext();
 
             if (string.IsNullOrEmpty(PhoneNumber) || PhoneNumber.Length < 12)
             {
-                if (culture.Name == "fr")
-                    await Host.ShowAlertAsync("Entrer un numéro de téléphone valide");
-                else
-                    await Host.ShowAlertAsync("Enter a valid phone number");
+               await Host.ShowAlertAsync(res.GetString("InvalidPhone"));                
             }
             else
             {
@@ -122,9 +126,10 @@ namespace QuicKE.Client
         //login
         private async void DoLogin(CommandExecutionContext context)
         {
-
             if (context == null)
                 context = new CommandExecutionContext();
+
+            ErrorBucket errors = new ErrorBucket();
 
             Validate(errors);
 
@@ -136,17 +141,12 @@ namespace QuicKE.Client
                 // call...
                 using (EnterBusy())
                 {
-                    if (culture.Name == "fr")
-                        await Host.ToggleProgressBar(true, "Connexion en cours ...");
-                    else
-                        await Host.ToggleProgressBar(true, "Signing In ...");
-
+                    await Host.ToggleProgressBar(true, res.GetString("SigningIn"));
+                    
                     var result = await proxy.SignInAsync(PhoneNumber, Password);
 
                     if (!(result.HasErrors))
-                    {
-
-                        var values = ApplicationData.Current.LocalSettings.Values;
+                    {                                              
 
                         //assign new token to global class
                         MFundiRuntime.LogonToken = result.token;
@@ -175,6 +175,7 @@ namespace QuicKE.Client
         //register
         private async void DoRegister(CommandExecutionContext context)
         {
+            ErrorBucket errors = new ErrorBucket();
             // if we don't have a context, create one...
             if (context == null)
                 context = new CommandExecutionContext();
@@ -189,12 +190,8 @@ namespace QuicKE.Client
                 // get a handler...
                 var proxy = TinyIoCContainer.Current.Resolve<IRegisterServiceProxy>();
 
-
-                if (culture.Name == "fr")
-                    await Host.ToggleProgressBar(true, "Enregistrement en cours ...");
-                else
-                    await Host.ToggleProgressBar(true, "Signing Up ...");
-
+                await Host.ToggleProgressBar(true, res.GetString("SigningUp"));
+               
                 var result = await proxy.RegisterAsync(FullName, PhoneNumber, Password, SelectedLocation, Code, Email);
 
                 // ok?
@@ -202,10 +199,7 @@ namespace QuicKE.Client
                 {
                     if (result.status == "success")
                     {
-                        if (culture.Name == "fr")
-                            await Host.ToggleProgressBar(true, string.Format("{0} votre compte a été enregistré avec succès.", FullName));
-                        else
-                            await Host.ToggleProgressBar(true, string.Format("{0} your account has been registered successfuly.", FullName));
+                        await Host.ToggleProgressBar(true, string.Format(res.GetString("registered"), FullName));
 
                         //assign new token to global class
                         MFundiRuntime.LogonToken = result.token;
@@ -254,18 +248,12 @@ namespace QuicKE.Client
             // do basic data presence validation...
             if (string.IsNullOrEmpty(PhoneNumber))
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Numéro de téléphone est exigé.");
-                else
-                    errors.AddError("PhoneNumber is required.");
+                errors.AddError(res.GetString("RequiredPhone"));
             }
 
             if (string.IsNullOrEmpty(Password) || Password.Length < 6)
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Le mot de passe doit être au moins de 6 caractères");
-                else
-                    errors.AddError("The Password must be at least 6 characters.");
+                errors.AddError(res.GetString("ValidPassword"));
             }
 
         }
@@ -276,75 +264,48 @@ namespace QuicKE.Client
             // do basic data presence validation...
             if (string.IsNullOrEmpty(FullName))
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Nom complet est exigé.");
-                else
-                    errors.AddError("FullName is required.");
+                errors.AddError(res.GetString("RequiredName"));
             }
                 
             if (string.IsNullOrEmpty(Password))
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Mot de passe requis.");
-                else
-                    errors.AddError("Password is required.");
+                errors.AddError(res.GetString("RequiredPassword"));
             }
             
             if (string.IsNullOrEmpty(Confirm))
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Confirmer le mot de passe.");
-                else
-                    errors.AddError("Confirm password.");
+                errors.AddError(res.GetString("txtConfirm/Text")); 
             }
             
             // check the passwords...
             if (!(string.IsNullOrEmpty(Password)) && Password != Confirm)
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Le mot de passe ne correspond pas.");
-                else
-                    errors.AddError("The passwords do not match.");
+                errors.AddError(res.GetString("MatchPassword"));
             }
             
-            if (Password.Length < 6)
+            if (!(string.IsNullOrEmpty(Password)) && Password.Length < 6)
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Le mot de passe doit être au moins de 6 caractères.");
-                else
-                    errors.AddError("The password must be at least 6 characters.");
+                errors.AddError(res.GetString("ValidPassword"));
             }
             
             if (string.IsNullOrEmpty(Email))
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Adresse e-mail est exigé.");
-                else
-                    errors.AddError("Email is required.");
+                errors.AddError(res.GetString("RequiredEmail"));
             }
             
             if (string.IsNullOrEmpty(PhoneNumber))
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Numéro de téléphone est exigé.");
-                else
-                    errors.AddError("PhoneNumber is required.");
+                errors.AddError(res.GetString("RequiredPhone"));
             }
             
             if ((string.IsNullOrEmpty(PhoneNumber)) && PhoneNumber.Length < 12)
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Numéro de téléphone invalide.");
-                else
-                    errors.AddError("Invalid phone number.");
+                errors.AddError(res.GetString("InvalidPhone"));
             }
             
             if (string.IsNullOrEmpty(Code))
             {
-                if (culture.Name == "fr")
-                    errors.AddError("Code de vérification est exigé.");
-                else
-                    errors.AddError("Verification Code is required.");
+                errors.AddError(res.GetString("RequiredCode"));
             }
             
         }
@@ -362,6 +323,8 @@ namespace QuicKE.Client
         //get locations
         private async Task LoadLocations()
         {
+            ErrorBucket errors = new ErrorBucket();
+
             var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
             // call...
             using (EnterBusy())

@@ -89,6 +89,12 @@
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\OppositeBoolConverter.cs" />
+    <Compile Include="Views\NewPassPage.xaml.cs">
+      <DependentUpon>NewPassPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ForgotPasswordPage.xaml.cs">
+      <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChargePage.xaml.cs">
       <DependentUpon>ChargePage.xaml</DependentUpon>
     </Compile>
@@ -177,6 +183,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\NewPassPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ForgotPasswordPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ChargePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

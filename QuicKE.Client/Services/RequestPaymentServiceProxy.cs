@@ -8,11 +8,11 @@ namespace QuicKE.Client
         public RequestPaymentServiceProxy()
             : base("request-payment")
         {
+            Url = MFundiRuntime.ServiceUrlBase + "request-payment";
         }
 
         public async Task<RequestPaymentResult> RequestPaymentAsync(int serviceid)
         {
-            Url = MFundiRuntime.ServiceUrlBase + "request-payment";
 
             JsonObject input = new JsonObject();
             input.Add("service", serviceid);           

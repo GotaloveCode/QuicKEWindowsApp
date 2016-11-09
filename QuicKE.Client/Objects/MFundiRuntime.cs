@@ -14,7 +14,7 @@ namespace QuicKE.Client
 
 
         // defines the base URL of our services...
-        internal const string ServiceUrlBase = "http://139.59.186.10/mfundi/public/api/";
+        internal const string ServiceUrlBase = "https://quicke.masterpiecefusion.com/api/";
 
         
 

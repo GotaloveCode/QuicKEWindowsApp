@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TinyIoC;
+using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 
 namespace QuicKE.Client
@@ -17,10 +17,8 @@ namespace QuicKE.Client
         private List<string> locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public List<string> Locations { get { return GetValue<List<string>>(); } set { SetValue(value); } }
         public string SelectedLocation { get { return GetValue<string>();} set { SetValue(value); }}
-        ErrorBucket errors = new ErrorBucket();
-        CultureInfo culture = CultureInfo.CurrentCulture;
-
-
+        ResourceLoader res = ResourceLoader.GetForCurrentView();
+        
 
         public UpdateLocationPageViewModel()
         {
@@ -52,11 +50,8 @@ namespace QuicKE.Client
                 context = new CommandExecutionContext();
 
             if (string.IsNullOrEmpty(SelectedLocation))
-            {
-                if (culture.Name == "fr")
-                    await Host.ShowAlertAsync("Sélectionner un emplacement");
-                else
-                    await Host.ShowAlertAsync("Select a Location");
+            {                
+                await Host.ShowAlertAsync(res.GetString("cmbSelectLocation/PlaceholderText"));               
             }                
             else
             {
@@ -66,6 +61,7 @@ namespace QuicKE.Client
                 using (EnterBusy())
                 {
                     var result = await proxy.UpdateLocationAsync(SelectedLocation);
+                    ErrorBucket errors = new ErrorBucket();
 
                     // ok?
                     if (!(result.HasErrors))
@@ -92,32 +88,23 @@ namespace QuicKE.Client
 
         }
       
-            
-        private void Validate(ErrorBucket errors)
-        {
-            // do basic data presence validation...
-            if (string.IsNullOrEmpty(SelectedLocation))
-            {
-                if (culture.Name == "fr")
-                    errors.AddError("Sélectionner un emplacement");
-                else
-                    errors.AddError("Select a Location");                
-            }
-                
-        }
-
+     
         public async override void Activated(object args)
         {
             base.Activated(args);
 
             using (EnterBusy())
             {
+                await Host.ToggleProgressBar(true, res.GetString("Loading"));
                 await LoadLocations();
+                await Host.ToggleProgressBar(false);                
             }
         }
 
         public async Task LoadLocations()
         {
+            ErrorBucket errors = new ErrorBucket();
+
             var proxy = TinyIoCContainer.Current.Resolve<IGetLocationsServiceProxy>();
             // call...
             using (EnterBusy())

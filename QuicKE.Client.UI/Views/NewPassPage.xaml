@@ -1,0 +1,55 @@
+﻿<local:QuicKEPage
+    x:Class="QuicKE.Client.UI.NewPassPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QuicKE.Client.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#f5f5f5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel VerticalAlignment="Top" Background="{StaticResource MyBlue}" Grid.Row="0" >
+            <Image Source="ms-appx:///Assets/quicke - white flat.png" Height="80"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2"  Margin="20,0">
+           
+                <TextBlock x:Uid="txtPassword" Text="Password" Foreground="Black" FontSize="{StaticResource TextStyleLargeFontSize}" FontFamily="Segoe WP Semibold" Margin="0,0,0,20"/>
+                <PasswordBox x:Uid="Password" PlaceholderText="Password"   Password="{Binding Password, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" Margin="0,0,0,10">
+                </PasswordBox>
+                <TextBlock x:Uid="txtConfirm" Text="Confirm Password" Foreground="Black" FontSize="{StaticResource TextStyleLargeFontSize}" FontFamily="Segoe WP Semibold" Margin="0,0,0,20"/>
+                <PasswordBox x:Uid="ConfirmPassword" PlaceholderText="Confirm Password" Password="{Binding Confirm, Mode=TwoWay}" 
+                HorizontalAlignment="Stretch" Margin="0,0,0,10" RenderTransformOrigin="0.489,0.609"
+                          />
+                
+                <TextBlock x:Uid="txtCode" Text="Verification Code" Foreground="Black" FontSize="{StaticResource TextStyleLargeFontSize}" FontFamily="Segoe WP Semibold" Margin="0,0,0,20"/>
+                <TextBox x:Uid="txtVerification" PlaceholderText="Verification Code"    
+                         Text="{Binding Code,Mode=TwoWay}"
+                HorizontalAlignment="Stretch" Margin="0,0,0,10"/>
+           
+
+            <Button x:Uid="btnReset"
+                    Grid.Row="3"
+                    Background="{StaticResource MyBlue}"
+                    Content="RESET PASSWORD"
+                    Foreground="white"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding SubmitCommand}"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource BooleanNegationConverter}}"                    
+                    Margin="0,20,0,0" 
+                    BorderBrush="{StaticResource MyBlue}"/>
+
+        </StackPanel>
+
+
+    </Grid>
+</local:QuicKEPage>
+

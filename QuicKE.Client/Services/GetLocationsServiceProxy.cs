@@ -10,7 +10,8 @@ namespace QuicKE.Client
         public GetLocationsServiceProxy()
             : base("estates") //change this to an id with time
         {
-            //Url = MFundiRuntime.ServiceUrlBase + "estates";
+            Url = MFundiRuntime.ServiceUrlBase + "estates";
+            System.Diagnostics.Debug.WriteLine("GetLocationsServiceProxy" + Url);
         }
         public async Task<GetLocationsResult> GetLocationsAsync()
         {            

@@ -9,7 +9,8 @@ namespace QuicKE.Client
         public UpdateLocationServiceProxy()
             : base("users/me/update-location")
         {
-            //Url = MFundiRuntime.ServiceUrlBase + "users/me/update-location";
+            Url = MFundiRuntime.ServiceUrlBase + "users/me/update-location";
+            System.Diagnostics.Debug.WriteLine("UpdateLocationServiceProxy" + Url);
         }
 
         public async Task<UpdateLocationResult> UpdateLocationAsync(string location)

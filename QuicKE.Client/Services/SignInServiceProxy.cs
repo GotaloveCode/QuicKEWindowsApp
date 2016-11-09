@@ -8,7 +8,6 @@ namespace QuicKE.Client
         public SignInServiceProxy()
             : base("auth")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "auth";
         }
 
         public async Task<RegisterResult> SignInAsync(string username, string password)

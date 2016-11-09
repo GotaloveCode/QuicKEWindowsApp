@@ -14,8 +14,7 @@ namespace QuicKE.Client.Services
 
         public async Task<TaskCompleteResult> TaskCompleteAsync(int TicketID)
         {
-            Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{0}/complete", TicketID);
-            //Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{0}/complete", ApplicationData.Current.LocalSettings.Values["DailyTicketID"].ToString());
+            Url = MFundiRuntime.ServiceUrlBase + string.Format("expert/tickets/{0}/complete", TicketID);            
 
             JsonObject input = new JsonObject();
 

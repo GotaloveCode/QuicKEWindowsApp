@@ -8,7 +8,6 @@ namespace QuicKE.Client
         public GetMyProfileServiceProxy()
             : base("users/me")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "users/me";
         }
 
         public async Task<GetProfileResult> GetProfileAsync()

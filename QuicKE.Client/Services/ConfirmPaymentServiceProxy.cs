@@ -9,7 +9,6 @@ namespace QuicKE.Client
         public ConfirmPaymentServiceProxy()
             : base("confirm-payment")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "confirm-payment";
         }
 
         public async Task<ConfirmPaymentResult> ConfirmPaymentAsync(string Code)

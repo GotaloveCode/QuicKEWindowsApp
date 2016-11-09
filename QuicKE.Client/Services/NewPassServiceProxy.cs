@@ -9,7 +9,6 @@ namespace QuicKE.Client
         public NewPassServiceProxy()
             : base("change-password")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "change-password";
         }
 
         public async Task<NewPassResult> VerifyAsync(string phone_number,string password,string confirm_password,string code)

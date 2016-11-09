@@ -7,9 +7,9 @@ namespace QuicKE.Client
     {
         public LoadTicketServiceProxy()
             : base(string.Format("tickets/{0}/history", ApplicationData.Current.LocalSettings.Values["ticketID"].ToString()))
-        {
-            Url = MFundiRuntime.ServiceUrlBase + string.Format("tickets/{0}/history", ApplicationData.Current.LocalSettings.Values["ticketID"].ToString());
+        {           
         }
+
         public async Task<GetMaidResult> GetMaidAsync()
         {          
             

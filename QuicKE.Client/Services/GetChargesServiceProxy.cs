@@ -8,8 +8,7 @@ namespace QuicKE.Client
     {
         public GetChargesServiceProxy()
             : base("professions/1/services") //change this to an id with time
-        {
-           Url = MFundiRuntime.ServiceUrlBase + "professions/1/services";
+        {          
         }
 
         public async Task<GetServicesResult> GetServicesAsync()

@@ -53,9 +53,9 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Background="White">
             <StackPanel  Background="{StaticResource MyBlue}">
-                <Button x:Uid="Submit" Content="Submit" Command="{Binding SubmitCommand}" FontSize="{StaticResource TextStyleLargeFontSize}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{StaticResource MyBlue}" />
+                <Button x:Uid="Submit" Content="Submit" Command="{Binding SubmitCommand}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{StaticResource MyBlue}" />
             </StackPanel>
-            <StackPanel Background="{StaticResource MyOrange}" Margin="0,20,0,0">
+            <StackPanel Background="{StaticResource MyOrange}" Margin="0,20,0,3">
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="Tapped">
                         <core:NavigateToPageAction TargetPage="QuicKE.Client.UI.HomePage"/>

@@ -8,7 +8,6 @@ namespace QuicKE.Client
         public VerifyServiceProxy()
             : base("phone/verify")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "phone/verify";
         }
 
         public async Task<VerifyResult> VerifyAsync(string phone_number)

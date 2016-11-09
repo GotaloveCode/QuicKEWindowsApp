@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.Data.Json;
 
 namespace QuicKE.Client.Services
 {
 
-     public class LogOutServiceProxy : ServiceProxy, ILogOutServiceProxy
+    public class LogOutServiceProxy : ServiceProxy, ILogOutServiceProxy
     {
         public LogOutServiceProxy()
              : base("logout")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "logout";
         }
 
         public async Task<SignOutResult> LogOutAsync()

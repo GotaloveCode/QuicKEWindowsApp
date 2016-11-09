@@ -11,8 +11,6 @@ namespace QuicKE.Client
         public GetPendingTicketsServiceProxy()
             : base("tickets")
         {
-            Url = MFundiRuntime.ServiceUrlBase + "tickets";
-            System.Diagnostics.Debug.WriteLine("GetPendingTicketsServiceProxy" + Url);
         }
 
         public async Task<PendingTicketsResult> GetTicketAsync()

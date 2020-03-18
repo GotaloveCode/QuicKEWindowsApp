@@ -184,7 +184,7 @@ namespace QuicKE.Client
         }
 
 
-        public static bool HasInternetConnection()
+        public bool HasInternetConnection()
         {
             ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
             return (connectionProfile != null && connectionProfile.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess);
